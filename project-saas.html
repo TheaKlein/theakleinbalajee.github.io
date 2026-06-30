@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ClearFlow B2B Dashboard — Thea</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+/* ─── RESET & BASE ────────────────────────────────── */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+:root {
+  --ink:       #1a1814;
+  --ink2:      #5a5650;
+  --ink3:      #9a958f;
+  --paper:     #f7f5f2;
+  --cream:     #eeeae3;
+  --white:     #ffffff;
+  --accent:    #2a5cff;
+  --accent-bg: #eef1ff;
+  --accent-bd: #c5d0ff;
+  --green:     #1d9e6a;
+  --green-bg:  #e8f7f2;
+  --red:       #d43f3f;
+  --amber:     #c97a12;
+  --amber-bg:  #fdf3e2;
+  --shadow-sm: 0 1px 4px rgba(26,24,20,.07);
+  --shadow-md: 0 4px 16px rgba(26,24,20,.09);
+  --r-sm:      8px;
+  --r-md:      12px;
+  --r-lg:      18px;
+  --f-display: 'DM Serif Display', Georgia, serif;
+  --f-body:    'DM Sans', system-ui, sans-serif;
+}
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--f-body);
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+a { text-decoration: none; color: inherit; }
+
+/* ─── NAV — uses shared.css .site-nav conventions ── */
+
+/* ─── HERO ───────────────────────────────────────── */
+.hero {
+  padding: 64px 48px 36px;
+  background: var(--white);
+  border-bottom: 1px solid var(--cream);
+  position: relative;
+  overflow: hidden;
+}
+.hero-inner {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding-left: 48px;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  top: -120px; right: -100px;
+  width: 480px; height: 480px;
+  border-radius: 50%;
+  background: var(--accent-bg);
+  opacity: .5;
+  pointer-events: none;
+}
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  color: var(--ink3);
+  margin-bottom: 16px;
+  position: relative;
+  z-index: 1;
+  transition: color .2s;
+}
+.back:hover { color: var(--accent); }
+.tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; position: relative; z-index: 1; }
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border-radius: 20px;
+  border: 1px solid;
+}
+.tag-blue  { color: var(--accent);  background: var(--accent-bg); border-color: var(--accent-bd); }
+.tag-green { color: var(--green);   background: var(--green-bg);  border-color: #9de0c8; }
+.tag-amber { color: var(--amber);   background: var(--amber-bg);  border-color: #f0cc8a; }
+.hero h1 {
+  font-family: var(--f-display);
+  font-size: clamp(2.2rem, 5vw, 3.8rem);
+  line-height: 1.06;
+  letter-spacing: -.01em;
+  color: var(--ink);
+  max-width: 760px;
+  margin-bottom: 12px;
+  position: relative;
+  z-index: 1;
+}
+.hero h1 em { color: var(--accent); font-style: italic; }
+.hero-desc {
+  font-size: .92rem;
+  color: var(--ink2);
+  max-width: 560px;
+  line-height: 1.7;
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 1;
+}
+
+/* CLIENT NOTICE BANNER */
+.client-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: var(--amber-bg);
+  border: 1px solid #f0cc8a;
+  border-radius: var(--r-md);
+  padding: 12px 16px;
+  max-width: 680px;
+  margin-bottom: 24px;
+  position: relative;
+  z-index: 1;
+}
+.cn-icon {
+  font-size: 16px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.cn-text { font-size: .84rem; color: var(--ink2); line-height: 1.65; }
+.cn-text strong { color: var(--ink); font-weight: 500; }
+
+.meta { display: flex; gap: 44px; flex-wrap: wrap; position: relative; z-index: 1; }
+.meta-item { display: flex; flex-direction: column; gap: 5px; }
+.meta-label { font-size: 10px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: var(--ink3); }
+.meta-val { font-size: .87rem; color: var(--ink); }
+.meta-val a { color: var(--accent); border-bottom: 1px solid var(--accent-bd); transition: border-color .2s; }
+.meta-val a:hover { border-color: var(--accent); }
+
+/* ─── BODY ───────────────────────────────────────── */
+.body { padding: 72px 48px 96px; max-width: 1080px; margin: 0 auto; }
+.section { margin-bottom: 56px; }
+.sec-h {
+  font-family: var(--f-display);
+  font-style: italic;
+  font-size: 1.55rem;
+  color: var(--ink);
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.sec-h::before {
+  content: '';
+  display: block;
+  width: 3px;
+  height: 24px;
+  background: var(--accent);
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+.prose {
+  font-size: .92rem;
+  line-height: 1.82;
+  color: var(--ink2);
+  max-width: 680px;
+  margin-bottom: 14px;
+}
+.prose strong { color: var(--ink); font-weight: 500; }
+
+/* ─── SCOPE CALLOUT ─────────────────────────────── */
+.scope-box {
+  background: var(--accent-bg);
+  border: 1px solid var(--accent-bd);
+  border-radius: var(--r-md);
+  padding: 20px 24px;
+  max-width: 680px;
+  margin: 20px 0 28px;
+}
+.scope-box h4 {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 10px;
+}
+.scope-list {
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 7px 24px;
+}
+.scope-list li {
+  font-size: .85rem;
+  color: var(--ink2);
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.scope-list li::before {
+  content: '↳';
+  color: var(--accent);
+  font-size: 11px;
+  flex-shrink: 0;
+}
+
+/* ─── FINDINGS GRID ─────────────────────────────── */
+.findings { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 24px 0; }
+.fc {
+  background: var(--white);
+  border: 1px solid var(--cream);
+  border-radius: var(--r-lg);
+  padding: 22px 24px;
+  box-shadow: var(--shadow-sm);
+}
+.fc-lbl {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+.fc-num {
+  font-family: var(--f-display);
+  font-size: 2.6rem;
+  letter-spacing: -.04em;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.fc-desc { font-size: .8rem; line-height: 1.65; color: var(--ink2); }
+
+/* ─── PULL QUOTE ────────────────────────────────── */
+.pull-quote {
+  border-left: 3px solid var(--accent);
+  padding: 16px 24px;
+  margin: 28px 0;
+  background: var(--white);
+  border-radius: 0 var(--r-md) var(--r-md) 0;
+  max-width: 640px;
+  box-shadow: var(--shadow-sm);
+}
+.pull-quote p {
+  font-family: var(--f-display);
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--ink);
+  line-height: 1.6;
+  margin-bottom: 8px;
+}
+.pull-quote cite { font-size: .8rem; color: var(--ink3); font-style: normal; }
+
+/* ─── TIMELINE ──────────────────────────────────── */
+.timeline {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  margin: 28px 0;
+  position: relative;
+}
+.timeline::before {
+  content: '';
+  position: absolute;
+  top: 14px;
+  left: 6px; right: 6px;
+  height: 1px;
+  background: var(--cream);
+}
+.tl-step { padding: 38px 12px 0 4px; position: relative; }
+.tl-dot {
+  position: absolute;
+  top: 9px; left: 0;
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: var(--accent-bg);
+  border: 2px solid var(--accent);
+}
+.tl-week { font-size: 10px; color: var(--accent); font-weight: 500; margin-bottom: 5px; }
+.tl-title { font-size: 12.5px; font-weight: 500; color: var(--ink); margin-bottom: 4px; }
+.tl-desc { font-size: 11px; color: var(--ink2); line-height: 1.55; }
+
+/* ─── IA DIAGRAM ────────────────────────────────── */
+.ia-wrap {
+  background: var(--white);
+  border: 1px solid var(--cream);
+  border-radius: var(--r-lg);
+  padding: 28px;
+  margin: 24px 0;
+  box-shadow: var(--shadow-sm);
+}
+.ia-root { display: flex; justify-content: center; margin-bottom: 20px; }
+.ia-node-root {
+  background: var(--accent-bg);
+  border: 1px solid var(--accent-bd);
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 500;
+  padding: 8px 20px;
+  border-radius: 20px;
+}
+.ia-connector-v {
+  width: 1px; height: 16px;
+  background: var(--cream);
+  margin: 0 auto 12px;
+}
+.ia-branches { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; }
+.ia-branch { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.ia-node {
+  background: var(--cream);
+  border: 1px solid #ddd9d2;
+  border-radius: var(--r-sm);
+  padding: 8px 10px;
+  font-size: 11px;
+  color: var(--ink);
+  font-weight: 500;
+  text-align: center;
+  width: 100%;
+}
+.ia-children { display: flex; flex-direction: column; gap: 5px; width: 100%; }
+.ia-child {
+  background: var(--paper);
+  border: 1px solid var(--cream);
+  border-radius: 6px;
+  padding: 5px 8px;
+  font-size: 10px;
+  color: var(--ink2);
+  text-align: center;
+  width: 100%;
+}
+
+/* ─── BEFORE / AFTER ────────────────────────────── */
+.before-after { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 28px 0; }
+.ba-card {
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  border: 1px solid var(--cream);
+  box-shadow: var(--shadow-sm);
+}
+.ba-label {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.ba-label.before { background: #fff5f5; color: var(--red); border-bottom: 1px solid #f5c5c5; }
+.ba-label.after  { background: #f0faf6; color: var(--green); border-bottom: 1px solid #a8e0cb; }
+.ba-dot { width: 6px; height: 6px; border-radius: 50%; }
+.ba-body { padding: 16px; background: var(--white); }
+.flow-step {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 8px 11px;
+  background: var(--paper);
+  border-radius: var(--r-sm);
+  margin-bottom: 6px;
+  font-size: 11.5px;
+  color: var(--ink2);
+}
+.flow-n {
+  width: 19px; height: 19px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  font-weight: 500;
+  flex-shrink: 0;
+}
+.flow-n.old { background: #ffe4e4; color: var(--red); }
+.flow-n.new { background: #d6f5e8; color: var(--green); }
+.ba-note {
+  margin-top: 12px;
+  padding: 11px 14px;
+  background: #f0faf6;
+  border-radius: var(--r-sm);
+  border: 1px solid #a8e0cb;
+  font-size: 11px;
+  color: var(--ink2);
+  line-height: 1.6;
+}
+.ba-note strong { color: var(--green); font-weight: 500; }
+
+/* ─── WIREFRAME PLACEHOLDERS ────────────────────── */
+.wireframes { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 28px 0; }
+.wf-slot {
+  border: 2px dashed #ccc8c0;
+  border-radius: var(--r-lg);
+  background: var(--white);
+  aspect-ratio: 4 / 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: var(--ink3);
+  position: relative;
+  overflow: hidden;
+}
+.wf-slot::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(var(--cream) 1px, transparent 1px),
+    linear-gradient(90deg, var(--cream) 1px, transparent 1px);
+  background-size: 28px 28px;
+  opacity: .5;
+}
+.wf-icon {
+  position: relative;
+  z-index: 1;
+  width: 36px; height: 36px;
+  border-radius: 8px;
+  background: var(--cream);
+  border: 1px solid #ccc8c0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.wf-icon svg { width: 16px; height: 16px; stroke: var(--ink3); fill: none; stroke-width: 1.5; }
+.wf-label {
+  position: relative;
+  z-index: 1;
+  font-size: 11.5px;
+  font-weight: 500;
+  color: var(--ink3);
+  text-align: center;
+  line-height: 1.5;
+}
+.wf-sub {
+  position: relative;
+  z-index: 1;
+  font-size: 10px;
+  color: #b5b0aa;
+  text-align: center;
+}
+
+/* Three-up wireframes row */
+.wireframes-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin: 28px 0; }
+
+/* ─── FIGMA LINK ─────────────────────────────────── */
+.figma-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--white);
+  border: 1px solid var(--cream);
+  border-radius: var(--r-md);
+  padding: 12px 18px;
+  font-size: .85rem;
+  color: var(--ink);
+  font-weight: 500;
+  box-shadow: var(--shadow-sm);
+  transition: border-color .2s, box-shadow .2s;
+  margin: 20px 0 28px;
+}
+.figma-link:hover {
+  border-color: var(--accent-bd);
+  box-shadow: var(--shadow-md);
+}
+.figma-icon {
+  width: 28px; height: 28px;
+  border-radius: 6px;
+  background: #1e1e1e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.figma-icon svg { width: 14px; height: 14px; }
+.figma-meta { display: flex; flex-direction: column; gap: 1px; }
+.figma-label { font-size: .85rem; font-weight: 500; color: var(--ink); }
+.figma-sub { font-size: 10px; color: var(--ink3); }
+
+/* ─── OUTCOMES ──────────────────────────────────── */
+.outcomes { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin: 24px 0; }
+.oc {
+  background: var(--white);
+  border: 1px solid var(--cream);
+  border-radius: var(--r-lg);
+  padding: 18px 16px;
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+}
+.oc-val {
+  font-family: var(--f-display);
+  font-size: 2rem;
+  color: var(--green);
+  line-height: 1;
+  margin-bottom: 6px;
+  letter-spacing: -.02em;
+}
+.oc-lbl { font-size: 10.5px; color: var(--ink2); line-height: 1.5; }
+
+/* ─── RETRO ─────────────────────────────────────── */
+.retro { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 24px 0; }
+.retro-card {
+  background: var(--white);
+  border: 1px solid var(--cream);
+  border-radius: var(--r-lg);
+  padding: 22px;
+  box-shadow: var(--shadow-sm);
+}
+.retro-icon { font-size: 20px; margin-bottom: 10px; }
+.retro-title { font-size: 13px; font-weight: 500; margin-bottom: 7px; }
+.retro-desc { font-size: .8rem; line-height: 1.68; color: var(--ink2); }
+
+/* ─── SCREEN IMAGES ──────────────────────────────── */
+.screen-full {
+  width: 100%; display: block; border-radius: var(--r-lg);
+  box-shadow: var(--shadow-md); margin: 20px 0;
+  border: 1px solid var(--cream);
+}
+.screen-overview {
+  max-width: 640px; display: block; border-radius: var(--r-lg);
+  box-shadow: var(--shadow-md); margin: 20px 0;
+  border: 1px solid var(--cream);
+}
+.screen-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 20px 0; }
+.screen-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 20px 0; }
+.screen-grid-2 img,
+.screen-grid-3 img {
+  width: 100%; display: block; border-radius: var(--r-lg);
+  box-shadow: var(--shadow-sm); border: 1px solid var(--cream);
+  transition: box-shadow .2s;
+}
+.screen-grid-2 img:hover,
+.screen-grid-3 img:hover { box-shadow: var(--shadow-md); }
+.screen-label {
+  font-size: 10px; font-weight: 500; letter-spacing: .09em;
+  text-transform: uppercase; color: var(--accent);
+  margin-bottom: 8px; display: flex; align-items: center; gap: 8px;
+}
+.screen-label::after { content: ''; flex: 1; height: 1px; background: var(--cream); }
+.screen-caption {
+  font-size: .76rem; color: var(--ink3); font-style: italic;
+  text-align: center; margin-top: 6px; margin-bottom: 0;
+}
+
+/* screen + prose side by side */
+.screen-with-prose {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 32px; align-items: start; margin: 20px 0 0;
+}
+.screen-with-prose img {
+  width: 100%; display: block; border-radius: var(--r-lg);
+  box-shadow: var(--shadow-md); border: 1px solid var(--cream);
+}
+.screen-prose {
+  font-size: .88rem; line-height: 1.78; color: var(--ink2);
+  padding-top: 4px;
+}
+.screen-prose strong { color: var(--ink); font-weight: 500; }
+
+.screen-group { margin-bottom: 32px; }
+.screen-group-inner { margin-top: 16px; }
+
+/* gap between caption text and the grid below in multi-screen groups */
+.screen-sub-grid { margin-top: 20px; }
+
+/* ─── TEMPLATE NOTE ─────────────────────────────── */
+.template-note {
+  background: var(--cream);
+  border: 1px dashed #bbb8b2;
+  border-radius: var(--r-md);
+  padding: 20px 24px;
+  max-width: 680px;
+  margin: 32px 0 0;
+}
+.template-note h4 {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--ink3);
+  margin-bottom: 8px;
+}
+.template-note p { font-size: .84rem; color: var(--ink2); line-height: 1.65; }
+.template-note code {
+  font-size: .8rem;
+  background: var(--white);
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 1px 6px;
+  font-family: monospace;
+}
+
+/* ─── FOOTER NAV ────────────────────────────────── */
+.footer-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 32px 48px 56px;
+  border-top: 1px solid var(--cream);
+  max-width: 1080px;
+  margin: 0 auto;
+}
+.fnav-link {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color: var(--ink2);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: color .2s;
+}
+.fnav-link:hover { color: var(--accent); }
+
+/* ─── RESPONSIVE ────────────────────────────────── */
+@media (max-width: 800px) {
+  .nav, .hero, .body, .footer-nav { padding-left: 24px; padding-right: 24px; }
+  .hero-inner { padding-left: 0; }
+  .findings, .before-after, .retro, .ia-branches, .wireframes, .wireframes-3,
+  .screen-grid-2, .screen-grid-3, .screen-with-prose { grid-template-columns: 1fr; }
+  .outcomes { grid-template-columns: 1fr 1fr; }
+  .timeline { grid-template-columns: 1fr 1fr; }
+  .scope-list { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<div id="cur"></div>
+<div id="cur-ring"></div>
+<div id="transition-overlay"></div>
+
+<!-- NAV -->
+<nav class="site-nav">
+  <a href="index.html" class="nav-wordmark">Thea<sup>✦</sup></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="uxui.html" class="active">UX/UI</a></li>
+    <li><a href="games.html">Games</a></li>
+    <li><a href="art.html">Art</a></li>
+    <li><a href="about.html">About</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+  <a href="uxui.html" class="back">← Back to UX/UI</a>
+  <div class="tags">
+    <span class="tag tag-blue">B2B SaaS · Product Design</span>
+    <span class="tag tag-amber">Passion Project</span>
+    <span class="tag tag-green">Reusable Template</span>
+  </div>
+  <h1>ClearFlow ~ <em>B2B Dashboard</em><br>Designed from Scratch</h1>
+  <p class="hero-desc">B2B analytics dashboard built from scratch for template purposes ~ IA, design system, and full UI.</p>
+
+  <div class="client-notice">
+    <div class="cn-icon">🔒</div>
+    <div class="cn-text">
+      <strong>Template Project.</strong> Company name and data shown are fictional stand-ins. Final screen designs are shown below.
+    </div>
+  </div>
+
+  <div class="meta">
+    <div class="meta-item"><span class="meta-label">Role</span><span class="meta-val">UX Designer</span></div>
+    <div class="meta-item"><span class="meta-label">Context</span><span class="meta-val">Private Project</span></div>
+    <div class="meta-item"><span class="meta-label">Duration</span><span class="meta-val">10 weeks</span></div>
+    <div class="meta-item"><span class="meta-label">Tools</span><span class="meta-val">Figma · FigJam · Notion</span></div>
+    <div class="meta-item"><span class="meta-label">Status</span><span class="meta-val">Shipped ~ Q3 2025</span></div>
+    <div class="meta-item"><span class="meta-label">Figma</span><span class="meta-val"><a href="#figma-file">View file ↗</a></span></div>
+  </div>
+  </div>
+</section>
+<div class="body">
+
+  <!-- PROJECT SCOPE -->
+  <div class="section">
+    <h2 class="sec-h">Project Scope</h2>
+    <p class="prose">A UX mentor suggested that I design something more corporate for practice purposes, and I decided on a B2B analytics dashboard. I intended to create everything from scratch: information architecture, 
+      design system, and a relatively high-fidelity UI.
+    <p class="prose">All screens, components, and patterns were created specifically for this project and informed by an audit of the B2B SaaS dashboard landscape rather than any pre-existing codebase or design.</p>
+    <div class="scope-box">
+      <h4>What was designed from scratch</h4>
+      <ul class="scope-list">
+        <li>Information architecture & navigation model</li>
+        <li>Full design system</li>
+        <li>Dashboard & data visualization UI</li>
+        <li>Reports creation & management flow</li>
+        <li>Onboarding & empty state patterns</li>
+        <li>Integrations & API key management</li>
+        <li>Team & permissions management</li>
+        <li>Audits & Billing</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- THE PROBLEM -->
+  <div class="section">
+    <h2 class="sec-h">The Problem</h2>
+    <p class="prose"> Across the B2B SaaS landscape, analytics tools consistently fail users in the same ways: navigation structured around efficiency rather than how people work, 
+      unintuitive UI that confuses non-technical employees, and feature discovery so poor that some users never find half of what they're paying for.</p>
+    <p class="prose">Starting from scratch meant there was no exact model to replicate, but also no baseline to copy. The design had to be grounded in a clear understanding of where similar products succeed and fail, which made the research phase the most important aspect of this process for me.</p>
+  </div>
+
+  <!-- RESEARCH -->
+  <div class="section">
+    <h2 class="sec-h">Research & Findings</h2>
+    <p class="prose">With no specific product to evaluate, research focused mostly on the competitive landscape. I did an audit of five B2B analytics platforms (Looker, Metabase, Grafana, Amplitude, Tableau), 
+      a close reading of UX literature on data-dense interfaces, and watched some walkthrough videos including product tours, onboarding recordings, and YouTube reviews where real users narrate their experience out loud.</p>
+    <p class="prose">That last source proved to be surprisingly valuable. Third-party demo videos and "honest review" content surface frustrations that polished marketing never does, like people pausing 
+      mid-flow to say "I never know how to get to this" or clicking around before completing a task. Combined with published research on B2B dashboard usability and design, I was able to identify key pain points and opportunities for improvement.</p>
+    <div class="findings">
+      <div class="fc">
+        <div class="fc-lbl">Platforms audited</div>
+        <div class="fc-num">5</div>
+        <div class="fc-desc">Analytics tools assessed across navigation model, accessibility, search, features, and data visualization patterns.</div>
+      </div>
+      <div class="fc">
+        <div class="fc-lbl">Design patterns catalogued</div>
+        <div class="fc-num">60+</div>
+        <div class="fc-desc">Navigation, filter, base state, feature organization, and user patterns documented from competitive review, videos, and UX literature.</div>
+      </div>
+    </div>
+    <p class="prose">Some issues appeared consistently across different audited platforms: navigation organised around system structure rather than user ease, organization and prioritization of data in a way that makes most sense to data engineers, and complex workflows that required deep knowledge of the service. These became the three things I wanted to solve in my simple, basic design.</p>
+  </div>
+
+  <!-- PROCESS TIMELINE -->
+  <div class="section">
+    <h2 class="sec-h">Design Process</h2>
+    <p class="prose">Ten weeks structured in four phases. Research and design ran in parallel after week four, because new findings continuously fed back into wireframes already in progress.</p>
+    <div class="timeline">
+      <div class="tl-step">
+        <div class="tl-dot"></div>
+        <div class="tl-week">Wks 1-4</div>
+        <div class="tl-title">Discovery</div>
+        <div class="tl-desc">Competitive audit of 5 tools, UX literature review, walkthrough video analyses.</div>
+      </div>
+      <div class="tl-step">
+        <div class="tl-dot"></div>
+        <div class="tl-week">Wks 3-5</div>
+        <div class="tl-title">IA & Synthesis</div>
+        <div class="tl-desc">Pattern library built from audit, navigation model defined, information architecture mapped</div>
+      </div>
+      <div class="tl-step">
+        <div class="tl-dot"></div>
+        <div class="tl-week">Wks 5-8</div>
+        <div class="tl-title">Design</div>
+        <div class="tl-desc">Wireframes → higher-fidelity, design system built, 100+ component library</div>
+      </div>
+      <div class="tl-step">
+        <div class="tl-dot"></div>
+        <div class="tl-week">Wks 8-10</div>
+        <div class="tl-title">Validation</div>
+        <div class="tl-desc">Review of hi-fi prototypes, design critique rounds, peer/mentor feedback iterations, user validation.</div>
+      </div>
+    </div>
+    <p class="prose">The competitive audit and pattern synthesis pointed toward a consistent theme across all tools: navigation should 
+      reflect <strong>what users are trying to do</strong>, not how the system is built internally/what data engineers understand. 
+      Many existing products have been organised around the latter. The new IA was rebuilt around the former, with ten sections, each representing a distinct,clear purpose.</p>
+
+    <!-- ALL FRAMES OVERVIEW -->
+    <p class="prose" style="margin-top: 28px;">The full set of screens designed across all six navigation sections, shown here as an overview before walking through each area individually.</p>
+    <div class="screen-label">All screens — design overview</div>
+    <img src="pics/ux/allFrames.png" alt="All ClearFlow screens overview" class="screen-overview">
+  </div>
+     
+
+  <!-- DESIGN APPROACH -->
+  <div class="section">
+    <h2 class="sec-h">Design Approach</h2>
+    <p class="prose">Design decisions were guided by <strong>approachable navigation</strong> (most-used tools always visible without drilling), <strong>simple, visually pleasing UI</strong> for user satisfaction, and a <strong>unified data model</strong> that made metric relationships legible 
+      without needing three separate views open simultaneously.</p>
+    <p class="prose">One of the earliest things I noticed was the complexity of some dashboards, and in particular, the lack of efficient information architecture.
+      with the tabular choices being more streamlined, there is no nested information that is difficult to reach. For example, all "team" items are in one spot, instead of scattered in odd places, 
+      like settings.</p>
+    <div class="before-after">
+      <div class="ba-card">
+        <div class="ba-label before"><div class="ba-dot" style="background:#d43f3f"></div>Common Issues in Information Architecture & Presentation</div>
+        <div class="ba-body">
+          <div class="flow-step"><div class="flow-n old">1</div>Nested menus with complicated steps</div>
+          <div class="flow-step"><div class="flow-n old">2</div>Complex, non-interactable steps</div>
+          <div class="flow-step"><div class="flow-n old">3</div>Settings and Actions listed in same menu</div>
+          <div class="flow-step"><div class="flow-n old">4</div>Complex steps for integrations & APIs</div>
+        </div>
+      </div>
+      <div class="ba-card">
+        <div class="ba-label after"><div class="ba-dot" style="background:#1d9e6a"></div>After: Simple Representation of Relevant Items</div>
+        <div class="ba-body">
+          <div class="flow-step"><div class="flow-n new">1</div>Smooth, simple representation features and tasks</div>
+          <div class="flow-step"><div class="flow-n new">2</div>Easy adjustability of reports and integrations</div>
+          <div class="flow-step"><div class="flow-n new">2</div>Simple navigation throughout site.</div>
+          <div class="flow-step"><div class="flow-n new">2</div>Visual continuity and aesthetic throughout site.</div>
+          <div class="ba-note"><strong>What changed:</strong> Simplified navigation and visual design improved user experience.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- KEY SCREENS -->
+    <p class="prose" style="margin-top:28px;">The three highest-priority screens, dashboard overview, reports with inline filters, and team management, 
+      impacted the majority of design decisions and became the foundation for the component library.</p>
+    <div class="screen-grid-3">
+      <div>
+        <div class="screen-label">Dashboard</div>
+        <img src="pics/ux/dashboardOverview.png" alt="Dashboard overview screen">
+      </div>
+      <div>
+        <div class="screen-label">Reports</div>
+        <img src="pics/ux/reports.png" alt="Reports screen with inline filters">
+      </div>
+      <div>
+        <div class="screen-label">Team members</div>
+        <img src="pics/ux/teamMembers.png" alt="Team members management screen">
+      </div>
+    </div>
+  </div>
+
+  <!-- FINAL DESIGN — ALL SCREENS -->
+  <div class="section">
+    <h2 class="sec-h">Final Design: All Screens</h2>
+    <p class="prose">The complete set of screens across all six IA sections, in navigation order.</p>
+
+    <!-- DASHBOARD -->
+    <div class="screen-group">
+      <div class="screen-label">Dashboard</div>
+      <div class="screen-with-prose">
+        <img src="pics/ux/dashboardOverview.png" alt="Dashboard overview">
+        <div class="screen-prose">
+          <strong>Dashboard overview</strong> -> the landing screen for every session. Three key updated metrics, and intuitive graph with resume trend for 30, 60, and 90 days. 
+          The revenue trend chart anchors the centre of the page, with the recent orders table below. The sidebar gives one-click access to every section from anywhere in the product.
+        </div>
+      </div>
+    </div>
+
+    <!-- REPORTS -->
+    <div class="screen-group">
+      <div class="screen-label">Reports</div>
+      <div class="screen-with-prose">
+        <img src="pics/ux/reports.png" alt="Reports screen">
+        <div class="screen-prose">
+          <strong>Reports</strong> -> filters can be easily accessed and changed above the results; everything updates live as parameters change. 
+          Share and export are clickable on each report, eliminating the need to navigate to a separate results page.
+        </div>
+      </div>
+    </div>
+
+    <!-- TEAM -->
+    <div class="screen-group">
+      <div class="screen-label">Team</div>
+      <div class="screen-with-prose" style="margin-bottom: 20px;">
+        <img src="pics/ux/teamMembers.png" alt="Team members">
+        <div class="screen-prose">
+          <strong>Team members</strong> -> a clear view of who has access, what their role is, and when they last signed in. 
+          Permissions are editable inline without navigating to a separate admin panel, which was a friction point in some original products.
+          Team members can be added quickly to the space. Finally, the teams chat is on the third tab in this section, and provides an easy, 
+          intuitive way to chat with teammates on the platform.
+        </div>
+      </div>
+      <div class="screen-sub-grid screen-grid-2">
+        <div>
+          <img src="pics/ux/pendingInvites.png" alt="Pending invites">
+          <p class="screen-caption">Pending invites -> status and invite people at a glance.</p>
+        </div>
+        <div>
+          <img src="pics/ux/teamMessages.png" alt="Team messages">
+          <p class="screen-caption">Team messages -> contextual comms within the product, no Slack tab needed</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- DATA SOURCES -->
+    <div class="screen-group">
+      <div class="screen-label">Data Sources</div>
+      <div class="screen-with-prose">
+        <img src="pics/ux/dataSources.png" alt="Data sources screen">
+        <div class="screen-prose">
+          <strong>Data sources</strong> -> connection management and sync history in one place. 
+          Each connection shows its last sync time and status at a glance, with an option to see sync history. 
+          New connections are added via a flow that surfaces the fields relevant to the selected source type.
+        </div>
+      </div>
+    </div>
+
+    <!-- SETTINGS -->
+    <div class="screen-group">
+      <div class="screen-label">Settings</div>
+      <div class="screen-with-prose" style="margin-bottom: 20px;">
+        <img src="pics/ux/billingPage.png" alt="Billing page">
+        <div class="screen-prose">
+          <strong>Billing</strong> -> plan overview (option for a client seeking paid versions), usage tracking, and invoice history on one page. 
+          Consolidating it here was a direct response to the audit finding that B2B users can struggle to find billing information.
+        </div>
+      </div>
+      <div class="screen-with-prose" style="margin-bottom: 20px;">
+        <img src="pics/ux/Integrations.png" alt="Integrations">
+        <div class="screen-prose">
+          <strong>Integrations</strong> -> connected apps and webhook management. Cards show each integration's status, last activity, 
+          and a quick-disconnect action without burying it in a settings submenu.
+        </div>
+      </div>
+      <div class="screen-sub-grid screen-grid-3">
+        <div>
+          <img src="pics/ux/APIKeys.png" alt="API keys management">
+          <p class="screen-caption">API keys -> easy access with creation date and last-used timestamp</p>
+        </div>
+        <div>
+          <img src="pics/ux/auditLog.png" alt="Audit log">
+          <p class="screen-caption">Audit log -> filterable event history with type of event, user, and timestamp</p>
+        </div>
+        <div>
+          <img src="pics/ux/editProfile.png" alt="Edit profile">
+          <p class="screen-caption">Edit profile -> personal settings, notification prefs, timezone, and display settings</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FIGMA FILE LINK -->
+  <div class="section">
+    <h2 class="sec-h">Figma File</h2>
+    <p class="prose">The full design system, component library, wireframes, and higher-fi screens live in Figma.
+       If you request access to the file, it should be given in 24 hours. However, all frames should be visible in this case study.</p>
+    <a href="https://www.figma.com/design/Mln4gsOMJQ45Zy5BahIlbz/B2B-Saas-Dashboard-Interface?node-id=0-1&t=equ5L4L7e0cbcR8W-1" target="_blank" class="figma-link" id="figma-file">
+      <div class="figma-icon">
+        <svg viewBox="0 0 38 57" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M19 28.5A9.5 9.5 0 1 1 28.5 19 9.5 9.5 0 0 1 19 28.5z" fill="#1ABCFE"/>
+          <path d="M9.5 47.5A9.5 9.5 0 0 1 19 38h9.5v9.5a9.5 9.5 0 0 1-19 0z" fill="#0ACF83"/>
+          <path d="M19 0H9.5A9.5 9.5 0 0 0 9.5 19H19V0z" fill="#FF7262"/>
+          <path d="M28.5 0H19v19h9.5a9.5 9.5 0 0 0 0-19z" fill="#F24E1E"/>
+          <path d="M9.5 19A9.5 9.5 0 0 0 9.5 38H19V19H9.5z" fill="#A259FF"/>
+        </svg>
+      </div>
+      <div class="figma-meta">
+        <span class="figma-label">ClearFlow: Full Design File</span>
+        <span class="figma-sub">View in Figma ↗</span>
+      </div>
+    </a>
+    <div style="border-radius: var(--r-lg); overflow: hidden; box-shadow: var(--shadow-md); margin-top: 8px; border: 1px solid var(--cream);">
+      <iframe style="border: none; display: block;" width="100%" height="480" src="https://embed.figma.com/design/Mln4gsOMJQ45Zy5BahIlbz/B2B-Saas-Dashboard-Interface?node-id=0-1&embed-host=share" allowfullscreen></iframe>
+    </div>
+  </div>
+
+  <!-- RETROSPECTIVE -->
+  <div class="section">
+    <h2 class="sec-h">Retrospective</h2>
+    <p class="prose">Ten weeks is a compressed timeline for a platform-level redesign built entirely from scratch. 
+      Here's an honest accounting of what worked, what I'd change, and what's next.</p>
+    <div class="retro">
+      <div class="retro-card">
+        <div class="retro-icon">✓</div>
+        <div class="retro-title">What worked</div>
+        <div class="retro-desc">Doing research and design at the same time saved roughly three weeks. Keeping a live doc that both tracked and updated findings the same week they were gathered.</div>
+      </div>
+      <div class="retro-card">
+        <div class="retro-icon">↻</div>
+        <div class="retro-title">What I'd change</div>
+        <div class="retro-desc">I'd personally test out more of the competitors myself, and see their interaction flows, as this project is not prototyped. I'd also like to have a bit more time to prototype the project outside of Figma Make, which did confirm its viability, but it would have been nice to see flows outside of that.</div>
+      </div>
+      <div class="retro-card">
+        <div class="retro-icon">→</div>
+        <div class="retro-title">What's next</div>
+        <div class="retro-desc">The design has been deprecated, but it is available for designers to iterate off of.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TEMPLATE NOTE -->
+  <div class="section">
+    <h2 class="sec-h">Using This as a Template</h2>
+    <p class="prose">This case study (and project) is published as a free template. If you're adapting it for your own portfolio, here's how the sections map to your project:</p>
+    <div class="scope-box">
+      <h4>Template section guide</h4>
+      <ul class="scope-list">
+        <li>Hero tags → swap in your own project type</li>
+        <li>Project scope → describe what you built and its constraints</li>
+        <li>Research section → replace with your own stats</li>
+        <li>Timeline → adjust phases and week counts</li>
+        <li>IA diagram → add an IA diagram (I chose not to, but it's good practice)</li>
+        <li>Before/After → document your key workflow wins</li>
+        <li>Wireframe slots → drop in your own images</li>
+        <li>Figma link → swap in your file URL</li>
+        <li>Outcomes → This was a short project with no clear outcome metrics, so I didn't add any. However, you should include any relevant metrics or KPIs that demonstrate the impact of your work.</li>
+        <li>Retrospective → be honest, it's the easiest section to write!</li>
+      </ul>
+    </div>
+  </div>
+
+</div><!-- /body -->
+
+<div class="footer-nav">
+  <a href="uxui.html" class="fnav-link">← All UX/UI Projects</a>
+  <a href="games.html" class="fnav-link">Next: Games →</a>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-mark">Thea ✦ Creative Portfolio</div>
+  <ul class="footer-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="games.html">Games</a></li>
+    <li><a href="art.html">Art</a></li>
+    <li><a href="about.html">About</a></li>
+  </ul>
+</footer>
+
+<script src="nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HuskySupport — Thea</title>
+<link rel="stylesheet" href="shared.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+body { background: var(--paper, #f7f5fb); }
+
+:root {
+  --hs-lavender:      #7c5cbf;
+  --hs-lavender-mid:  #9b7dd4;
+  --hs-lavender-dim:  rgba(124,92,191,.09);
+  --hs-lavender-bd:   rgba(124,92,191,.22);
+  --hs-sage:       #5a9e7c;
+  --hs-sage-dim:   rgba(90,158,124,.1);
+  --hs-rose:       #c2566a;
+  --hs-rose-dim:   rgba(194,86,106,.1);
+  --hs-amber:      #b87333;
+  --hs-amber-dim:  rgba(184,115,51,.1);
+  --hs-ink:        #1e1528;
+  --hs-ink2:       #5e5075;
+  --hs-ink3:       #9d90b4;
+  --hs-border:     rgba(140,100,200,.13);
+  --hs-border2:    rgba(140,100,200,.07);
+  --hs-white:      #ffffff;
+  --hs-paper2:     #f0ecf8;
+  --hs-shadow:     0 2px 12px rgba(100,70,160,.07);
+  --hs-shadow-md:  0 6px 28px rgba(100,70,160,.10);
+  --hs-r:          12px;
+  --hs-r-lg:       18px;
+  --f-display-hs:  'Playfair Display', Georgia, serif;
+  --f-body-hs:     'DM Sans', system-ui, sans-serif;
+}
+
+/* ── HERO ────────────────────────────────────────── */
+.hs-hero {
+  padding: 72px 64px 64px;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid var(--hs-border);
+  background: var(--hs-white);
+  display: grid;
+  grid-template-columns: 1fr 520px;
+  gap: 48px;
+  align-items: start;
+}
+.hs-hero-left { position: relative; z-index: 2; }
+.hs-hero-right {
+  position: relative; z-index: 2;
+  display: flex; flex-direction: column; gap: 16px;
+  padding-top: 8px;
+}
+.hs-hero-img {
+  width: 100%; border-radius: 20px;
+  box-shadow: var(--hs-shadow-md);
+  display: block; object-fit: cover;
+  max-height: 460px;
+}
+.hs-figma-link {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: var(--hs-white); border: 1px solid var(--hs-border);
+  border-radius: var(--hs-r); padding: 11px 16px;
+  font-size: .82rem; color: var(--hs-ink); font-weight: 500;
+  box-shadow: var(--hs-shadow); transition: border-color .2s, box-shadow .2s;
+  text-decoration: none;
+}
+.hs-figma-link:hover { border-color: var(--hs-lavender-bd); box-shadow: var(--hs-shadow-md); }
+.hs-figma-icon {
+  width: 26px; height: 26px; border-radius: 6px; background: #1e1e1e;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.hs-figma-icon svg { width: 13px; height: 13px; }
+.hs-figma-meta { display: flex; flex-direction: column; gap: 1px; }
+.hs-figma-label { font-size: .82rem; font-weight: 500; color: var(--hs-ink); }
+.hs-figma-sub { font-size: 10px; color: var(--hs-ink3); }
+.hs-hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: radial-gradient(circle, rgba(124,92,191,.12) 1px, transparent 1px);
+  background-size: 36px 36px;
+  pointer-events: none;
+}
+.hs-hero::after {
+  content: '';
+  position: absolute;
+  top: -200px; left: -160px;
+  width: 700px; height: 700px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(155,125,212,.18) 0%, transparent 65%);
+  pointer-events: none;
+}
+.hs-glow2 {
+  position: absolute;
+  bottom: -160px; right: -120px;
+  width: 500px; height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(124,92,191,.10) 0%, transparent 65%);
+  pointer-events: none;
+}
+.hs-eyebrow {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 28px; position: relative; z-index: 2;
+  animation: hsFadeUp .65s ease both;
+}
+.hs-eyebrow-line { width: 32px; height: 1.5px; background: var(--hs-lavender); opacity: .5; }
+.hs-eyebrow-text {
+  font-size: 10.5px; font-weight: 500; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--hs-lavender);
+}
+.hs-title {
+  font-family: var(--f-display-hs);
+  font-size: clamp(2rem, 5vw, 4rem);
+  font-weight: 400; line-height: 1.02; letter-spacing: -.02em;
+  color: var(--hs-ink); max-width: 900px; margin-bottom: 10px;
+  position: relative; z-index: 2;
+  animation: hsFadeUp .65s .1s ease both;
+}
+.hs-title em { font-style: italic; color: var(--hs-lavender); }
+.hs-subtitle {
+  font-size: .88rem; color: var(--hs-ink2); max-width: 480px;
+  line-height: 1.72; margin-bottom: 32px;
+  position: relative; z-index: 2;
+  animation: hsFadeUp .65s .18s ease both;
+}
+.hs-tags {
+  display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 28px;
+  position: relative; z-index: 2;
+  animation: hsFadeUp .65s .22s ease both;
+}
+.hs-tag {
+  font-size: 10.5px; font-weight: 500; letter-spacing: .06em;
+  padding: 4px 13px; border-radius: 20px; border: 1px solid;
+}
+.hs-tag-purple { color: var(--hs-lavender); background: var(--hs-lavender-dim); border-color: var(--hs-lavender-bd); }
+.hs-tag-sage   { color: var(--hs-sage);     background: var(--hs-sage-dim);     border-color: rgba(90,158,124,.28); }
+.hs-tag-amber  { color: var(--hs-amber);    background: var(--hs-amber-dim);    border-color: rgba(184,115,51,.28); }
+.hs-meta {
+  display: flex; flex-wrap: wrap;
+  position: relative; z-index: 2;
+  animation: hsFadeUp .65s .28s ease both;
+  border: 1px solid var(--hs-border); border-radius: var(--hs-r-lg);
+  background: rgba(255,255,255,.8); backdrop-filter: blur(12px);
+  overflow: hidden; max-width: fit-content; box-shadow: var(--hs-shadow);
+}
+.hs-meta-item {
+  display: flex; flex-direction: column; gap: 5px;
+  padding: 16px 26px; border-right: 1px solid var(--hs-border);
+}
+.hs-meta-item:last-child { border-right: none; }
+.hs-meta-label {
+  font-size: 9.5px; font-weight: 500; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--hs-ink3);
+}
+.hs-meta-val { font-size: .87rem; color: var(--hs-ink); }
+
+@keyframes hsFadeUp {
+  from { opacity:0; transform: translateY(20px); }
+  to   { opacity:1; transform: translateY(0); }
+}
+
+/* ── BODY ────────────────────────────────────────── */
+.hs-body {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 56px 64px 80px;
+  font-family: var(--f-body-hs);
+  color: var(--hs-ink);
+}
+.hs-section { margin-bottom: 56px; }
+
+.hs-sec-label { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
+.hs-sec-label-line { width: 22px; height: 1.5px; background: var(--hs-lavender); flex-shrink: 0; }
+.hs-sec-label-text {
+  font-size: 10px; font-weight: 500; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--hs-lavender);
+}
+.hs-h {
+  font-family: var(--f-display-hs); font-style: italic;
+  font-size: clamp(1.55rem, 2.8vw, 2.1rem);
+  font-weight: 400; color: var(--hs-ink); margin-bottom: 18px; line-height: 1.22;
+}
+.hs-h-sm {
+  font-family: var(--f-display-hs); font-style: italic;
+  font-size: 1.2rem; font-weight: 400; color: var(--hs-ink);
+  margin: 28px 0 14px;
+}
+.hs-prose {
+  font-size: .91rem; line-height: 1.84; color: var(--hs-ink2);
+  max-width: 680px; margin-bottom: 15px;
+}
+.hs-prose strong { color: var(--hs-ink); font-weight: 500; }
+.hs-divider { height: 1px; background: var(--hs-border); margin: 0 64px; }
+
+/* ── REAL IMAGE STYLES ───────────────────────────── */
+.hs-real-img {
+  width: 100%;
+  border-radius: var(--hs-r-lg);
+  display: block;
+  margin: 20px 0;
+  box-shadow: var(--hs-shadow-md);
+}
+.hs-real-img.tall   { max-height: 520px; object-fit: cover; object-position: top; }
+.hs-real-img.medium { max-height: 320px; object-fit: cover; object-position: top; }
+.hs-real-img.short  { max-height: 200px; object-fit: cover; object-position: top; }
+.hs-real-img.contain { object-fit: contain; background: var(--hs-paper2); padding: 16px; }
+
+.hs-caption {
+  font-size: .78rem; color: var(--hs-ink3);
+  text-align: center; margin-top: -10px; margin-bottom: 20px;
+  font-style: italic;
+}
+
+/* full-width banner image */
+.hs-banner {
+  width: 100%; border-radius: var(--hs-r-lg);
+  overflow: hidden; margin: 24px 0;
+  box-shadow: var(--hs-shadow-md);
+}
+.hs-banner img { width: 100%; display: block; }
+
+/* two-up and three-up grids */
+.hs-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 20px 0; }
+.hs-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin: 20px 0; }
+.hs-grid-2 figure, .hs-grid-3 figure { margin: 0; }
+.hs-grid-2 figure img,
+.hs-grid-3 figure img {
+  width: 100%; display: block; border-radius: var(--hs-r-lg);
+  box-shadow: var(--hs-shadow-md);
+  object-fit: cover;
+}
+.hs-grid-2 figcaption,
+.hs-grid-3 figcaption {
+  font-size: .75rem; color: var(--hs-ink3);
+  text-align: center; margin-top: 6px;
+  font-style: italic;
+}
+
+/* annotated image wrapper */
+.hs-anno-wrap { margin: 20px 0; }
+.hs-anno-label {
+  font-size: 10px; font-weight: 500; letter-spacing: .09em;
+  text-transform: uppercase; color: var(--hs-lavender);
+  margin-bottom: 8px; display: flex; align-items: center; gap: 8px;
+}
+.hs-anno-label::after { content: ''; flex: 1; height: 1px; background: var(--hs-border); }
+
+/* before/after compare */
+.hs-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 20px 0; }
+.hs-compare-card { border-radius: var(--hs-r-lg); overflow: hidden; border: 1px solid var(--hs-border); }
+.hs-compare-badge {
+  font-size: 10px; font-weight: 500; letter-spacing: .08em;
+  text-transform: uppercase; padding: 8px 14px;
+  display: flex; align-items: center; gap: 7px;
+}
+.hs-compare-badge.before { background: rgba(194,86,106,.07); color: var(--hs-rose); border-bottom: 1px solid rgba(194,86,106,.15); }
+.hs-compare-badge.after  { background: rgba(90,158,124,.07);  color: var(--hs-sage); border-bottom: 1px solid rgba(90,158,124,.15); }
+.hs-compare-dot { width: 6px; height: 6px; border-radius: 50%; }
+.hs-compare-card img { width: 100%; display: block; object-fit: cover; max-height: 280px; }
+
+/* ── COMPONENTS ──────────────────────────────────── */
+.hs-problem {
+  border: 1px solid var(--hs-lavender-bd); background: var(--hs-lavender-dim);
+  border-radius: var(--hs-r-lg); padding: 24px 28px; max-width: 720px;
+  margin: 24px 0; position: relative; overflow: hidden;
+}
+.hs-problem::before {
+  content: '"'; position: absolute; top: -24px; right: 16px;
+  font-family: var(--f-display-hs); font-size: 110px;
+  color: var(--hs-lavender); opacity: .07; line-height: 1; pointer-events: none;
+}
+.hs-problem p {
+  font-family: var(--f-display-hs); font-style: italic;
+  font-size: 1.04rem; color: var(--hs-ink); line-height: 1.7;
+}
+
+.hs-stats { display: flex; gap: 12px; flex-wrap: wrap; margin: 22px 0; }
+.hs-stat {
+  background: var(--hs-white); border: 1px solid var(--hs-border);
+  border-radius: var(--hs-r); padding: 14px 20px;
+  display: flex; flex-direction: column; gap: 4px;
+  min-width: 136px; box-shadow: var(--hs-shadow);
+}
+.hs-stat-num {
+  font-family: var(--f-display-hs); font-size: 2rem;
+  color: var(--hs-lavender); line-height: 1; letter-spacing: -.03em;
+}
+.hs-stat-lbl { font-size: 11px; color: var(--hs-ink2); }
+
+.hs-goals { display: flex; flex-direction: column; gap: 11px; margin: 20px 0; max-width: 720px; }
+.hs-goal {
+  display: flex; gap: 16px; align-items: flex-start;
+  background: var(--hs-white); border: 1px solid var(--hs-border);
+  border-radius: var(--hs-r); padding: 18px 20px; box-shadow: var(--hs-shadow);
+  transition: border-color .2s, box-shadow .2s;
+}
+.hs-goal:hover { border-color: var(--hs-lavender-bd); box-shadow: var(--hs-shadow-md); }
+.hs-goal-n {
+  font-family: var(--f-display-hs); font-style: italic;
+  font-size: 1.6rem; color: var(--hs-lavender); opacity: .45;
+  line-height: 1; flex-shrink: 0; width: 24px; margin-top: 1px;
+}
+.hs-goal-text { font-size: .9rem; color: var(--hs-ink2); line-height: 1.74; }
+.hs-goal-text strong { color: var(--hs-ink); font-weight: 500; }
+
+.hs-research-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 13px; margin: 24px 0; }
+.hs-rcard {
+  background: var(--hs-white); border: 1px solid var(--hs-border);
+  border-radius: var(--hs-r-lg); padding: 22px 24px; box-shadow: var(--hs-shadow);
+  transition: border-color .2s, transform .2s;
+}
+.hs-rcard:hover { border-color: var(--hs-lavender-bd); transform: translateY(-2px); }
+.hs-rcard-icon  { font-size: 20px; margin-bottom: 11px; }
+.hs-rcard-title { font-size: 13px; font-weight: 500; color: var(--hs-ink); margin-bottom: 6px; }
+.hs-rcard-desc  { font-size: .81rem; line-height: 1.7; color: var(--hs-ink2); }
+
+.hs-qs { display: flex; flex-direction: column; gap: 8px; margin: 16px 0; max-width: 680px; }
+.hs-q {
+  display: flex; gap: 12px; align-items: flex-start;
+  background: var(--hs-white); border: 1px solid var(--hs-border);
+  border-radius: var(--hs-r); padding: 13px 16px; box-shadow: var(--hs-shadow);
+}
+.hs-q-mark {
+  font-family: var(--f-display-hs); font-style: italic;
+  font-size: 1.1rem; color: var(--hs-lavender);
+  opacity: .5; flex-shrink: 0; line-height: 1.2;
+}
+.hs-q-text { font-size: .87rem; color: var(--hs-ink2); line-height: 1.65; }
+
+.hs-timeline { display: grid; grid-template-columns: repeat(3, 1fr); gap: 13px; margin: 24px 0; }
+.hs-tl {
+  background: var(--hs-white); border: 1px solid var(--hs-border);
+  border-radius: var(--hs-r); padding: 20px; box-shadow: var(--hs-shadow);
+  transition: border-color .2s;
+}
+.hs-tl:hover { border-color: var(--hs-lavender-bd); }
+.hs-tl-month {
+  font-size: 9.5px; font-weight: 500; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--hs-lavender); margin-bottom: 6px;
+}
+.hs-tl-title { font-size: 13px; font-weight: 500; color: var(--hs-ink); margin-bottom: 6px; }
+.hs-tl-desc  { font-size: .8rem; color: var(--hs-ink2); line-height: 1.66; }
+
+.hs-decision {
+  border: 1px solid var(--hs-lavender-bd); background: var(--hs-lavender-dim);
+  border-radius: var(--hs-r-lg); padding: 20px 24px;
+  max-width: 720px; margin: 24px 0;
+  display: flex; gap: 14px; align-items: flex-start;
+}
+.hs-decision-icon { font-size: 20px; flex-shrink: 0; margin-top: 2px; }
+.hs-decision-title {
+  font-size: 12px; font-weight: 500; letter-spacing: .06em;
+  text-transform: uppercase; color: var(--hs-lavender); margin-bottom: 6px;
+}
+.hs-decision-text { font-size: .88rem; color: var(--hs-ink2); line-height: 1.72; }
+.hs-decision-text strong { color: var(--hs-ink); font-weight: 500; }
+
+.hs-stack { display: grid; grid-template-columns: repeat(3, 1fr); gap: 13px; margin: 24px 0; }
+.hs-scard {
+  background: var(--hs-white); border: 1px solid var(--hs-border);
+  border-radius: var(--hs-r); padding: 20px; box-shadow: var(--hs-shadow);
+  transition: border-color .2s, transform .2s;
+}
+.hs-scard:hover { border-color: var(--hs-lavender-bd); transform: translateY(-2px); }
+.hs-scard-icon { font-size: 22px; margin-bottom: 11px; }
+.hs-scard-name { font-size: 13px; font-weight: 500; color: var(--hs-ink); margin-bottom: 5px; }
+.hs-scard-desc { font-size: .8rem; color: var(--hs-ink2); line-height: 1.64; }
+
+.hs-roles { display: grid; grid-template-columns: 1fr 1fr; gap: 13px; margin: 24px 0; }
+.hs-role {
+  background: var(--hs-white); border: 1px solid var(--hs-border);
+  border-radius: var(--hs-r-lg); padding: 22px 24px; box-shadow: var(--hs-shadow);
+}
+.hs-role-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 10px; font-weight: 500; letter-spacing: .07em;
+  text-transform: uppercase; padding: 4px 11px; border-radius: 10px; margin-bottom: 14px;
+}
+.hs-badge-ux   { background: var(--hs-lavender-dim); color: var(--hs-lavender); border: 1px solid var(--hs-lavender-bd); }
+.hs-badge-data { background: var(--hs-sage-dim);     color: var(--hs-sage);     border: 1px solid rgba(90,158,124,.28); }
+.hs-role-title { font-size: 14px; font-weight: 500; color: var(--hs-ink); margin-bottom: 12px; }
+.hs-role-list  { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.hs-role-list li {
+  display: flex; gap: 10px; font-size: .84rem;
+  color: var(--hs-ink2); line-height: 1.62; align-items: flex-start;
+}
+.hs-role-list li::before {
+  content: '→'; color: var(--hs-lavender);
+  flex-shrink: 0; margin-top: 1px; font-size: 11px;
+}
+
+.hs-list { display: flex; flex-direction: column; gap: 10px; margin: 20px 0; max-width: 720px; }
+.hs-item {
+  display: flex; gap: 14px; align-items: flex-start;
+  padding: 16px 18px; background: var(--hs-white);
+  border: 1px solid var(--hs-border); border-radius: var(--hs-r);
+  box-shadow: var(--hs-shadow); transition: border-color .2s;
+}
+.hs-item:hover { border-color: var(--hs-lavender-bd); }
+.hs-item-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+.hs-item-text { font-size: .88rem; color: var(--hs-ink2); line-height: 1.72; }
+.hs-item-text strong { color: var(--hs-ink); font-weight: 500; }
+
+.hs-next-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 20px 0; }
+.hs-next {
+  background: var(--hs-white); border: 1px solid var(--hs-border);
+  border-radius: var(--hs-r); padding: 18px 20px;
+  display: flex; gap: 13px; align-items: flex-start;
+  box-shadow: var(--hs-shadow); transition: border-color .2s;
+}
+.hs-next:hover { border-color: var(--hs-lavender-bd); }
+.hs-next-n {
+  width: 24px; height: 24px; border-radius: 50%;
+  background: var(--hs-lavender-dim); border: 1px solid var(--hs-lavender-bd);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; color: var(--hs-lavender); font-weight: 500;
+  flex-shrink: 0; margin-top: 1px;
+}
+.hs-next-text { font-size: .87rem; color: var(--hs-ink2); line-height: 1.7; }
+.hs-next-text strong { color: var(--hs-ink); font-weight: 500; }
+
+.hs-signoff { text-align: center; padding: 48px 24px 0; }
+.hs-signoff-text {
+  font-family: var(--f-display-hs); font-style: italic;
+  font-size: 1.5rem; color: var(--hs-ink2); margin-bottom: 8px;
+}
+
+/* ── RESPONSIVE ──────────────────────────────────── */
+@media (max-width: 860px) {
+  .hs-hero { grid-template-columns: 1fr; padding-left: 24px; padding-right: 24px; padding-top: 48px; padding-bottom: 40px; }
+  .hs-hero-right { display: none; }
+  .hs-body { padding-left: 24px; padding-right: 24px; }
+  .hs-divider { margin: 0 28px; }
+  .hs-meta-item { border-right: none !important; border-bottom: 1px solid var(--hs-border); }
+  .hs-meta-item:last-child { border-bottom: none; }
+  .hs-research-grid, .hs-roles, .hs-stack, .hs-next-grid,
+  .hs-timeline, .hs-grid-2, .hs-grid-3, .hs-compare { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+
+<body class="page-uxui">
+<div id="cur"></div>
+<div id="cur-ring"></div>
+<div id="transition-overlay"></div>
+
+<nav class="site-nav">
+  <a href="index.html" class="nav-wordmark">Thea<sup>✦</sup></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="uxui.html" class="active">UX/UI</a></li>
+    <li><a href="games.html">Games</a></li>
+    <li><a href="art.html">Art</a></li>
+    <li><a href="about.html">About</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap">
+
+<!-- ── HERO ────────────────────────────────────────── -->
+<section class="hs-hero">
+  <div class="hs-glow2"></div>
+  <div class="hs-hero-left">
+    <div class="hs-eyebrow">
+      <div class="hs-eyebrow-line"></div>
+      <span class="hs-eyebrow-text">UX Design + Data Science · Amazon-Sponsored Capstone 2026</span>
+    </div>
+    <h1 class="hs-title">Husky<em>Support</em> 🐾</h1>
+    <p class="hs-subtitle">A Slack-based predictive assistant built for Amazon that detects device anomalies before they 
+      become crashes, surfacing plain-language root causes and guided resolution paths to employees and IT system engineers alike.</p>
+    <div class="hs-tags">
+      <span class="hs-tag hs-tag-purple">UX Design</span>
+      <span class="hs-tag hs-tag-purple">Data Science</span>
+      <span class="hs-tag hs-tag-amber">Amazon</span>
+      <span class="hs-tag hs-tag-sage">Capstone Project &amp; Contract Work</span>
+    </div>
+    <div class="hs-meta">
+      <div class="hs-meta-item"><span class="hs-meta-label">Role</span><span class="hs-meta-val">Design Technologist</span></div>
+      <div class="hs-meta-item"><span class="hs-meta-label">Duration</span><span class="hs-meta-val">Jan – June 2026</span></div>
+      <div class="hs-meta-item"><span class="hs-meta-label">Hours</span><span class="hs-meta-val">~200 hrs</span></div>
+      <div class="hs-meta-item"><span class="hs-meta-label">Team</span><span class="hs-meta-val">5 members</span></div>
+      <div class="hs-meta-item"><span class="hs-meta-label">Stack</span><span class="hs-meta-val">Python · AWS · Qualtrics · Claude</span></div>
+      <div class="hs-meta-item"><span class="hs-meta-label">Context</span><span class="hs-meta-val">Informatics Capstone</span></div>
+    </div>
+  </div>
+  <div class="hs-hero-right">
+    <img src="pics/ux/topImage.png" alt="HuskySupport project overview" class="hs-hero-img">
+    <a href="https://www.figma.com/deck/cNMl8dITqbOc5gRwJRYJMM/Final-Presentation?node-id=75-2025&p=f&viewport=163%2C255%2C0.12&t=BzOBjsmB4e6AbhWG-1&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1" target="_blank" class="hs-figma-link">
+      <div class="hs-figma-icon">
+        <svg viewBox="0 0 38 57" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M19 28.5A9.5 9.5 0 1 1 28.5 19 9.5 9.5 0 0 1 19 28.5z" fill="#1ABCFE"/>
+          <path d="M9.5 47.5A9.5 9.5 0 0 1 19 38h9.5v9.5a9.5 9.5 0 0 1-19 0z" fill="#0ACF83"/>
+          <path d="M19 0H9.5A9.5 9.5 0 0 0 9.5 19H19V0z" fill="#FF7262"/>
+          <path d="M28.5 0H19v19h9.5a9.5 9.5 0 0 0 0-19z" fill="#F24E1E"/>
+          <path d="M9.5 19A9.5 9.5 0 0 0 9.5 38H19V19H9.5z" fill="#A259FF"/>
+        </svg>
+      </div>
+      <div class="hs-figma-meta">
+        <span class="hs-figma-label">Final Presentation — Figma File</span>
+        <span class="hs-figma-sub">View slides &amp; final designs ↗</span>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- ── BODY ─────────────────────────────────────────── -->
+<div class="hs-body">
+
+  <!-- THE PROBLEM -->
+  <div class="hs-section reveal">
+    <div class="hs-sec-label"><div class="hs-sec-label-line"></div><span class="hs-sec-label-text">The Problem</span></div>
+    <h2 class="hs-h">Crashes don't happen out of nowhere.</h2>
+    <p class="hs-prose">Most system failures are preceded by measurable signals such as increasing CPU temperature, high memory utilization, longer boot times, 
+      and degraded battery health. But <strong>users only see symptoms</strong>: a slow laptop, a freezing screen, a black screen. By the time they notice, it's already too late.</p>
+    <p class="hs-prose">Traditional IT support is reactive by design. A crash happens → an employee opens a ticket → they seek IT support → they repeat their problem to a technician starting from scratch. 
+      Throughout this process, they've lost unsaved work, wasted hours, and disrupted their workflow.</p>
+    <div class="hs-problem">
+      <p>How might Amazonians experiencing technical problems receive timely and accurate hardware problem diagnoses, 
+        while Amazon IT support engineers can more quickly identify device issues so that resolution time is reduced and work disruption is minimized?</p>
+    </div>
+    <div class="hs-stats">
+      <div class="hs-stat"><div class="hs-stat-num">12</div><div class="hs-stat-lbl">device features monitored</div></div>
+      <div class="hs-stat"><div class="hs-stat-num">4</div><div class="hs-stat-lbl">resolution routing paths</div></div>
+      <div class="hs-stat"><div class="hs-stat-num">~200</div><div class="hs-stat-lbl">hours invested</div></div>
+      <div class="hs-stat"><div class="hs-stat-num">300k+</div><div class="hs-stat-lbl">computers analyzed</div></div>
+    </div>
+  </div>
+
+  <div class="hs-divider"></div>
+
+  <!-- GOALS -->
+  <div class="hs-section reveal" style="margin-top:44px">
+    <div class="hs-sec-label"><div class="hs-sec-label-line"></div><span class="hs-sec-label-text">Goals</span></div>
+    <h2 class="hs-h">What we set out to build.</h2>
+    <div class="hs-goals">
+      <div class="hs-goal">
+        <div class="hs-goal-n">1</div>
+        <div class="hs-goal-text"><strong>Shift Amazon IT support from reactive repair to predictive prevention</strong> - detect issues 
+          before crashes occur and surface them proactively so employees can act before losing work or time.</div>
+      </div>
+      <div class="hs-goal">
+        <div class="hs-goal-n">2</div>
+        <div class="hs-goal-text"><strong>Build a random forest model</strong> trained on threshold-defined device telemetry across 12 features 
+          (memory utilization, boot time, CPU capacity, battery cycles, and more) to predict imminent system failures and surface features with anomalies.</div>
+      </div>
+      <div class="hs-goal">
+        <div class="hs-goal-n">3</div>
+        <div class="hs-goal-text"><strong>Surface predictions in plain language</strong> that non-technical users can act on, and route them to the 
+          right resolution path (self-fix, backup &amp; replace, online support, or in-person support) without misdiagnosed 
+          tickets or wasted time.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hs-divider"></div>
+
+  <!-- PROCESS -->
+  <div class="hs-section reveal" style="margin-top:44px">
+    <div class="hs-sec-label"><div class="hs-sec-label-line"></div><span class="hs-sec-label-text">Process</span></div>
+    <h2 class="hs-h">Six months, two disciplines.</h2>
+    <p class="hs-prose">The project ran across two parallel tracks, UX Research and Design, and Data Science, that converged into a single product. 
+      I worked on both, initially joining UX before shifting significant effort to the data team when capacity gaps emerged. While I am primarily a UX/UI Designer, 
+      I have studied machine learning and data science for a few years. This project was a perfect example of why being technologically literate as a designer matters.</p>
+    <div class="hs-timeline">
+      <div class="hs-tl"><div class="hs-tl-month">Jan – Feb</div><div class="hs-tl-title">Discovery &amp; Research</div><div class="hs-tl-desc">In-person conversations at Amazon HQ, Zoom interviews, and Qualtrics surveys across IT engineers and end users. Mapped pain points and failure moments in the current IT support flow.</div></div>
+      <div class="hs-tl"><div class="hs-tl-month">Feb – Mar</div><div class="hs-tl-title">Model Foundation</div><div class="hs-tl-desc">Defined 12 device telemetry features. Wrote variable algorithms, ran initial analyses, and began training the random forest model on various thresholds discovered through data analysis.</div></div>
+      <div class="hs-tl"><div class="hs-tl-month">Mar – Apr</div><div class="hs-tl-title">UX Design</div><div class="hs-tl-desc">Translated research into a Slack-based interface. Designed the proactive DM alert pattern, anomaly surfacing, and four resolution routing paths.</div></div>
+      <div class="hs-tl"><div class="hs-tl-month">Apr – May</div><div class="hs-tl-title">Threshold Refinement</div><div class="hs-tl-desc">Defined and tested failure thresholds per feature. Iterated on the model to improve crash detection accuracy and cut down on unnecessary features.</div></div>
+      <div class="hs-tl"><div class="hs-tl-month">May – Jun</div><div class="hs-tl-title">Integration &amp; Pitch</div><div class="hs-tl-desc">Connecting the Slack frontend with the backend model. Preparing pitch presentation for Amazon stakeholders and capstone class. Working on user validation study.</div></div>
+      <div class="hs-tl"><div class="hs-tl-month">Ongoing Throughout</div><div class="hs-tl-title">Team Collaboration</div><div class="hs-tl-desc">Weekly scope syncs, cross-team observations, and shared research docs. Regular pitch presentations to the company partner and capstone instructors.</div></div>
+    </div>
+
+    <!-- tech stack ideation image -->
+    <h3 class="hs-h-sm">Tech stack ideation</h3>
+    <div style="max-width:320px;">
+      <img src="pics/ux/ideateTechStack.png" alt="Tech stack ideation diagram" class="hs-real-img" style="height:300px; object-fit:cover; object-position:top; max-height:300px; border-radius:var(--hs-r-lg);">
+    </div>
+    <p class="hs-caption" style="text-align:left; margin-left:0;">Early ideation -> mapping the technical architecture and tool choices</p>
+  </div>
+
+  <div class="hs-divider"></div>
+
+  <!-- USER RESEARCH -->
+  <div class="hs-section reveal" style="margin-top:44px">
+    <div class="hs-sec-label"><div class="hs-sec-label-line"></div><span class="hs-sec-label-text">User Research</span></div>
+    <h2 class="hs-h">Talking to both sides of the ticket.</h2>
+    <p class="hs-prose">We conducted research across two distinct user groups: <strong>IT Support Engineers</strong> who triage and resolve issues, and <strong>end users</strong> (employees) who experience device problems. Understanding both perspectives was critical to designing a system that serves each without adding friction to either.</p>
+    <div class="hs-research-grid">
+      <div class="hs-rcard"><div class="hs-rcard-icon">🗣️</div><div class="hs-rcard-title">In-person conversations</div><div class="hs-rcard-desc">Informal sessions at Amazon HQ that revealed how IT support actually gets done day-to-day, much of which wasn't reflected in the official ticket workflow.</div></div>
+      <div class="hs-rcard"><div class="hs-rcard-icon">📹</div><div class="hs-rcard-title">Zoom interviews</div><div class="hs-rcard-desc">Structured interviews with IT engineers and employees, focused on describing specific crash incidents like timeline, symptoms, what they did, what they wished they'd known.</div></div>
+      <div class="hs-rcard"><div class="hs-rcard-icon">📋</div><div class="hs-rcard-title">Qualtrics surveys</div><div class="hs-rcard-desc">Comprehensive quantitative surveys measuring issue frequency, time lost per incident, familiarity with self-resolution options, and satisfaction with existing IT support.</div></div>
+      <div class="hs-rcard"><div class="hs-rcard-icon">🔁</div><div class="hs-rcard-title">Cross-team synthesis</div><div class="hs-rcard-desc">Research findings were shared across UX and data teams simultaneously. Data insights regularly reshaped which telemetry features the model represented, and vice versa.</div></div>
+    </div>
+
+    <h3 class="hs-h-sm">Research in the field</h3>
+    <div class="hs-anno-wrap">
+      <div class="hs-anno-label">Research documentation &amp; synthesis</div>
+      <img src="pics/ux/userResearch.png" alt="User research session" class="hs-real-img" style="max-height:480px; object-fit:cover; object-position:top;">
+    </div>
+
+    <h3 class="hs-h-sm">User journey mapping</h3>
+    <div class="hs-anno-wrap">
+      <div class="hs-anno-label">User story map</div>
+      <img src="pics/ux/userStory.png" alt="User story map" class="hs-real-img" style="max-height:600px; object-fit:cover; object-position:top;">
+    </div>
+    <div class="hs-grid-2" style="margin-top:16px">
+      <figure>
+        <img src="pics/ux/userPersona1.png" alt="User persona — IT Engineer" style="height:280px; object-fit:cover; object-position:top;">
+        <figcaption>Persona -> IT Support Engineer</figcaption>
+      </figure>
+      <figure>
+        <img src="pics/ux/userPersona2.png" alt="User persona — End User Employee" style="height:280px; object-fit:cover; object-position:top;">
+        <figcaption>Persona -> Amazon Employee (end user)</figcaption>
+      </figure>
+    </div>
+
+    <h3 class="hs-h-sm">Sample interview questions</h3>
+    <p class="hs-prose">A selection of questions asked during both IT engineer and end-user interview sessions.</p>
+    <div class="hs-qs">
+      <div class="hs-q"><div class="hs-q-mark">&ldquo;</div><div class="hs-q-text">Walk me through the last time your device crashed or slowed significantly. What did you notice first?</div></div>
+      <div class="hs-q"><div class="hs-q-mark">&ldquo;</div><div class="hs-q-text">How did you decide who to contact for help, and what process, if any, went into your decision?</div></div>
+      <div class="hs-q"><div class="hs-q-mark">&ldquo;</div><div class="hs-q-text">If you received an alert that your device was about to have a problem, what information would you need to feel confident taking action on your own?</div></div>
+      <div class="hs-q"><div class="hs-q-mark">&ldquo;</div><div class="hs-q-text"><em>[IT Engineers]</em> What is the most common piece of information missing when an employee submits a ticket about a device issue?</div></div>
+      <div class="hs-q"><div class="hs-q-mark">&ldquo;</div><div class="hs-q-text"><em>[IT Engineers]</em> If you could see a device's telemetry history before a ticket was filed, how would that change your resolution process?</div></div>
+    </div>
+  </div>
+
+  <div class="hs-divider"></div>
+
+  <!-- THE PRODUCT -->
+  <div class="hs-section reveal" style="margin-top:44px">
+    <div class="hs-sec-label"><div class="hs-sec-label-line"></div><span class="hs-sec-label-text">The Product</span></div>
+    <h2 class="hs-h">Proactive alerts, right where work happens.</h2>
+    <p class="hs-prose">HuskySupport lives entirely inside Slack, which is the tool Amazonians already use all day. When the model detects anomalous telemetry patterns 
+      that exceed failure thresholds, it sends a proactive DM to the affected employee with a plain-language summary of detected anomalies and a guided resolution path. 
+      If the employee is able to follow the resolution steps to a solution, they could avoid tickets, having to go to the IT office, and spending a lot of time troubleshooting.</p>
+    <p class="hs-prose">The interface was designed with non-technical users as the primary audience. The resolution routing, self-fix, backup &amp; replace, online support, or in-person support, is determined by
+      the model's output and issue severity, so employees always know their next step.</p>
+
+    <h3 class="hs-h-sm">Early iteration</h3>
+    <div class="hs-anno-wrap">
+      <div class="hs-anno-label">Initial design exploration</div>
+      <img src="pics/ux/earlyIteration.png" alt="Early design iteration" class="hs-real-img" style="max-height:560px; object-fit:cover; object-position:top;">
+    </div>
+
+    <div class="hs-decision">
+      <div class="hs-decision-icon">💡</div>
+      <div>
+        <div class="hs-decision-title">Design Decision: Removing Confidence Scores</div>
+        <div class="hs-decision-text">An early version surfaced <strong>confidence scores</strong> alongside each flagged anomaly. Through research, we found that scores 
+          introduced anxiety rather than clarity. Non-technical users didn't know what 87% meant or whether to act on it. 
+          We <strong>removed confidence scores entirely</strong> and instead surface all detected anomalies in more standard language, 
+          letting the resolution routing guide the user's response. This is one of <strong> my key impacts </strong> on the final product.</div>
+      </div>
+    </div>
+
+    <h3 class="hs-h-sm">Final design frames &amp; screen mock</h3>
+    <div class="hs-grid-2" style="align-items:start;">
+      <figure>
+        <div class="hs-anno-label">Shipped Slack interface</div>
+        <img src="pics/ux/finalFrames.png" alt="Final design frames" style="width:100%; height:480px; object-fit:cover; object-position:top; border-radius:var(--hs-r-lg); box-shadow:var(--hs-shadow-md); display:block;">
+        <figcaption>Final Slack interface: Proactive DM alert, anomaly list, and resolution routing</figcaption>
+      </figure>
+      <figure>
+        <div class="hs-anno-label">Product in context</div>
+        <img src="pics/ux/screenMock.png" alt="Screen mockup of HuskySupport in Slack" style="width:100%; height:480px; object-fit:contain; background:var(--hs-paper2); border-radius:var(--hs-r-lg); box-shadow:var(--hs-shadow-md); display:block;">
+        <figcaption>HuskySupport resolution process as seen by an Amazon employee in Slack</figcaption>
+      </figure>
+    </div>
+
+    <h3 class="hs-h-sm">Final presentation</h3>
+    <div class="hs-anno-wrap">
+      <div class="hs-anno-label">Figma deck — embedded</div>
+      <div style="border-radius: var(--hs-r-lg); overflow: hidden; box-shadow: var(--hs-shadow-md); margin: 12px 0;">
+        <iframe style="border: none; display: block;" width="100%" height="480" src="https://embed.figma.com/deck/cNMl8dITqbOc5gRwJRYJMM/Final-Presentation?node-id=75-2025&p=f&viewport=163%2C255%2C0.12&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1&embed-host=share" allowfullscreen></iframe>
+      </div>
+    </div>
+    <p class="hs-caption">Final capstone presentation. View full deck in Figma ↗</p>
+
+    <h3 class="hs-h-sm">Final poster</h3>
+    <img src="pics/ux/finalPoster.png" alt="HuskySupport final capstone poster" class="hs-real-img" style="border-radius: var(--hs-r-lg); box-shadow: var(--hs-shadow-md);">
+    <p class="hs-caption">Capstone presentation poster: Shipped version</p>
+  </div>
+
+  <div class="hs-divider"></div>
+
+  <!-- TECHNOLOGY -->
+  <div class="hs-section reveal" style="margin-top:44px">
+    <div class="hs-sec-label"><div class="hs-sec-label-line"></div><span class="hs-sec-label-text">Technology</span></div>
+    <h2 class="hs-h">What's under the hood.</h2>
+    <div class="hs-stack">
+      <div class="hs-scard"><div class="hs-scard-icon">🐍</div><div class="hs-scard-name">Python (VSCode)</div><div class="hs-scard-desc">Primary language for all model development. Variable algorithm implementation, threshold testing, and the random forest training pipeline were all written and iterated in Python.</div></div>
+      <div class="hs-scard"><div class="hs-scard-icon">☁️</div><div class="hs-scard-name">AWS with SageMaker</div><div class="hs-scard-desc">Cloud infrastructure for backend processing. Houses the model serving layer and telemetry data pipeline that feeds device statistics into the prediction system in real time.</div></div>
+      <div class="hs-scard"><div class="hs-scard-icon">🤖</div><div class="hs-scard-name">Claude (Anthropic)</div><div class="hs-scard-desc">Used to help quickly iterate on the frontend layer, translating model outputs into human-readable alerts that non-technical employees can understand and act on.</div></div>
+      <div class="hs-scard"><div class="hs-scard-icon">🌲</div><div class="hs-scard-name">Random Forest Model</div><div class="hs-scard-desc">Trained on various threshold levels of telemetry data across 12 device features. Detects anomalies and predicts probability of upcoming failure for surfacing in the UI.</div></div>
+      <div class="hs-scard"><div class="hs-scard-icon">💬</div><div class="hs-scard-name">Slack API</div><div class="hs-scard-desc">Frontend delivery layer. Proactive DMs are sent via Slack's API when anomalies are detected. Users can respond and route to support without ever leaving Slack.</div></div>
+      <div class="hs-scard"><div class="hs-scard-icon">📊</div><div class="hs-scard-name">Qualtrics</div><div class="hs-scard-desc">Used for both user research and user validation through topics like measuring issue frequency, time lost to crashes, satisfaction with existing IT support, and self-resolution familiarity.</div></div>
+    </div>
+
+    <h3 class="hs-h-sm">Model &amp; data science</h3>
+    <p class="hs-prose">The random forest model was trained on telemetry data from over 300,000 devices. Below are key visualizations from the data science work including the model itself, feature importance, variable graphs, and backend architecture.</p>
+
+    <div class="hs-grid-2">
+      <figure>
+        <img src="pics/ux/randomForest.png" alt="Random forest model visualization" style="height:260px; object-fit:contain; background:var(--hs-paper2); padding:12px; border-radius:var(--hs-r-lg);">
+        <figcaption>Random forest model structure</figcaption>
+      </figure>
+      <figure>
+        <img src="pics/ux/featureImportance.png" alt="Feature importance chart" style="height:260px; object-fit:contain; background:var(--hs-paper2); padding:12px; border-radius:var(--hs-r-lg);">
+        <figcaption>Feature importance ranking with 12 telemetry variables</figcaption>
+      </figure>
+    </div>
+
+
+    <h3 class="hs-h-sm">Why these features?</h3>
+    <p class="hs-prose">Each of the six telemetry features was selected based on its measurable correlation with device failure events in the dataset, 
+      and its interpretability to a non-technical audience. Features that did not survive a Variable Inflation Analysis, were too similar to other features, or were static/unchangeable were deprioritized.</p>
+    <div class="hs-goals" style="max-width:100%;">
+      <div class="hs-goal">
+        <div class="hs-goal-n" style="font-size:1rem;opacity:.6;">💾</div>
+        <div class="hs-goal-text"><strong>Memory Utilization</strong> -> Sustained high memory usage (above ~78%) was one of the strongest predictors of imminent crash. It's also something employees can act on directly by closing applications, restarting their laptops, or requesting a RAM upgrade.</div>
+      </div>
+      <div class="hs-goal">
+        <div class="hs-goal-n" style="font-size:1rem;opacity:.6;">🌡️</div>
+        <div class="hs-goal-text"><strong>P90 CPU Temp</strong> -> Sustained elevated temperatures above 88 degrees Celsius caused more app crashes and indicated cooling system issues or high-load conditions. Thermal anomalies often preceded hard failures, but also indicated storage issues and potential CPU throttling.</div>
+      </div>
+      <div class="hs-goal">
+        <div class="hs-goal-n" style="font-size:1rem;opacity:.6;">🔋</div>
+        <div class="hs-goal-text"><strong>Battery cycles</strong> -> Battery health degrades predictably with cycle count. Devices approaching or exceeding manufacturer cycle limits (93% of its 4-year lifespan at Amazon) showed meaningfully higher failure rates, and this is a metric ITSE employees can immediately understand and replace devices accordingly.</div>
+      </div>
+      <div class="hs-goal">
+        <div class="hs-goal-n" style="font-size:1rem;opacity:.6;">🖥️</div>
+        <div class="hs-goal-text"><strong>Uptime Days</strong> -> Devices with an uptime of over 27 days were more prone to crashes, which is solved with a simple restart.</div>
+      </div>
+      <div class="hs-goal">
+        <div class="hs-goal-n" style="font-size:1rem;opacity:.6;">💿</div>
+        <div class="hs-goal-text"><strong>Max CPU Usage</strong> -> CPU usage over 90% resulted in more app crashes. It's a straightforward metric with a clear resolution path: restart, close applications, or seek support if you are not able to delete/exit certain applications.</div>
+      </div>
+      <div class="hs-goal">
+        <div class="hs-goal-n" style="font-size:1rem;opacity:.6;">⏱️</div>
+        <div class="hs-goal-text"><strong>Processor Time</strong> -> An increase in processor time (67%) relative to a device's own baseline was a reliable and visible early signal of underlying storage or software degradation.</div>
+      </div>
+    </div>
+
+    <div class="hs-anno-wrap" style="margin-top:8px">
+      <div class="hs-anno-label">Variable graphs</div>
+      <img src="pics/ux/variableGraphs.png" alt="Variable distribution graphs" class="hs-real-img" style="object-fit:contain; background:var(--hs-paper2); padding:16px; max-height:520px;">
+    </div>
+    <p class="hs-caption">Telemetry feature distributions used to define failure thresholds.</p>
+    <p class="hs-prose" style="margin-top:12px;">We dec.</p>
+
+
+    <div class="hs-anno-wrap">
+      <div class="hs-anno-label">Model weights &amp; code</div>
+      <img src="pics/ux/RFModelWeightsCode.png" alt="Random forest model weights and code" class="hs-real-img medium" style="object-fit:contain; background:#1e1e2e; padding:16px; border-radius:var(--hs-r-lg);">
+    </div>
+    <p class="hs-caption">Model implementation: weights and core Python code</p>
+
+    <div class="hs-anno-wrap">
+      <div class="hs-anno-label">Backend architecture</div>
+      <img src="pics/ux/backend.png" alt="Backend system architecture diagram" class="hs-real-img medium" style="object-fit:contain; background:var(--hs-paper2); padding:16px;">
+    </div>
+    <p class="hs-caption">AWS backend architecture: telemetry pipeline to Slack delivery</p>
+  </div>
+
+  <div class="hs-divider"></div>
+
+  <!-- MY ROLE -->
+  <div class="hs-section reveal" style="margin-top:44px">
+    <div class="hs-sec-label"><div class="hs-sec-label-line"></div><span class="hs-sec-label-text">My Role &amp; Contributions</span></div>
+    <h2 class="hs-h">Two teams, one project.</h2>
+    <p class="hs-prose">I started on the UX research and design team, but about halfway through the project the data team needed more capacity.
+       Because I have a background in data science, I shifted significant effort there without fully stepping back from UX. At peak, I was averaging
+        <strong>35 hours per week</strong> on this project alone. I worked as a liason between the teams, attending both team meetings.</p>
+    <div class="hs-roles">
+      <div class="hs-role">
+        <div class="hs-role-badge hs-badge-ux">🎨 UX Team</div>
+        <div class="hs-role-title">Research &amp; Design</div>
+        <ul class="hs-role-list">
+          <li>Supported and conducted user interviews with IT engineers and end users</li>
+          <li>Synthesized and summarized research findings across sessions</li>
+          <li>Helped write and design the Qualtrics research surveys</li>
+          <li>Translated research insights into design concepts and interface decisions</li>
+          <li>Contributed to the Slack chatbot frontend interface design</li>
+        </ul>
+      </div>
+      <div class="hs-role">
+        <div class="hs-role-badge hs-badge-data">📈 Data Team</div>
+        <div class="hs-role-title">Model &amp; Analysis</div>
+        <ul class="hs-role-list">
+          <li>Wrote algorithms for all 12 device feature variables</li>
+          <li>Tested variable implementations and debugged edge cases</li>
+          <li>Helped define and refine failure thresholds with my data science teammate</li>
+          <li>Performed analyses to evaluate model accuracy and coverage</li>
+          <li>Helped write the final random forest model implementation and research documentation</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 class="hs-h-sm">The team</h3>
+    <div class="hs-grid-2">
+      <figure>
+        <img src="pics/ux/teamPhoto.png" alt="Project team" style="height:240px;">
+        <figcaption>The HuskySupport team at Amazon HQ</figcaption>
+      </figure>
+      <figure>
+        <img src="pics/ux/teamPhoto2.png" alt="Team working session" style="height:240px;">
+        <figcaption>Team collaboration session</figcaption>
+      </figure>
+    </div>
+    <p class="hs-prose" style="margin-top:16px">Working across both teams gave me an unusually complete view of the product. Understanding exactly what the model could and couldn't surface made me a better designer, and understanding what the UX needed made me a better data scientist on this project.</p>
+  </div>
+
+  <div class="hs-divider"></div>
+
+  <!-- TEAM COLLABORATION -->
+  <div class="hs-section reveal" style="margin-top:44px">
+    <div class="hs-sec-label"><div class="hs-sec-label-line"></div><span class="hs-sec-label-text">Team Collaboration</span></div>
+    <h2 class="hs-h">How we worked together.</h2>
+    <p class="hs-prose">Five people, two disciplines, one product. Keeping the UX and data tracks aligned required constant collaboration with regular scope syncs 
+      that kept both sides from drifting in directions that would cause issues for the other's work.</p>
+    <div class="hs-list" style="margin-top:20px">
+      <div class="hs-item"><div class="hs-item-icon">📅</div><div class="hs-item-text"><strong>Weekly scope meetings</strong> -> We discussed the current state of the project, reviewed any new feature proposals against their impact on both tracks, and made explicit decisions about what to hold constant. This prevented late-stage scope creep that would have cost the timeline.</div></div>
+      <div class="hs-item"><div class="hs-item-icon">🎤</div><div class="hs-item-text"><strong>Pitch presentations</strong> -> The team collaborated on pitch decks presented to Amazon stakeholders and to our capstone class. These forced us to articulate the product's value clearly, and the feedback loops sharpened both our problem framing and our demo.</div></div>
+      <div class="hs-item"><div class="hs-item-icon">🔄</div><div class="hs-item-text"><strong>Cross-track knowledge sharing</strong> -> User research findings were regularly shared with the data team, and model output characteristics regularly informed UX decisions. We compared notes and redefined assumptions frequently, so the different tracks were never fully siloed.</div></div>
+    </div>
+  </div>
+
+  <div class="hs-divider"></div>
+
+  <!-- TAKEAWAYS -->
+  <div class="hs-section reveal" style="margin-top:44px">
+    <div class="hs-sec-label"><div class="hs-sec-label-line"></div><span class="hs-sec-label-text">Takeaways</span></div>
+    <h2 class="hs-h">What this taught me.</h2>
+    <div class="hs-list">
+      <div class="hs-item"><div class="hs-item-icon">🎯</div><div class="hs-item-text"><strong>Data without design is useless.</strong> The model's output will be entirely meaningless if it isn't conveyed in a way every employee can act on. A 92% accurate prediction 
+        that confuses a non-technical user changes nothing. UX matters.</div></div>
+      <div class="hs-item"><div class="hs-item-icon">📝</div><div class="hs-item-text"><strong>Document your decisions, even the imperfect ones.</strong> Even when the model's accuracy isn't where we want it yet, 
+        it's critical to justify why we made the development choices we did so that any team who picks this up after us can understand the reasoning and build forward rather than from scratch.</div></div>
+      <div class="hs-item"><div class="hs-item-icon">🚧</div><div class="hs-item-text"><strong>Late scope changes are expensive for the whole team.</strong> Changing scope near the end of the project 
+        can create disruptions across design, model, and backend. Locking scope early is a practice I'll carry forward.</div></div>
+    </div>
+  </div>
+
+  <div class="hs-divider"></div>
+
+</div><!-- /hs-body -->
+</main>
+
+<footer class="site-footer">
+  <div class="footer-mark">Thea ✦ Creative Portfolio</div>
+  <ul class="footer-links">
+    <li><a href="uxui.html">UX/UI</a></li>
+    <li><a href="games.html">Games</a></li>
+    <li><a href="art.html">Art</a></li>
+    <li><a href="about.html">About</a></li>
+  </ul>
+</footer>
+
+<script src="nav.js"></script>
+</body>
+</html>

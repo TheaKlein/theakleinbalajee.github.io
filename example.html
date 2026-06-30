@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sidepath — 25 UI Frames</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400;1,500&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --matcha:#5c7a52;--matcha-mid:#7a9e70;--matcha-lt:#a8c49e;
+  --pine:#2d4a2a;--pine-deep:#1a2e18;--moss:#3d5c35;--sage:#8faa86;
+  --ivory:#f8f5ee;--ivory2:#f0ece2;--cream:#e8e2d4;
+  --bark:#8b7355;--clay:#b0856a;
+  --ink:#1f2318;--ink2:#4a5240;--ink3:#8a9180;
+  --f-display:'Lora',Georgia,serif;--f-body:'DM Sans',system-ui,sans-serif;
+}
+html{scroll-behavior:smooth}
+body{background:#e4ded4;font-family:var(--f-body);color:var(--ink);-webkit-font-smoothing:antialiased}
+
+/* ── HEADER ── */
+.header{padding:72px 8vw 56px;position:relative;overflow:hidden}
+.header::before{content:'';position:absolute;top:-100px;right:-80px;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,rgba(92,122,82,.12) 0%,transparent 65%);pointer-events:none}
+.header-label{font-size:10px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--matcha);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.header-label::before{content:'';display:block;width:24px;height:1.5px;background:var(--matcha)}
+.header h1{font-family:var(--f-display);font-style:italic;font-size:clamp(2.4rem,5vw,4rem);line-height:1.06;color:var(--ink);max-width:600px;margin-bottom:16px}
+.header h1 em{color:var(--matcha);font-style:normal}
+.header-sub{font-size:.92rem;color:var(--ink2);line-height:1.72;max-width:520px;opacity:.8}
+.header-meta{display:flex;gap:28px;margin-top:24px}
+.hm{display:flex;flex-direction:column;gap:3px}
+.hm-n{font-family:var(--f-display);font-style:italic;font-size:1.6rem;color:var(--pine);line-height:1}
+.hm-l{font-size:9px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);opacity:.6}
+
+/* ── GRID ── */
+.fg{display:grid;grid-template-columns:repeat(5,1fr);gap:36px 24px;padding:0 8vw 96px}
+
+/* ── PHONE ── */
+.fw{display:flex;flex-direction:column;gap:13px;opacity:0;animation:fadeUp .55s ease both}
+.fw:nth-child(1){animation-delay:0.04s}.fw:nth-child(2){animation-delay:0.08s}.fw:nth-child(3){animation-delay:0.12s}.fw:nth-child(4){animation-delay:0.16s}.fw:nth-child(5){animation-delay:0.20s}.fw:nth-child(6){animation-delay:0.24s}.fw:nth-child(7){animation-delay:0.28s}.fw:nth-child(8){animation-delay:0.32s}.fw:nth-child(9){animation-delay:0.36s}.fw:nth-child(10){animation-delay:0.40s}.fw:nth-child(11){animation-delay:0.44s}.fw:nth-child(12){animation-delay:0.48s}.fw:nth-child(13){animation-delay:0.52s}.fw:nth-child(14){animation-delay:0.56s}.fw:nth-child(15){animation-delay:0.60s}.fw:nth-child(16){animation-delay:0.64s}.fw:nth-child(17){animation-delay:0.68s}.fw:nth-child(18){animation-delay:0.72s}.fw:nth-child(19){animation-delay:0.76s}.fw:nth-child(20){animation-delay:0.80s}.fw:nth-child(21){animation-delay:0.84s}.fw:nth-child(22){animation-delay:0.88s}.fw:nth-child(23){animation-delay:0.92s}.fw:nth-child(24){animation-delay:0.96s}.fw:nth-child(25){animation-delay:1.00s}
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+.ph{width:100%;aspect-ratio:9/19.5;background:#15161a;border-radius:34px;padding:7px;box-shadow:0 28px 56px rgba(0,0,0,.25),0 4px 14px rgba(0,0,0,.16),inset 0 0 0 1px rgba(255,255,255,.09);position:relative;transition:transform .38s cubic-bezier(.34,1.56,.64,1),box-shadow .3s ease}
+.ph:hover{transform:translateY(-8px) scale(1.02);box-shadow:0 44px 72px rgba(0,0,0,.3),0 6px 20px rgba(0,0,0,.18),inset 0 0 0 1px rgba(255,255,255,.11)}
+.psc{width:100%;height:100%;border-radius:27px;overflow:hidden;position:relative}
+.pno{position:absolute;top:0;left:50%;transform:translateX(-50%);width:36%;height:19px;background:#15161a;border-radius:0 0 11px 11px;z-index:20}
+.pbt{position:absolute;right:-3px;top:22%;width:3px;height:10%;background:#2a2a2a;border-radius:0 2px 2px 0}
+.pvu{position:absolute;left:-3px;top:18%;width:3px;height:8%;background:#2a2a2a;border-radius:2px 0 0 2px}
+.pvd{position:absolute;left:-3px;top:28%;width:3px;height:8%;background:#2a2a2a;border-radius:2px 0 0 2px}
+.fnu{font-family:var(--f-display);font-style:italic;font-size:.72rem;color:var(--matcha);opacity:.55;text-align:center;margin-bottom:1px}
+.flb{font-size:10.5px;font-weight:500;color:var(--ink3);text-align:center;letter-spacing:.03em;line-height:1.4}
+
+/* ── STATUS BAR ── */
+.sbar{display:flex;justify-content:space-between;align-items:center;padding:22px 16px 7px;position:relative;z-index:10;flex-shrink:0}
+
+@media(max-width:1300px){.fg{grid-template-columns:repeat(4,1fr)}}
+@media(max-width:1000px){.fg{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:700px){.fg{grid-template-columns:repeat(2,1fr)}.header,.fg{padding-left:6vw;padding-right:6vw}}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="header-label">Sidepath &middot; UI Frames</div>
+  <h1>25 screens.<br><em>One forest.</em></h1>
+  <p class="header-sub">High-fidelity phone frames across the full Sidepath experience &mdash; from first launch through deep exploration of a professional network built on curiosity, not cold outreach.</p>
+  <div class="header-meta">
+    <div class="hm"><div class="hm-n">25</div><div class="hm-l">Screens</div></div>
+    <div class="hm"><div class="hm-n">4</div><div class="hm-l">Onboarding flows</div></div>
+    <div class="hm"><div class="hm-n">3</div><div class="hm-l">Forest views</div></div>
+  </div>
+</div>
+<div class="fg">
+  <div class="fw">
+    <div class="ph">
+      <div class="psc"><div style="width:100%;height:100%;background:linear-gradient(165deg,#1a2e18 0%,#0d1a0b 55%,#0a1408 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden">
+  <div style="position:absolute;top:-60px;left:50%;transform:translateX(-50%);width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(92,122,82,.28) 0%,transparent 65%)"></div>
+  <div style="position:absolute;inset:0;background-image:radial-gradient(circle,rgba(92,122,82,.07) 1px,transparent 1px);background-size:18px 18px"></div>
+  <div style="position:absolute;bottom:0;left:0;right:0;display:flex;justify-content:space-around;align-items:flex-end;padding:0 6px;opacity:.14">
+    <span style="font-size:18px;line-height:1">🌲</span><span style="font-size:27px;line-height:1">🌲</span><span style="font-size:20px;line-height:1">🌲</span><span style="font-size:32px;line-height:1">🌲</span><span style="font-size:22px;line-height:1">🌲</span><span style="font-size:15px;line-height:1">🌲</span>
+  </div>
+  <div style="position:relative;z-index:3;display:flex;flex-direction:column;align-items:center;gap:11px">
+    <div style="width:52px;height:52px;border-radius:16px;background:linear-gradient(145deg,#2d4a2a,#1a2e18);border:1px solid rgba(92,122,82,.35);display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(0,0,0,.4)">
+      <span style="font-size:26px">🌲</span>
+    </div>
+    <div style="font-family:'Lora',Georgia,serif;font-style:italic;font-size:1.5rem;color:rgba(248,245,238,.95);letter-spacing:-.01em">Sidepath</div>
+    <div style="width:28px;height:1px;background:rgba(168,196,158,.3)"></div>
+    <div style="font-size:7px;color:rgba(168,196,158,.5);letter-spacing:.14em;text-transform:uppercase">a living forest of people</div>
+  </div>
+  <div style="position:absolute;bottom:28px;left:50%;transform:translateX(-50%)">
+    <div style="width:30px;height:3px;background:rgba(248,245,238,.25);border-radius:2px"></div>
+  </div>
+</div></div>
+      <div class="pno"></div>
+      <div class="pbt"></div>
+      <div class="pvu"></div>
+      <div class="pvd"></div>
+    </div>
+    <div class="fnu">01</div>
+    <div class="flb">Splash screen</div>
+  </div>
+  <div class="fw">
+    <div class="ph">
+      <div class="psc"><div style="width:100%;height:100%;background:#f8f5ee;display:flex;flex-direction:column">
+  <div style="flex:1;background:linear-gradient(160deg,#d4e6ce 0%,#b8d0b4 100%);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden">
+    <div style="position:absolute;top:-50px;right:-50px;width:140px;height:140px;border-radius:50%;background:rgba(92,122,82,.14)"></div>
+    <div style="position:absolute;bottom:-30px;left:-20px;width:100px;height:100px;border-radius:50%;background:rgba(45,74,42,.08)"></div>
+    <div style="position:relative;z-index:2">
+      <svg width="110" height="90" viewBox="0 0 110 90" fill="none">
+        <g opacity="0.25"><line x1="55" y1="45" x2="14" y2="72" stroke="#5c7a52" stroke-width="0.8"/><line x1="55" y1="45" x2="96" y2="68" stroke="#5c7a52" stroke-width="0.8"/><circle cx="14" cy="72" r="7" fill="#2d4a2a"/><text x="14" y="76" text-anchor="middle" font-size="8" fill="rgba(200,230,190,.5)">🌲</text><circle cx="96" cy="68" r="7" fill="#2d4a2a"/><text x="96" y="72" text-anchor="middle" font-size="8" fill="rgba(200,230,190,.5)">🌲</text></g>
+        <line x1="55" y1="45" x2="30" y2="60" stroke="#7a9e70" stroke-width="1.4"/><line x1="55" y1="45" x2="80" y2="58" stroke="#7a9e70" stroke-width="1.4"/>
+        <line x1="55" y1="45" x2="34" y2="28" stroke="#7a9e70" stroke-width="1.4"/><line x1="55" y1="45" x2="76" y2="26" stroke="#7a9e70" stroke-width="1.4"/>
+        <circle cx="30" cy="60" r="9" fill="#5c7a52" stroke="rgba(168,196,158,.4)" stroke-width="1"/><text x="30" y="64" text-anchor="middle" font-size="9" fill="white">🌲</text>
+        <circle cx="80" cy="58" r="9" fill="#5c7a52" stroke="rgba(168,196,158,.4)" stroke-width="1"/><text x="80" y="62" text-anchor="middle" font-size="9" fill="white">🌲</text>
+        <circle cx="34" cy="28" r="9" fill="#5c7a52" stroke="rgba(168,196,158,.4)" stroke-width="1"/><text x="34" y="32" text-anchor="middle" font-size="9" fill="white">🌲</text>
+        <circle cx="76" cy="26" r="9" fill="#5c7a52" stroke="rgba(168,196,158,.4)" stroke-width="1"/><text x="76" y="30" text-anchor="middle" font-size="9" fill="white">🌲</text>
+        <circle cx="55" cy="45" r="15" fill="#2d4a2a" stroke="#7a9e70" stroke-width="1.8"/>
+        <circle cx="55" cy="45" r="21" fill="none" stroke="rgba(122,158,126,.2)" stroke-width="1" stroke-dasharray="3 3"/>
+        <text x="55" y="50" text-anchor="middle" font-size="13" fill="white">🌲</text>
+      </svg>
+    </div>
+  </div>
+  <div style="padding:22px 18px 20px">
+    <div style="font-family:'Lora',Georgia,serif;font-style:italic;font-size:1rem;color:#1f2318;margin-bottom:6px;line-height:1.2">Grow your forest,<br>not your following.</div>
+    <div style="font-size:8.5px;color:#4a5240;line-height:1.6;margin-bottom:16px">Professional connections built on curiosity, not cold outreach.</div>
+    <div style="background:#2d4a2a;color:white;border-radius:11px;padding:10px;text-align:center;font-size:9px;font-weight:600;letter-spacing:.06em;margin-bottom:8px;box-shadow:0 4px 12px rgba(45,74,42,.3)">Get started</div>
+    <div style="background:transparent;color:#4a5240;border-radius:11px;padding:8px;text-align:center;font-size:8.5px;border:1px solid #e8e2d4">I already have an account</div>
+  </div>
+</div></div>
+      <div class="pno"></div>
+      <div class="pbt"></div>
+      <div class="pvu"></div>
+      <div class="pvd"></div>
+    </div>
+    <div class="fnu">02</div>
+    <div class="flb">Welcome — onboarding</div>
+  </div>
+  <div class="fw">
+    <div class="ph">
+      <div class="psc"><div style="width:100%;height:100%;background:#f8f5ee;display:flex;flex-direction:column"><div class="sbar" style="color:var(--ink)"><span style="font-size:8.5px;font-weight:600">9:41</span><div style="display:flex;gap:3px;align-items:center"><div style="width:4px;height:4px;border-radius:50%;background:rgba(31,35,24,.4)"></div><div style="width:4px;height:4px;border-radius:50%;background:rgba(31,35,24,.4)"></div><div style="width:4px;height:4px;border-radius:50%;background:rgba(31,35,24,.4)"></div></div></div><div style="height:2.5px;background:#e8e2d4;margin:0 14px 10px"><div style="height:100%;width:33%;background:#5c7a52;border-radius:2px"></div></div>
+<div style="flex:1;padding:0 14px;overflow:hidden">
+  <div style="font-family:'Lora',Georgia,serif;font-style:italic;font-size:.88rem;color:#1f2318;margin-bottom:4px;line-height:1.25">What are you curious<br>about right now?</div>
+  <div style="font-size:7.5px;color:#8a9180;margin-bottom:11px">Pick as many as feel true. You can change these anytime.</div>
+  <div style="display:flex;flex-wrap:wrap;gap:5px">
+    <div style="font-size:8px;padding:4px 10px;border-radius:13px;background:#5c7a52;color:white;border:1px solid #5c7a52">🌿 Biomimicry</div>
+    <div style="font-size:8px;padding:4px 10px;border-radius:13px;background:#5c7a52;color:white;border:1px solid #5c7a52">🎨 Design systems</div>
+    <div style="font-size:8px;padding:4px 10px;border-radius:13px;background:white;color:#4a5240;border:1px solid rgba(92,122,82,.22)">🌊 Ocean science</div>
+    <div style="font-size:8px;padding:4px 10px;border-radius:13px;background:#5c7a52;color:white;border:1px solid #5c7a52">🔬 Research methods</div>
+    <div style="font-size:8px;padding:4px 10px;border-radius:13px;background:white;color:#4a5240;border:1px solid rgba(92,122,82,.22)">🏕️ Slow travel</div>
+    <div style="font-size:8px;padding:4px 10px;border-radius:13px;background:white;color:#4a5240;border:1px solid rgba(92,122,82,.22)">🎵 Music production</div>
+    <div style="font-size:8px;padding:4px 10px;border-radius:13px;background:#5c7a52;color:white;border:1px solid #5c7a52">📖 Non-fiction</div>
+    <div style="font-size:8px;padding:4px 10px;border-radius:13px;background:white;color:#4a5240;border:1px solid rgba(92,122,82,.22)">🌱 Regenerative systems</div>
+    <div style="font-size:8px;padding:4px 10px;border-radius:13px;background:white;color:#4a5240;border:1px solid rgba(92,122,82,.22)">🧠 Cognitive science</div>
+    <div style="font-size:8px;padding:4px 10px;border-radius:13px;background:#5c7a52;color:white;border:1px solid #5c7a52">🏗️ Architecture</div>
+    <div style="font-size:8px;padding:4px 10px;border-radius:13px;background:white;color:#4a5240;border:1px solid rgba(92,122,82,.22)">🎮 Indie games</div>
+  </div>
+</div>
+<div style="padding:10px 14px 12px">
+  <div style="background:#2d4a2a;color:white;border-radius:11px;padding:10px;text-align:center;font-size:9px;font-weight:600;letter-spacing:.05em;box-shadow:0 4px 12px rgba(45,74,42,.25)">Continue — 5 selected →</div>
+</div></div></div>
+      <div class="pno"></div>
+      <div class="pbt"></div>
+      <div class="pvu"></div>
+      <div class="pvd"></div>
+    </div>
+    <div class="fnu">03</div>
+    <div class="flb">Interest selection</div>
+  </div>
+  <div class="fw">
+    <div class="ph">
+      <div class="psc"><div style="width:100%;height:100%;background:#f8f5ee;display:flex;flex-direction:column"><div class="sbar" style="color:var(--ink)"><span style="font-size:8.5px;font-weight:600">9:41</span><div style="display:flex;gap:3px;align-items:center"><div style="width:4px;height:4px;border-radius:50%;background:rgba(31,35,24,.4)"></div><div style="width:4px;height:4px;border-radius:50%;background:rgba(31,35,24,.4)"></div><div style="width:4px;height:4px;border-radius:50%;background:rgba(31,35,24,.4)"></div></div></div><div style="height:2.5px;background:#e8e2d4;margin:0 14px 10px"><div style="height:100%;width:66%;background:#5c7a52;border-radius:2px"></div></div>
+<div style="flex:1;padding:0 14px;overflow:hidden">
+  <div style="font-family:'Lora',Georgia,serif;font-style:italic;font-size:.88rem;color:#1f2318;margin-bottom:12px;line-height:1.25">Tell us a little<br>about yourself.</div>
+  <div style="font-size:7px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#8a9180;margin-bottom:4px">Name</div>
+  <div style="background:white;border:1.5px solid #5c7a52;border-radius:9px;padding:8px 10px;font-size:9px;color:#1f2318;margin-bottom:9px;box-shadow:0 0 0 3px rgba(92,122,82,.08)">Ren Okamoto</div>
+  <div style="font-size:7px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#8a9180;margin-bottom:4px">What you do</div>
+  <div style="background:white;border:1px solid #e8e2d4;border-radius:9px;padding:8px 10px;font-size:9px;color:#4a5240;margin-bottom:9px">Systems Designer · Tokyo</div>
+  <div style="font-size:7px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#8a9180;margin-bottom:4px">Currently exploring</div>
+  <div style="background:rgba(92,122,82,.07);border:1px solid rgba(92,122,82,.2);border-radius:9px;padding:8px 10px;font-size:8.5px;color:#4a5240;font-style:italic;font-family:'Lora',Georgia,serif;line-height:1.55;min-height:44px">How mycelium communication patterns might inform distributed system architecture…</div>
+  <div style="font-size:6.5px;color:#8a9180;margin-top:5px">This is the first thing people see on your profile. Update anytime.</div>
+</div>
+<div style="padding:8px 14px 12px">
+  <div style="background:#2d4a2a;color:white;border-radius:11px;padding:10px;text-align:center;font-size:9px;font-weight:600;letter-spacing:.05em;box-shadow:0 4px 12px rgba(45,74,42,.25)">Almost there →</div>
+</div></div></div>
+      <div class="pno"></div>
+      <div class="pbt"></div>
+      <div class="pvu"></div>
+      <div class="pvd"></div>
+    </div>
+    <div class="fnu">04</div>
+    <div class="flb">Profile setup</div>
+  </div>
+  <div class="fw">
+    <div class="ph">
+      <div class="psc"><div style="width:100%;height:100%;background:#f8f5ee;display:flex;flex-direction:column"><div class="sbar" style="color:var(--ink)"><span style="font-size:8.5px;font-weight:600">9:41</span><div style="display:flex;gap:3px;align-items:center"><div style="width:4px;height:4px;border-radius:50%;background:rgba(31,35,24,.4)"></div><div style="width:4px;height:4px;border-radius:50%;background:rgba(31,35,24,.4)"></div><div style="width:4px;height:4px;border-radius:50%;background:rgba(31,35,24,.4)"></div></div></div><div style="padding:2px 14px 8px;display:flex;justify-content:space-between;align-items:center;flex-shrink:0">
+  <div style="font-family:'Lora',Georgia,serif;font-style:italic;font-size:.92rem;color:#2d4a2a">Sidepath</div>
+  <div style="width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,#8faa86,#5c7a52);border:2px solid #e8e2d4"></div>
+</div>
+<div style="padding:0 12px 6px;flex-shrink:0">
+  <div style="font-size:6.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#8a9180">What&apos;s growing</div>
+</div>
+<div style="flex:1;overflow:hidden;padding:0 10px;display:flex;flex-direction:column;gap:6px">
+  <div style="background:white;border-radius:13px;padding:10px 11px;border:1px solid rgba(92,122,82,.1);box-shadow:0 1px 6px rgba(31,35,24,.05)">
+    <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px">
+      <div style="width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#8faa86,#5c7a52);display:flex;align-items:center;justify-content:center;font-size:10px;flex-shrink:0">🌿</div>
+      <div><div style="font-size:8.5px;font-weight:500;color:#1f2318">Ren O.</div><div style="font-size:6.5px;color:#8a9180">Systems Designer · Tokyo</div></div>
+      <div style="margin-left:auto;font-size:6.5px;color:#8a9180">2m</div>
+    </div>
+    <div style="font-size:8px;color:#4a5240;line-height:1.58;margin-bottom:8px">"Wondering if mycelium's 'wood wide web' is a useful metaphor for distributed systems — or just beautiful enough that we want it to be true."</div>
+    <div style="display:flex;gap:5px">
+      <div style="display:flex;align-items:center;gap:3px;font-size:7.5px;padding:3px 8px;border-radius:9px;background:rgba(92,122,82,.1);border:1px solid rgba(92,122,82,.22);color:#5c7a52">🌲 resonates</div>
+      <div style="display:flex;align-items:center;gap:3px;font-size:7.5px;padding:3px 7px;border-radius:9px;border:1px solid #e8e2d4;color:#8a9180;background:#f0ece2">🌱</div>
+      <div style="display:flex;align-items:center;gap:3px;font-size:7.5px;padding:3px 7px;border-radius:9px;border:1px solid #e8e2d4;color:#8a9180;background:#f0ece2">💬 3</div>
+    </div>
+  </div>
+  <div style="background:white;border-radius:13px;padding:10px 11px;border:1px solid rgba(92,122,82,.1);box-shadow:0 1px 6px rgba(31,35,24,.05)">
+    <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px">
+      <div style="width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#c4a882,#8b7355);display:flex;align-items:center;justify-content:center;font-size:10px;flex-shrink:0">🌱</div>
+      <div><div style="font-size:8.5px;font-weight:500;color:#1f2318">Priya M.</div><div style="font-size:6.5px;color:#8a9180">Service Designer · Mumbai</div></div>
+      <div style="margin-left:auto;font-size:6.5px;color:#8a9180">14m</div>
+    </div>
+    <div style="font-size:8px;color:#4a5240;line-height:1.58;margin-bottom:8px">"Just ran a co-design session where no one spoke for 15 minutes. Most generative session I've had all year."</div>
+    <div style="display:flex;gap:5px">
+      <div style="display:flex;align-items:center;gap:3px;font-size:7.5px;padding:3px 7px;border-radius:9px;border:1px solid #e8e2d4;color:#8a9180;background:#f0ece2">🌲</div>
+      <div style="display:flex;align-items:center;gap:3px;font-size:7.5px;padding:3px 8px;border-radius:9px;background:rgba(92,122,82,.1);border:1px solid rgba(92,122,82,.22);color:#5c7a52">🌸 celebrated</div>
+    </div>
+  </div>
+</div>
+<div style="background:var(--ivory);border-top:1px solid var(--cream);display:flex;justify-content:space-around;align-items:center;padding:7px 0 14px;flex-shrink:0"><div style="display:flex;flex-direction:column;align-items:center;gap:2px;font-size:6px;letter-spacing:.06em;text-transform:uppercase;color:var(--matcha)"><span style="font-size:14px">🌿</span>Feed</div><div style="display:flex;flex-direction:column;align-items:center;gap:2px;font-size:6px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink3)"><span style="font-size:14px">🌲</span>Forest</div><div style="display:flex;flex-direction:column;align-items:center;gap:2px;font-size:6px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink3)"><span style="font-size:14px">💬</span>Msg</div><div style="display:flex;flex-direction:column;align-items:center;gap:2px;font-size:6px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink3)"><span style="font-size:14px">👤</span>Profile</div></div></div></div>
+      <div class="pno"></div>
+      <div class="pbt"></div>
+      <div class="pvu"></div>
+      <div class="pvd"></div>
+    </div>
+    <div class="fnu">05</div>
+    <div class="flb">Home feed</div>
+  </div>
+  <div class="fw">
+    <div class="ph">
+      <div class="psc"><div style="width:100%;height:100%;background:#f8f5ee;display:flex;flex-direction:column"><div class="sbar" style="color:var(--ink)"><span style="font-size:8.5px;font-weight:600">9:41</span><div style="display:flex;gap:3px;align-items:center"><div style="width:4px;height:4px;border-radius:50%;background:rgba(31,35,24,.4)"></div><div style="width:4px;height:4px;border-radius:50%;background:rgba(31,35,24,.4)"></div><div style="width:4px;height:4px;border-radius:50%;background:rgba(31,35,24,.4)"></div></div></div><div style="height:72px;background:linear-gradient(135deg,#c8dcc4 0%,#a8c4a0 100%);position:relative;flex-shrink:0">
+  <div style="position:absolute;bottom:-20px;left:14px;width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#8faa86,#5c7a52);border:3px solid #f8f5ee;display:flex;align-items:center;justify-content:center;font-size:18px">🌿</div>
+  <div style="position:absolute;bottom:10px;right:12px;background:#2d4a2a;color:white;font-size:7px;font-weight:600;letter-spacing:.06em;padding:4px 11px;border-radius:9px;box-shadow:0 2px 8px rgba(45,74,42,.3)">Connect via desk →</div>
+</div>
+<div style="padding:24px 14px 8px;flex:1;overflow:hidden">
+  <div style="font-family:'Lora',Georgia,serif;font-style:italic;font-size:.9rem;color:#1f2318;margin-bottom:2px">Ren Okamoto</div>
+  <div style="font-size:8px;color:#5c7a52;font-weight:500;margin-bottom:5px">Systems Designer · Tokyo</div>
+  <div style="font-size:7.5px;color:#4a5240;line-height:1.58;margin-bottom:8px">Interested in the overlap between ecological thinking and interface design.</div>
+  <div style="background:rgba(92,122,82,.08);border:1px solid rgba(92,122,82,.2);border-radius:8px;padding:7px 9px;font-size:7.5px;color:#5c7a52;margin-bottom:10px;display:flex;gap:5px;align-items:flex-start">
+    <span>🔭</span>
+    <div><span style="color:#3d5c35;font-weight:500">Currently exploring:</span> How mycelium communication patterns might inform distributed system architecture.</div>
+  </div>
+  <div style="display:flex;border-bottom:1px solid #e8e2d4;margin-bottom:9px">
+    <div style="font-size:7.5px;font-weight:500;padding:5px 12px;color:#5c7a52;border-bottom:1.5px solid #5c7a52">Posts</div>
+    <div style="font-size:7.5px;font-weight:500;padding:5px 10px;color:#8a9180">Desk</div>
+    <div style="font-size:7.5px;font-weight:500;padding:5px 10px;color:#8a9180">Forest</div>
+  </div>
+  <div style="background:white;border-radius:11px;padding:9px 10px;border:1px solid rgba(92,122,82,.1)">
+    <div style="font-size:8px;color:#4a5240;font-style:italic;font-family:'Lora',Georgia,serif;line-height:1.55;margin-bottom:6px">"What if interface affordances worked like lichen — collaborative, not consuming?"</div>
+    <div style="display:flex;gap:4px">
+      <div style="font-size:7px;padding:2px 7px;border-radius:8px;background:rgba(92,122,82,.1);color:#5c7a52;border:1px solid rgba(92,122,82,.2)">🌲 12</div>
+      <div style="font-size:7px;padding:2px 7px;border-radius:8px;background:#f0ece2;color:#8a9180;border:1px solid #e8e2d4">🌸 4</div>
+    </div>
+  </div>
+</div>
+<div style="background:var(--ivory);border-top:1px solid var(--cream);display:flex;justify-content:space-around;align-items:center;padding:7px 0 14px;flex-shrink:0"><div style="display:flex;flex-direction:column;align-items:center;gap:2px;font-size:6px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink3)"><span style="font-size:14px">🌿</span>Feed</div><div style="display:flex;flex-direction:column;align-items:center;gap:2px;font-size:6px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink3)"><span style="font-size:14px">🌲</span>Forest</div><div style="display:flex;flex-direction:column;align-items:center;gap:2px;font-size:6px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink3)"><span style="font-size:14px">💬</span>Msg</div><div style="display:flex;flex-direction:column;align-items:center;gap:2px;font-size:6px;letter-spacing:.06em;text-transform:uppercase;color:var(--matcha)"><span style="font-size:14px">👤</span>Profile</div></div></div></div>
+      <div class="pno"></div>
+      <div class="pbt"></div>
+      <div class="pvu"></div>
+      <div class="pvd"></div>
+    </div>
+    <div class="fnu">06</div>
+    <div class="flb">Profile view</div>
+  </div>
+  <div class="fw">
+    <div class="ph">
+      <div class="psc"><div style="width:100%;height:100%;background:#f0ece2;display:flex;flex-direction:column;position:relative;overflow:hidden">
+  <div style="background:rgba(248,245,238,.88);backdrop-filter:blur(4px);padding:20px 14px 4px;display:flex;justify-content:space-between;align-items:center;position:relative;z-index:10;flex-shrink:0">
+    <span style="font-size:8px;font-weight:600;color:#1f2318">9:41</span>
+    <div style="display:flex;gap:3px"><div style="width:4px;height:4px;border-radius:50%;background:rgba(31,35,24,.35)"></div><div style="width:4px;height:4px;border-radius:50%;background:rgba(31,35,24,.35)"></div><div style="width:4px;height:4px;border-radius:50%;background:rgba(31,35,24,.35)"></div></div>
+  </div>
+  <div style="padding:2px 14px 6px;display:flex;justify-content:space-between;align-items:center;position:relative;z-index:10;flex-shrink:0">
+    <div style="font-family:'Lora',Georgia,serif;font-style:italic;font-size:.82rem;color:#1f2318">Ren&apos;s desk</div>
+    <div style="font-size:7.5px;color:#5c7a52;border:1px solid rgba(92,122,82,.28);border-radius:7px;padding:2px 8px">Edit</div>
+  </div>
+  <div style="flex:1;position:relative">
+    <!-- wall -->
+    <div style="position:absolute;top:0;left:0;right:0;height:48%;background:linear-gradient(180deg,#ede7db 0%,#d8cfbf 100%)"></div>
+    <!-- shelf line -->
+    <div style="position:absolute;top:48%;left:0;right:0;height:4px;background:linear-gradient(180deg,#c4a882,#b09070);box-shadow:0 2px 6px rgba(0,0,0,.15)"></div>
+    <!-- surface -->
+    <div style="position:absolute;top:52%;bottom:0;left:0;right:0;background:linear-gradient(180deg,#c4a882 0%,#b09070 60%,#a08060 100%)"></div>
+    <!-- wall items -->
+    <div style="position:absolute;top:7%;left:14%;text-align:center">
+      <span style="font-size:17px;display:block;filter:drop-shadow(0 2px 4px rgba(0,0,0,.2))">🖼️</span>
+      <span style="font-size:5.5px;background:rgba(255,255,255,.85);border-radius:3px;padding:1px 4px;color:#1f2318;white-space:nowrap;display:block;margin-top:2px">Fav print</span>
+    </div>
+    <div style="position:absolute;top:9%;left:40%;text-align:center">
+      <span style="font-size:13px;display:block">📌</span>
+      <span style="font-size:5px;background:rgba(255,255,255,.85);border-radius:3px;padding:1px 3px;color:#1f2318;white-space:nowrap;display:block;margin-top:1px">Open question</span>
+    </div>
+    <div style="position:absolute;top:6%;right:12%;text-align:center">
+      <span style="font-size:16px;display:block;filter:drop-shadow(0 2px 3px rgba(0,0,0,.15))">🗺️</span>
+      <span style="font-size:5px;background:rgba(255,255,255,.85);border-radius:3px;padding:1px 3px;color:#1f2318;white-space:nowrap;display:block;margin-top:1px">Systems map</span>
+    </div>
+    <!-- surface items -->
+    <div style="position:absolute;bottom:36%;left:10%;text-align:center">
+      <span style="font-size:15px;display:block;filter:drop-shadow(0 3px 6px rgba(0,0,0,.25))">📖</span>
+      <span style="font-size:5px;background:rgba(255,255,255,.88);border-radius:3px;padding:1px 4px;color:#1f2318;white-space:nowrap;display:block;margin-top:2px">Braiding Sweetgrass</span>
+    </div>
+    <div style="position:absolute;bottom:38%;left:44%;transform:translateX(-50%);text-align:center">
+      <span style="font-size:18px;display:block;filter:drop-shadow(0 3px 8px rgba(0,0,0,.3))">💻</span>
+      <span style="font-size:5px;background:rgba(255,255,255,.88);border-radius:3px;padding:1px 4px;color:#1f2318;white-space:nowrap;display:block;margin-top:2px">Prototype</span>
+    </div>
+    <div style="position:absolute;bottom:40%;right:8%;text-align:center">
+      <span style="font-size:17px;display:block;filter:drop-shadow(0 3px 6px rgba(0,0,0,.25))">🪴</span>
+      <span style="font-size:5px;background:rgba(255,255,255,.88);border-radius:3px;padding:1px 4px;color:#1f2318;white-space:nowrap;display:block;margin-top:2px">Monstera</span>
+    </div>
+    <div style="position:absolute;bottom:52%;left:16%;text-align:center">
+      <span style="font-size:14px;display:block">☕</span>
+      <span style="font-size:5px;background:rgba(255,255,255,.88);border-radius:3px;padding:1px 3px;color:#1f2318;white-space:nowrap;display:block;margin-top:1px">Always</span>
+    </div>
+    <div style="position:absolute;bottom:50%;right:16%;text-align:center">
+      <span style="font-size:14px;display:block">🗒️</span>
+      <span style="font-size:5px;background:rgba(255,255,255,.88);border-radius:3px;padding:1px 3px;color:#1f2318;white-space:nowrap;display:block;margin-top:1px">Field notes</span>
+    </div>
+    <!-- popup -->
+    <div style="position:absolute;bottom:30%;left:8%;background:white;border-radius:9px;padding:6px 9px;box-shadow:0 4px 16px rgba(0,0,0,.18);border:1px solid rgba(92,122,82,.22);max-width:95px;z-index:10">
+      <div style="font-size:5.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#5c7a52;margin-bottom:2px">📖 Reading</div>
+      <div style="font-size:6.5px;color:#4a5240;line-height:1.5">Robin Wall Kimmerer — on reciprocal attention in design systems.</div>
+      <div style="position:absolute;bottom:-5px;left:12px;width:9px;height:9px;background:white;border-right:1px solid rgba(92,122,82,.22);border-bottom:1px solid rgba(92,122,82,.22);transform:rotate(45deg)"></div>
+    </div>
+  </div>
+</div></div>
+      <div class="pno"></div>
+      <div class="pbt"></div>
+      <div class="pvu"></div>
+      <div class="pvd"></div>
+    </div>
+    <div class="fnu">07</div>
+    <div class="flb">Interactive desk</div>
+  </div>
+  <div class="fw">
+    <div class="ph">
+      <div class="psc"><div style="width:100%;height:100%;background:linear-gradient(175deg,#1a2416 0%,#0d1509 100%);display:flex;flex-direction:column;position:relative;overflow:hidden">
+  <div style="position:absolute;inset:0;background-image:radial-gradient(circle,rgba(92,122,82,.08) 1px,transparent 1px);background-size:20px 20px"></div>
+  <div class="sbar" style="color:rgba(255,255,255,.7)"><span style="font-size:8.5px;font-weight:600">9:41</span><div style="display:flex;gap:3px;align-items:center"><div style="width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.5)"></div><div style="width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.5)"></div><div style="width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.5)"></div></div></div>
+  <div style="padding:0 14px 6px;display:flex;justify-content:space-between;align-items:center;position:relative;z-index:5;flex-shrink:0">
+    <div style="font-family:'Lora',Georgia,serif;font-style:italic;font-size:.8rem;color:rgba(248,245,238,.82)">Your forest</div>
+    <div style="font-size:7px;color:rgba(168,196,158,.6);display:flex;align-items:center;gap:4px">
+      <span>Filter</span>
+      <span style="font-size:9px">↓</span>
+    </div>
+  </div>
+  <div style="flex:1;position:relative;display:flex;align-items:center;justify-content:center">
+    <svg width="210" height="265" viewBox="0 0 210 265" fill="none">
+      <!-- 2nd degree faint -->
+      <g opacity="0.12">
+        <line x1="105" y1="132" x2="20" y2="212" stroke="#5c7a52" stroke-width="0.8"/><line x1="105" y1="132" x2="190" y2="205" stroke="#5c7a52" stroke-width="0.8"/>
+        <line x1="105" y1="132" x2="16" y2="60" stroke="#5c7a52" stroke-width="0.8"/><line x1="105" y1="132" x2="194" y2="55" stroke="#5c7a52" stroke-width="0.8"/>
+        <circle cx="20" cy="212" r="6" fill="#1a2a18"/><circle cx="190" cy="205" r="6" fill="#1a2a18"/>
+        <circle cx="16" cy="60" r="6" fill="#1a2a18"/><circle cx="194" cy="55" r="6" fill="#1a2a18"/>
+      </g>
+      <!-- 1st degree dimmer -->
+      <g opacity="0.38">
+        <line x1="105" y1="132" x2="50" y2="188" stroke="#5c7a52" stroke-width="1.2"/><line x1="105" y1="132" x2="160" y2="182" stroke="#5c7a52" stroke-width="1.2"/>
+        <line x1="105" y1="132" x2="54" y2="82" stroke="#5c7a52" stroke-width="1.2"/><line x1="105" y1="132" x2="156" y2="78" stroke="#5c7a52" stroke-width="1.2"/>
+        <circle cx="50" cy="188" r="11" fill="#2d4a2a" stroke="rgba(168,196,158,.25)" stroke-width="1"/><text x="50" y="192" text-anchor="middle" font-size="10" fill="rgba(168,196,158,.6)">🌲</text>
+        <circle cx="160" cy="182" r="11" fill="#2d4a2a" stroke="rgba(168,196,158,.25)" stroke-width="1"/><text x="160" y="186" text-anchor="middle" font-size="10" fill="rgba(168,196,158,.6)">🌲</text>
+        <circle cx="54" cy="82" r="11" fill="#2d4a2a" stroke="rgba(168,196,158,.25)" stroke-width="1"/><text x="54" y="86" text-anchor="middle" font-size="10" fill="rgba(168,196,158,.6)">🌲</text>
+        <circle cx="156" cy="78" r="11" fill="#2d4a2a" stroke="rgba(168,196,158,.25)" stroke-width="1"/><text x="156" y="82" text-anchor="middle" font-size="10" fill="rgba(168,196,158,.6)">🌲</text>
+      </g>
+      <!-- Close connections -->
+      <line x1="105" y1="132" x2="72" y2="155" stroke="#7a9e70" stroke-width="2"/><line x1="105" y1="132" x2="138" y2="150" stroke="#7a9e70" stroke-width="2"/>
+      <line x1="105" y1="132" x2="74" y2="110" stroke="#7a9e70" stroke-width="2"/><line x1="105" y1="132" x2="136" y2="108" stroke="#7a9e70" stroke-width="2"/>
+      <circle cx="72" cy="155" r="15" fill="#5c7a52" stroke="#a8c49e" stroke-width="1.5"/><text x="72" y="159" text-anchor="middle" font-size="12" fill="white">🌲</text>
+      <text x="72" y="175" text-anchor="middle" font-size="7" fill="rgba(200,220,190,.55)">Priya</text>
+      <circle cx="138" cy="150" r="15" fill="#5c7a52" stroke="#a8c49e" stroke-width="1.5"/><text x="138" y="154" text-anchor="middle" font-size="12" fill="white">🌲</text>
+      <text x="138" y="170" text-anchor="middle" font-size="7" fill="rgba(200,220,190,.55)">Jo</text>
+      <circle cx="74" cy="110" r="15" fill="#5c7a52" stroke="#a8c49e" stroke-width="1.5"/><text x="74" y="114" text-anchor="middle" font-size="12" fill="white">🌲</text>
+      <text x="74" y="130" text-anchor="middle" font-size="7" fill="rgba(200,220,190,.55)">Ren</text>
+      <circle cx="136" cy="108" r="15" fill="#5c7a52" stroke="#a8c49e" stroke-width="1.5"/><text x="136" y="112" text-anchor="middle" font-size="12" fill="white">🌲</text>
+      <text x="136" y="128" text-anchor="middle" font-size="7" fill="rgba(200,220,190,.55)">Sam</text>
+      <!-- You -->
+      <circle cx="105" cy="132" r="24" fill="#2d4a2a" stroke="#7a9e70" stroke-width="2.5"/>
+      <circle cx="105" cy="132" r="30" fill="none" stroke="rgba(122,158,126,.18)" stroke-width="1" stroke-dasharray="3 3"/>
+      <text x="105" y="137" text-anchor="middle" font-size="18" fill="white">🌲</text>
+      <text x="105" y="153" text-anchor="middle" font-size="7" fill="rgba(200,220,190,.65)">you</text>
+    </svg>
+  </div>
+  <div style="background:rgba(13,21,10,.92);border-top:1px solid rgba(255,255,255,.06);display:flex;justify-content:space-around;align-items:center;padding:7px 0 14px;flex-shrink:0"><div style="display:flex;flex-direction:column;align-items:center;gap:2px;font-size:6px;letter-spacing:.06em;text-transform:uppercase;color:rgba(168,196,158,.35)"><span style="font-size:14px">🌿</span>Feed</div><div style="display:flex;flex-direction:column;align-items:center;gap:2px;font-size:6px;letter-spacing:.06em;text-transform:uppercase;color:rgba(168,196,158,.9)"><span style="font-size:14px">🌲</span>Forest</div><div style="display:flex;flex-direction:column;align-items:center;gap:2px;font-size:6px;letter-spacing:.06em;text-transform:uppercase;color:rgba(168,196,158,.35)"><span style="font-size:14px">💬</span>Msg</div><div style="display:flex;flex-direction:column;align-items:center;gap:2px;font-size:6px;letter-spacing:.06em;text-transform:uppercase;color:rgba(168,196,158,.35)"><span style="font-size:14px">👤</span>Profile</div></div>
+</div></div>
+      <div class="pno"></div>
+      <div class="pbt"></div>
+      <div class="pvu"></div>
+      <div class="pvd"></div>
+    </div>
+    <div class="fnu">08</div>
+    <div class="flb">Forest network</div>
+  </div>
+  <div class="fw">
+    <div class="ph">
+      <div class="psc"><div style="width:100%;height:100%;background:#f8f5ee;display:flex;flex-direction:column"><div class="sbar" style="color:var(--ink)"><span style="font-size:8.5px;font-weight:600">9:41</span><div style="display:flex;gap:3px;align-items:center"><div style="width:4px;height:4px;border-radius:50%;background:rgba(31,35,24,.4)"></div><div style="width:4px;height:4px;border-radius:50%;background:rgba(31,35,24,.4)"></div><div style="width:4px;height:4px;border-radius:50%;background:rgba(31,35,24,.4)"></div></div></div><div style="flex:1;padding:5px 12px 0;display:flex;flex-direction:column;gap:6px;overflow:hidden">
+  <div style="background:white;border-radius:11px;padding:10px 11px;border:1px solid #e8e2d4">
+    <div style="display:flex;align-items:center;gap:6px;margin-bottom:5px">
+      <div style="width:20px;height:20px;border-radius:50%;background:linear-gradient(135deg,#8faa86,#5c7a52);font-size:9px;display:flex;align-items:center;justify-content:center">🌿</div>
+      <span style="font-size:8px;font-weight:500;color:#1f2318">Ren O.</span>
+    </div>
+    <div style="font-size:8px;color:#4a5240;font-style:italic;font-family:'Lora',Georgia,serif;line-height:1.55">"What if interface affordances worked like lichen — collaborative, not consuming?"</div>
+  </div>
+  <div style="font-size:7px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#8a9180;display:flex;align-items:center;gap:6px"><span style="flex:1;height:1px;background:#e8e2d4"></span>How does this land?<span style="flex:1;height:1px;background:#e8e2d4"></span></div>
+  <div style="background:white;border-radius:11px;padding:10px 11px;border:1px solid #e8e2d4;display:flex;align-items:center;gap:9px;box-shadow:0 1px 5px rgba(31,35,24,.04)">
+    <span style="font-size:20px;flex-shrink:0">🌱</span>
+    <div>
+      <div style="font-family:'Lora',Georgia,serif;font-style:italic;font-size:.78rem;color:#1f2318;margin-bottom:2px">Sprout</div>
+      <div style="font-size:7px;color:#8a9180;line-height:1.5">Curiosity — I want to learn more about this.</div>
+    </div>
+  </div>
+  <div style="background:#f0f4ef;border-radius:11px;padding:10px 11px;border:1.5px solid rgba(45,74,42,.25);display:flex;align-items:center;gap:9px;box-shadow:0 2px 8px rgba(45,74,42,.08)">
+    <span style="font-size:20px;flex-shrink:0">🌲</span>
+    <div>
+      <div style="font-family:'Lora',Georgia,serif;font-style:italic;font-size:.78rem;color:#1f2318;margin-bottom:2px">Pine Tree</div>
+      <div style="font-size:7px;color:#8a9180;line-height:1.5">Resonance — this connects with my experience.</div>
+    </div>
+    <div style="margin-left:auto;width:16px;height:16px;border-radius:50%;background:#5c7a52;display:flex;align-items:center;justify-content:center;flex-shrink:0"><span style="font-size:8px;color:white">✓</span></div>
+  </div>
+  <div style="background:white;border-radius:11px;padding:10px 11px;border:1px solid #e8e2d4;display:flex;align-items:center;gap:9px;box-shadow:0 1px 5px rgba(31,35,24,.04)">
+    <span style="font-size:20px;flex-shrink:0">🌸</span>
+    <div>
+      <div style="font-family:'Lora',Georgia,serif;font-style:italic;font-size:.78rem;color:#1f2318;margin-bottom:2px">Flower</div>
+      <div style="font-size:7px;color:#8a9180;line-height:1.5">Celebration — I appreciate what you shared.</div>
+    </div>
+  </div>
+  <div style="font-size:7px;color:#8a9180;text-align:center;font-style:italic;font-family:'Lora',Georgia,serif">No counts. Only presence.</div>
+</div></div></div>
+      <div class="pno"></div>
+      <div class="pbt"></div>
+      <div class="pvu"></div>
+      <div class="pvd"></div>
+    </div>
+    <div class="fnu">09</div>
+    <div class="flb">Reaction panel</div>
+  </div>
+  <div class="fw">
+    <div class="ph">
+      <div class="psc"><div style="width:100%;height:100%;background:#f8f5ee;display:flex;flex-direction:column"><div class="sbar" style="color:var(--ink)"><span style="font-size:8.5px;font-weight:600">9:41</span><div style="display:flex;gap:3px;align-items:center"><div style="width:4px;height:4px;border-radius:50%;background:rgba(31,35,24,.4)"></div><div style="width:4px;height:4px;border-radius:50%;background:rgba(31,35,24,.4)"></div><div style="width:4px;height:4px;border-radius:50%;background:rgba(31,35,24,.4)"></div></div></div><div style="padding:4px 14px 8px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #e8e2d4;flex-shrink:0">
+  <div style="font-size:8px;color:#8a9180">Cancel</div>
+  <div style="font-size:8.5px;font-weight:500;color:#1f2318">New thought</div>
+  <div style="background:#2d4a2a;color:white;font-size:8px;font-weight:600;padding:4px 12px;border-radius:8px">Share</div>
+</div>
+<div style="flex:1;padding:10px 14px;display:flex;flex-direction:column;gap:9px">
+  <div style="display:flex;align-items:center;gap:7px">
+    <div style="width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,#8faa86,#5c7a52);flex-shrink:0"></div>
+    <div>
+      <div style="font-size:9px;font-weight:500;color:#1f2318">Ren Okamoto</div>
+      <div style="font-size:7px;color:#5c7a52;display:flex;align-items:center;gap:3px">🌲 My forest + Biomimicry space</div>
+    </div>
+  </div>
+  <div style="background:rgba(92,122,82,.08);border:1px solid rgba(92,122,82,.18);border-radius:9px;padding:8px 10px">
+    <span style="font-size:6px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#a8c49e;display:block;margin-bottom:3px">Optional prompt</span>
+    <span style="font-size:8px;color:#5c7a52;font-style:italic;font-family:'Lora',Georgia,serif;line-height:1.55">"What&apos;s a question you&apos;ve been sitting with this week?"</span>
+  </div>
+  <div style="flex:1;font-size:9px;color:#4a5240;line-height:1.68;font-style:italic;font-family:'Lora',Georgia,serif">Something about the way lichen grows on rocks — it doesn&apos;t consume, it collaborates. What if interface affordances worked that way? Not taking attention, but sharing it…<span style="width:1.5px;height:12px;background:#5c7a52;display:inline-block;margin-left:1px;vertical-align:text-bottom;animation:blink 1s step-end infinite"></span></div>
+  <div style="display:flex;gap:8px;align-items:center;border-top:1px solid #e8e2d4;padding-top:8px">
+    <span style="font-size:13px;opacity:.5">🌿</span><span style="font-size:13px;opacity:.5">📎</span><span style="font-size:13px;opacity:.5">🔒</span>
+    <div style="margin-left:auto;font-size:7px;background:rgba(92,122,82,.1);color:#5c7a52;border:1px solid rgba(92,122,82,.22);padding:3px 8px;border-radius:8px">🌿 Biomimicry</div>
+  </div>
+</div></div></div>
+      <div class="pno"></div>
+      <div class="pbt"></div>
+      <div class="pvu"></div>
+      <div class="pvd"></div>
+    </div>
+    <div class="fnu">10</div>
+    <div class="flb">Post compose</div>
+  </div>
+  <div class="fw">
+    <div class="ph">
+      <div class="psc"><div style="width:100%;height:100%;background:#f8f5ee;display:flex;flex-direction:column"><div class="sbar" style="color:var(--ink)"><span style="font-size:8.5px;font-weight:600">9:41</span><div style="display:flex;gap:3px;align-items:center"><div style="width:4px;height:4px;border-radius:50%;background:rgba(31,35,24,.4)"></div><div style="width:4px;height:4px;border-radius:50%;background:rgba(31,35,24,.4)"></div><div style="width:4px;height:4px;border-radius:50%;background:rgba(31,35,24,.4)"></div></div></div><div style="padding:4px 14px 6px;border-bottom:1px solid #e8e2d4;flex-shrink:0">
+  <div style="font-size:8px;color:#5c7a52;margin-bottom:2px">← Ren&apos;s post</div>
+  <div style="font-size:9px;font-weight:500;color:#1f2318">Thread · 4 replies</div>
+</div>
+<div style="flex:1;padding:8px 12px;overflow:hidden;display:flex;flex-direction:column;gap:6px">
+  <div style="background:white;border-radius:11px;padding:9px 10px;border:1px solid #e8e2d4">
+    <div style="font-size:8px;color:#4a5240;font-style:italic;font-family:'Lora',Georgia,serif;line-height:1.55;margin-bottom:6px">"Mycelium as a metaphor for social organizing — how could this actually be designed into systems?"</div>
+    <div style="display:flex;gap:4px"><div style="font-size:7px;padding:2px 7px;border-radius:8px;background:rgba(92,122,82,.1);color:#5c7a52;border:1px solid rgba(92,122,82,.2)">🌲 8</div><div style="font-size:7px;padding:2px 7px;border-radius:8px;background:#f0ece2;color:#8a9180;border:1px solid #e8e2d4">🌱 5</div></div>
+  </div>
+  <div style="display:flex;gap:6px;align-items:flex-start">
+    <div style="width:20px;height:20px;border-radius:50%;background:linear-gradient(135deg,#8db4cc,#5a7a9e);flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;font-size:9px">☁️</div>
+    <div style="background:white;border-radius:11px;padding:7px 9px;border:1px solid #e8e2d4;flex:1">
+      <div style="font-size:7.5px;font-weight:500;color:#1f2318;margin-bottom:3px">Jo W. · Design Researcher</div>
+      <div style="font-size:7.5px;color:#4a5240;line-height:1.55">The mycelium metaphor is beautiful because it speaks to non-hierarchical organizing. Not one centre, but distributed intelligence. Lots to explore here.</div>
+    </div>
+  </div>
+  <div style="display:flex;gap:6px;align-items:flex-start;padding-left:22px">
+    <div style="width:20px;height:20px;border-radius:50%;background:linear-gradient(135deg,#8faa86,#5c7a52);flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;font-size:9px">🌿</div>
+    <div style="background:rgba(92,122,82,.08);border-radius:11px;padding:7px 9px;border:1px solid rgba(92,122,82,.18);flex:1">
+      <div style="font-size:7.5px;font-weight:500;color:#5c7a52;margin-bottom:3px">Ren O. (author)</div>
+      <div style="font-size:7.5px;color:#4a5240;line-height:1.55">Yes — and the rerouting piece. When a thread breaks, the network adapts. Communities could be built around that kind of resilience.</div>
+    </div>
+  </div>
+  <div style="font-size:6.5px;color:#8a9180;text-align:center;font-style:italic;font-family:'Lora',Georgia,serif">Visible to your shared forest only</div>
+</div>
+<div style="padding:6px 12px 8px;display:flex;gap:6px;border-top:1px solid #e8e2d4;flex-shrink:0">
+  <div style="flex:1;background:white;border:1px solid #e8e2d4;border-radius:9px;padding:6px 9px;font-size:7.5px;color:#8a9180;font-style:italic;font-family:'Lora',Georgia,serif">Continue the thread…</div>
+  <div style="width:26px;height:26px;border-radius:50%;background:#5c7a52;display:flex;align-items:center;justify-content:center;color:white;font-size:11px;flex-shrink:0">→</div>
+</div></div></div>
+      <div class="pno"></div>
+      <div class="pbt"></div>
+      <div class="pvu"></div>
+      <div class="pvd"></div>
+    </div>
+    <div class="fnu">11</div>
+    <div class="flb">Thread &amp; comments</div>
+  </div>
+  <div class="fw">
+    <div class="ph">
+      <div class="psc"><div style="width:100%;height:100%;background:#f8f5ee;display:flex;flex-direction:column"><div class="sbar" style="color:var(--ink)"><span style="font-size:8.5px;font-weight:600">9:41</span><div style="display:flex;gap:3px;align-items:center"><div style="width:4px;height:4px;border-radius:50%;background:rgba(31,35,24,.4)"></div><div style="width:4px;height:4px;border-radius:50%;background:rgba(31,35,24,.4)"></div><div style="width:4px;height:4px;border-radius:50%;background:rgba(31,35,24,.4)"></div></div></div><div style="padding:2px 14px 7px;flex-shrink:0">
+  <div style="font-family:'Lora',Georgia,serif;font-style:italic;font-size:.88rem;color:#1f2318;margin-bottom:2px">Passion Spaces</div>
+  <div style="font-size:7.5px;color:#8a9180">Exploration over expertise</div>
+</div>
+<div style="flex:1;overflow:hidden;padding:0 12px;display:flex;flex-direction:column;gap:6px">
+  <div style="background:white;border-radius:12px;padding:10px 11px;border:1px solid rgba(92,122,82,.12);display:flex;gap:8px;align-items:flex-start;box-shadow:0 1px 5px rgba(31,35,24,.04)">
+    <div style="width:28px;height:28px;border-radius:8px;background:rgba(92,122,82,.12);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0">🌿</div>
+    <div>
+      <div style="font-size:8.5px;font-weight:500;color:#1f2318;margin-bottom:2px;line-height:1.3">Exploring biomimicry in technology</div>
+      <div style="font-size:7px;color:#5c7a52;font-weight:500;margin-bottom:3px">🌲 14 people nearby · You&apos;re a member</div>
+      <div style="font-size:7px;color:#8a9180;line-height:1.45">How natural systems teach us to design better human ones.</div>
+    </div>
+  </div>
+  <div style="background:white;border-radius:12px;padding:10px 11px;border:1px solid rgba(92,122,82,.08);display:flex;gap:8px;align-items:flex-start;box-shadow:0 1px 5px rgba(31,35,24,.04)">
+    <div style="width:28px;height:28px;border-radius:8px;background:rgba(141,180,204,.12);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0">🌊</div>
+    <div>
+      <div style="font-size:8.5px;font-weight:500;color:#1f2318;margin-bottom:2px;line-height:1.3">Learning sustainable system design</div>
+      <div style="font-size:7px;color:#5c7a52;font-weight:500;margin-bottom:3px">🌱 8 people nearby</div>
+      <div style="font-size:7px;color:#8a9180;line-height:1.45">Systems that regenerate rather than extract.</div>
+    </div>
+  </div>
+  <div style="background:white;border-radius:12px;padding:10px 11px;border:1px solid rgba(92,122,82,.08);display:flex;gap:8px;align-items:flex-start;box-shadow:0 1px 5px rgba(31,35,24,.04)">
+    <div style="width:28px;height:28px;border-radius:8px;background:rgba(176,133,106,.12);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0">🏺</div>
+    <div>
+      <div style="font-size:8.5px;font-weight:500;color:#1f2318;margin-bottom:2px;line-height:1.3">Craft, slowness, and digital making</div>
+      <div style="font-size:7px;color:#5c7a52;font-weight:500;margin-bottom:3px">🌸 6 people nearby</div>
+      <div style="font-size:7px;color:#8a9180;line-height:1.45">Making carefully in an accelerated industry.</div>
+    </div>
+  </div>
+  <div style="border:1px dashed rgba(92,122,82,.28);border-radius:11px;padding:9px;text-align:center;font-size:8px;color:#5c7a52;background:rgba(92,122,82,.04)">+ Discover more spaces matching your curiosity</div>
+</div>
+<div style="background:var(--ivory);border-top:1px solid var(--cream);display:flex;justify-content:space-around;align-items:center;padding:7px 0 14px;flex-shrink:0"><div style="display:flex;flex-direction:column;align-items:center;gap:2px;font-size:6px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink3)"><span style="font-size:14px">🌿</span>Feed</div><div style="display:flex;flex-direction:column;align-items:center;gap:2px;font-size:6px;letter-spacing:.06em;text-transform:uppercase;color:var(--matcha)"><span style="font-size:14px">🌲</span>Forest</div><div style="display:flex;flex-direction:column;align-items:center;gap:2px;font-size:6px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink3)"><span style="font-size:14px">💬</span>Msg</div><div style="display:flex;flex-direction:column;align-items:center;gap:2px;font-size:6px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink3)"><span style="font-size:14px">👤</span>Profile</div></div></div></div>
+      <div class="pno"></div>
+      <div class="pbt"></div>
+      <div class="pvu"></div>
+      <div class="pvd"></div>
+    </div>
+    <div class="fnu">12</div>
+    <div class="flb">Passion spaces</div>
+  </div>
+  <div class="fw">
+    <div class="ph">
+      <div class="psc"><div style="width:100%;height:100%;background:#f8f5ee;display:flex;flex-direction:column"><div class="sbar" style="color:var(--ink)"><span style="font-size:8.5px;font-weight:600">9:41</span><div style="display:flex;gap:3px;align-items:center"><div style="width:4px;height:4px;border-radius:50%;background:rgba(31,35,24,.4)"></div><div style="width:4px;height:4px;border-radius:50%;background:rgba(31,35,24,.4)"></div><div style="width:4px;height:4px;border-radius:50%;background:rgba(31,35,24,.4)"></div></div></div><div style="padding:3px 14px 8px;border-bottom:1px solid #e8e2d4;display:flex;align-items:center;gap:8px;flex-shrink:0">
+  <div style="font-size:10px;color:#5c7a52">←</div>
+  <div style="width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,#8faa86,#5c7a52)"></div>
+  <div>
+    <div style="font-size:9px;font-weight:500;color:#1f2318">Priya M.</div>
+    <div style="font-size:7px;color:#5c7a52">via Biomimicry space · Active now</div>
+  </div>
+</div>
+<div style="flex:1;padding:8px 12px;display:flex;flex-direction:column;gap:7px;overflow:hidden">
+  <div style="background:rgba(92,122,82,.08);border:1px solid rgba(92,122,82,.18);border-radius:9px;padding:8px 10px">
+    <div style="font-size:6px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#a8c49e;margin-bottom:3px">Connected through</div>
+    <div style="font-size:7.5px;color:#5c7a52;line-height:1.55;font-style:italic;font-family:'Lora',Georgia,serif">"I noticed you have Braiding Sweetgrass on your desk — I just finished it."</div>
+  </div>
+  <div style="display:flex;gap:5px;align-items:flex-end">
+    <div style="width:18px;height:18px;border-radius:50%;background:linear-gradient(135deg,#c4a882,#8b7355);flex-shrink:0"></div>
+    <div style="max-width:72%;background:white;border:1px solid #e8e2d4;border-radius:11px;border-bottom-left-radius:3px;padding:7px 9px;font-size:8px;color:#4a5240;line-height:1.55">I saw your note about mycelium and distributed systems — I&apos;ve been thinking exactly the same thing.</div>
+  </div>
+  <div style="display:flex;gap:5px;align-items:flex-end;flex-direction:row-reverse">
+    <div style="width:18px;height:18px;border-radius:50%;background:linear-gradient(135deg,#8faa86,#5c7a52);flex-shrink:0"></div>
+    <div style="max-width:72%;background:#2d4a2a;border-radius:11px;border-bottom-right-radius:3px;padding:7px 9px;font-size:8px;color:rgba(255,255,255,.9);line-height:1.55">Yes! Do you think it actually holds or are we just drawn to it because it&apos;s beautiful?</div>
+  </div>
+  <div style="display:flex;gap:5px;align-items:flex-end">
+    <div style="width:18px;height:18px;border-radius:50%;background:linear-gradient(135deg,#c4a882,#8b7355);flex-shrink:0"></div>
+    <div style="max-width:72%;background:white;border:1px solid #e8e2d4;border-radius:11px;border-bottom-left-radius:3px;padding:7px 9px;font-size:8px;color:#4a5240;line-height:1.55">Both, maybe. The beauty is the signal that something true is hiding in it.</div>
+  </div>
+  <div style="display:flex;gap:5px;align-items:flex-end">
+    <div style="width:18px;height:18px;border-radius:50%;background:linear-gradient(135deg,#c4a882,#8b7355);flex-shrink:0"></div>
+    <div style="max-width:55%;background:white;border:1px solid #e8e2d4;border-radius:11px;border-bottom-left-radius:3px;padding:7px 9px;display:flex;gap:3px;align-items:center">
+      <div style="width:4px;height:4px;border-radius:50%;background:#8a9180;animation:blink .8s ease-in-out infinite"></div>
+      <div style="width:4px;height:4px;border-radius:50%;background:#8a9180;animation:blink .8s ease-in-out .2s infinite"></div>
+      <div style="width:4px;height:4px;border-radius:50%;background:#8a9180;animation:blink .8s ease-in-out .4s infinite"></div>
+    </div>
+  </div>
+</div>
+<div style="padding:6px 12px 8px;display:flex;gap:6px;border-top:1px solid #e8e2d4;align-items:center;flex-shrink:0">
+  <div style="flex:1;background:white;border:1px solid #e8e2d4;border-radius:20px;padding:7px 13px;font-size:8px;color:#8a9180;font-style:italic;font-family:'Lora',Georgia,serif">Reply…</div>
+  <div style="width:28px;height:28px;border-radius:50%;background:#5c7a52;display:flex;align-items:center;justify-content:center;color:white;font-size:11px;flex-shrink:0;box-shadow:0 2px 6px rgba(92,122,82,.3)">→</div>
+</div></div></div>
+      <div class="pno"></div>
+      <div class="pbt"></div>
+      <div class="pvu"></div>
+      <div class="pvd"></div>
+    </div>
+    <div class="fnu">13</div>
+    <div class="flb">Messaging</div>
+  </div>
+  <div class="fw">
+    <div class="ph">
+      <div class="psc"><div style="width:100%;height:100%;background:#f8f5ee;display:flex;flex-direction:column"><div class="sbar" style="color:var(--ink)"><span style="font-size:8.5px;font-weight:600">9:41</span><div style="display:flex;gap:3px;align-items:center"><div style="width:4px;height:4px;border-radius:50%;background:rgba(31,35,24,.4)"></div><div style="width:4px;height:4px;border-radius:50%;background:rgba(31,35,24,.4)"></div><div style="width:4px;height:4px;border-radius:50%;background:rgba(31,35,24,.4)"></div></div></div><div style="padding:2px 14px 8px;flex-shrink:0">
+  <div style="font-family:'Lora',Georgia,serif;font-style:italic;font-size:.88rem;color:#1f2318">Notifications</div>
+</div>
+<div style="flex:1;overflow:hidden;padding:0 12px;display:flex;flex-direction:column;gap:5px">
+  <div style="background:rgba(92,122,82,.04);border-radius:11px;padding:9px 10px;border:1px solid rgba(92,122,82,.1);border-left:3px solid #5c7a52;display:flex;gap:8px;align-items:flex-start">
+    <div style="width:28px;height:28px;border-radius:50%;background:rgba(92,122,82,.1);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0">🌲</div>
+    <div>
+      <div style="font-size:7.5px;color:#4a5240;line-height:1.55"><span style="color:#1f2318;font-weight:500">Priya M.</span> sent you a pine tree reaction on your post about lichen.</div>
+      <div style="font-size:6.5px;color:#8a9180;margin-top:2px">2 min ago</div>
+    </div>
+  </div>
+  <div style="background:rgba(92,122,82,.04);border-radius:11px;padding:9px 10px;border:1px solid rgba(92,122,82,.1);border-left:3px solid #5c7a52;display:flex;gap:8px;align-items:flex-start">
+    <div style="width:28px;height:28px;border-radius:50%;background:rgba(92,122,82,.1);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0">💬</div>
+    <div>
+      <div style="font-size:7.5px;color:#4a5240;line-height:1.55"><span style="color:#1f2318;font-weight:500">Jo W.</span> continued the thread on mycelium and organizing.</div>
+      <div style="font-size:6.5px;color:#8a9180;margin-top:2px">12 min ago</div>
+    </div>
+  </div>
+  <div style="background:white;border-radius:11px;padding:9px 10px;border:1px solid #e8e2d4;display:flex;gap:8px;align-items:flex-start">
+    <div style="width:28px;height:28px;border-radius:50%;background:rgba(92,122,82,.1);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0">🌿</div>
+    <div>
+      <div style="font-size:7.5px;color:#4a5240;line-height:1.55"><span style="color:#1f2318;font-weight:500">Sam K.</span> joined the Biomimicry space you&apos;re exploring.</div>
+      <div style="font-size:6.5px;color:#8a9180;margin-top:2px">1 hour ago</div>
+    </div>
+  </div>
+  <div style="background:white;border-radius:11px;padding:9px 10px;border:1px solid #e8e2d4;display:flex;gap:8px;align-items:flex-start">
+    <div style="width:28px;height:28px;border-radius:50%;background:rgba(92,122,82,.1);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0">🌱</div>
+    <div>
+      <div style="font-size:7.5px;color:#4a5240;line-height:1.55"><span style="color:#1f2318;font-weight:500">3 people</span> are exploring craft + digital making — matches your interests.</div>
+      <div style="font-size:6.5px;color:#8a9180;margin-top:2px">3 hours ago</div>
+    </div>
+  </div>
+  <div style="background:white;border-radius:11px;padding:9px 10px;border:1px solid #e8e2d4;display:flex;gap:8px;align-items:flex-start">
+    <div style="width:28px;height:28px;border-radius:50%;background:rgba(92,122,82,.1);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0">🌸</div>
+    <div>
+      <div style="font-size:7.5px;color:#4a5240;line-height:1.55"><span style="color:#1f2318;font-weight:500">Maya T.</span> appreciated your post about co-design sessions.</div>
+      <div style="font-size:6.5px;color:#8a9180;margin-top:2px">Yesterday</div>
+    </div>
+  </div>
+</div></div></div>
+      <div class="pno"></div>
+      <div class="pbt"></div>
+      <div class="pvu"></div>
+      <div class="pvd"></div>
+    </div>
+    <div class="fnu">14</div>
+    <div class="flb">Notifications</div>
+  </div>
+  <div class="fw">
+    <div class="ph">
+      <div class="psc"><div style="width:100%;height:100%;background:#f8f5ee;display:flex;flex-direction:column"><div class="sbar" style="color:var(--ink)"><span style="font-size:8.5px;font-weight:600">9:41</span><div style="display:flex;gap:3px;align-items:center"><div style="width:4px;height:4px;border-radius:50%;background:rgba(31,35,24,.4)"></div><div style="width:4px;height:4px;border-radius:50%;background:rgba(31,35,24,.4)"></div><div style="width:4px;height:4px;border-radius:50%;background:rgba(31,35,24,.4)"></div></div></div><div style="padding:2px 14px 8px;flex-shrink:0">
+  <div style="font-family:'Lora',Georgia,serif;font-style:italic;font-size:.88rem;color:#1f2318;margin-bottom:8px">Discover</div>
+  <div style="background:white;border:1px solid #e8e2d4;border-radius:11px;padding:8px 11px;font-size:8px;color:#8a9180;display:flex;align-items:center;gap:6px;box-shadow:0 1px 4px rgba(31,35,24,.04)">
+    <span style="opacity:.5">🔍</span>
+    <span>Search people, spaces, topics…</span>
+  </div>
+</div>
+<div style="flex:1;overflow:hidden;padding:0 12px">
+  <div style="font-size:7px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#8a9180;margin:5px 0 6px">People in your spaces</div>
+  <div style="display:flex;flex-direction:column;gap:5px;margin-bottom:8px">
+    <div style="background:white;border-radius:11px;padding:8px 10px;border:1px solid #e8e2d4;display:flex;align-items:center;gap:7px">
+      <div style="width:30px;height:30px;border-radius:50%;background:rgba(141,180,204,.2);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0">☁️</div>
+      <div style="flex:1"><div style="font-size:8.5px;font-weight:500;color:#1f2318">Jo W.</div><div style="font-size:7px;color:#8a9180">Design Researcher · Berlin</div></div>
+      <div style="font-size:7px;background:rgba(92,122,82,.1);color:#5c7a52;padding:3px 7px;border-radius:7px;border:1px solid rgba(92,122,82,.2);white-space:nowrap">3 shared</div>
+    </div>
+    <div style="background:white;border-radius:11px;padding:8px 10px;border:1px solid #e8e2d4;display:flex;align-items:center;gap:7px">
+      <div style="width:30px;height:30px;border-radius:50%;background:rgba(176,133,106,.2);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0">🌱</div>
+      <div style="flex:1"><div style="font-size:8.5px;font-weight:500;color:#1f2318">Sam K.</div><div style="font-size:7px;color:#8a9180">Architect · Berlin</div></div>
+      <div style="font-size:7px;background:rgba(92,122,82,.1);color:#5c7a52;padding:3px 7px;border-radius:7px;border:1px solid rgba(92,122,82,.2);white-space:nowrap">2 shared</div>
+    </div>
+    <div style="background:white;border-radius:11px;padding:8px 10px;border:1px solid #e8e2d4;display:flex;align-items:center;gap:7px">
+      <div style="width:30px;height:30px;border-radius:50%;background:rgba(92,122,82,.15);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0">🌿</div>
+      <div style="flex:1"><div style="font-size:8.5px;font-weight:500;color:#1f2318">Maya T.</div><div style="font-size:7px;color:#8a9180">UX Designer · London</div></div>
+      <div style="font-size:7px;background:rgba(92,122,82,.1);color:#5c7a52;padding:3px 7px;border-radius:7px;border:1px solid rgba(92,122,82,.2);white-space:nowrap">5 shared</div>
+    </div>
+  </div>
+  <div style="font-size:7px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#8a9180;margin-bottom:6px">Spaces you might like</div>
+  <div style="background:white;border-radius:12px;padding:10px 11px;border:1px solid rgba(92,122,82,.08);display:flex;gap:8px;align-items:flex-start">
+    <div style="width:28px;height:28px;border-radius:8px;background:rgba(184,168,212,.15);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0">🧠</div>
+    <div>
+      <div style="font-size:8.5px;font-weight:500;color:#1f2318;margin-bottom:2px;line-height:1.3">Cognitive science × design</div>
+      <div style="font-size:7px;color:#5c7a52;font-weight:500">🌱 11 people nearby</div>
+    </div>
+  </div>
+</div>
+<div style="background:var(--ivory);border-top:1px solid var(--cream);display:flex;justify-content:space-around;align-items:center;padding:7px 0 14px;flex-shrink:0"><div style="display:flex;flex-direction:column;align-items:center;gap:2px;font-size:6px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink3)"><span style="font-size:14px">🌿</span>Feed</div><div style="display:flex;flex-direction:column;align-items:center;gap:2px;font-size:6px;letter-spacing:.06em;text-transform:uppercase;color:var(--matcha)"><span style="font-size:14px">🌲</span>Forest</div><div style="display:flex;flex-direction:column;align-items:center;gap:2px;font-size:6px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink3)"><span style="font-size:14px">💬</span>Msg</div><div style="display:flex;flex-direction:column;align-items:center;gap:2px;font-size:6px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink3)"><span style="font-size:14px">👤</span>Profile</div></div></div></div>
+      <div class="pno"></div>
+      <div class="pbt"></div>
+      <div class="pvu"></div>
+      <div class="pvd"></div>
+    </div>
+    <div class="fnu">15</div>
+    <div class="flb">Discover</div>
+  </div>
+  <div class="fw">
+    <div class="ph">
+      <div class="psc"><div style="width:100%;height:100%;background:linear-gradient(175deg,#1a2416 0%,#0d1509 100%);display:flex;flex-direction:column;position:relative;overflow:hidden">
+  <div style="position:absolute;inset:0;background-image:radial-gradient(circle,rgba(92,122,82,.08) 1px,transparent 1px);background-size:20px 20px"></div>
+  <div class="sbar" style="color:rgba(255,255,255,.7)"><span style="font-size:8.5px;font-weight:600">9:41</span><div style="display:flex;gap:3px;align-items:center"><div style="width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.5)"></div><div style="width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.5)"></div><div style="width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.5)"></div></div></div>
+  <div style="flex:1;position:relative;display:flex;align-items:center;justify-content:center">
+    <svg width="210" height="240" viewBox="0 0 210 240" fill="none" style="position:relative;z-index:2">
+      <g opacity="0.3">
+        <line x1="105" y1="120" x2="44" y2="155" stroke="#7a9e70" stroke-width="1.8"/><line x1="105" y1="120" x2="166" y2="150" stroke="#7a9e70" stroke-width="1.8"/>
+        <line x1="105" y1="120" x2="48" y2="85" stroke="#7a9e70" stroke-width="1.8"/><line x1="105" y1="120" x2="162" y2="82" stroke="#7a9e70" stroke-width="1.8"/>
+        <circle cx="44" cy="155" r="13" fill="#3d5c35" stroke="rgba(168,196,158,.3)" stroke-width="1.2"/><text x="44" y="159" text-anchor="middle" font-size="11" fill="white">🌲</text>
+        <circle cx="166" cy="150" r="13" fill="#3d5c35" stroke="rgba(168,196,158,.3)" stroke-width="1.2"/><text x="166" y="154" text-anchor="middle" font-size="11" fill="white">🌲</text>
+        <circle cx="48" cy="85" r="13" fill="#3d5c35" stroke="rgba(168,196,158,.3)" stroke-width="1.2"/><text x="48" y="89" text-anchor="middle" font-size="11" fill="white">🌲</text>
+        <circle cx="162" cy="82" r="13" fill="#3d5c35" stroke="rgba(168,196,158,.3)" stroke-width="1.2"/><text x="162" y="86" text-anchor="middle" font-size="11" fill="white">🌲</text>
+      </g>
+      <circle cx="105" cy="120" r="28" fill="#2d4a2a" stroke="#7a9e70" stroke-width="2.5"/>
+      <circle cx="105" cy="120" r="36" fill="none" stroke="rgba(122,158,126,.22)" stroke-width="1.5" stroke-dasharray="4 4"/>
+      <circle cx="105" cy="120" r="44" fill="none" stroke="rgba(122,158,126,.1)" stroke-width="1" stroke-dasharray="2 5"/>
+      <text x="105" y="126" text-anchor="middle" font-size="20" fill="white">🌲</text>
+    </svg>
+    <!-- Popup card -->
+    <div style="position:absolute;bottom:75px;left:50%;transform:translateX(-50%);background:rgba(26,36,22,.94);backdrop-filter:blur(12px);border:1px solid rgba(122,158,126,.28);border-radius:14px;padding:12px 16px;z-index:10;width:150px;text-align:center;box-shadow:0 8px 24px rgba(0,0,0,.4)">
+      <div style="font-size:24px;margin-bottom:5px">🌿</div>
+      <div style="font-family:'Lora',Georgia,serif;font-style:italic;font-size:.78rem;color:rgba(248,245,238,.92);margin-bottom:2px">Ren Okamoto</div>
+      <div style="font-size:7px;color:rgba(168,196,158,.65);margin-bottom:6px">Systems Designer · Tokyo</div>
+      <div style="font-size:7px;color:rgba(168,196,158,.5);line-height:1.5;margin-bottom:7px;font-style:italic;font-family:'Lora',Georgia,serif">Exploring: mycelium → distributed systems</div>
+      <div style="font-size:7px;color:rgba(92,122,82,.85);margin-bottom:8px;display:flex;align-items:center;justify-content:center;gap:4px">🌿 <span>3 shared spaces</span></div>
+      <div style="background:#5c7a52;color:white;font-size:7.5px;font-weight:600;padding:6px 14px;border-radius:9px;display:inline-block;box-shadow:0 2px 8px rgba(92,122,82,.3)">View profile →</div>
+    </div>
+  </div>
+  <div style="background:rgba(13,21,10,.92);border-top:1px solid rgba(255,255,255,.06);display:flex;justify-content:space-around;align-items:center;padding:7px 0 14px;flex-shrink:0"><div style="display:flex;flex-direction:column;align-items:center;gap:2px;font-size:6px;letter-spacing:.06em;text-transform:uppercase;color:rgba(168,196,158,.35)"><span style="font-size:14px">🌿</span>Feed</div><div style="display:flex;flex-direction:column;align-items:center;gap:2px;font-size:6px;letter-spacing:.06em;text-transform:uppercase;color:rgba(168,196,158,.9)"><span style="font-size:14px">🌲</span>Forest</div><div style="display:flex;flex-direction:column;align-items:center;gap:2px;font-size:6px;letter-spacing:.06em;text-transform:uppercase;color:rgba(168,196,158,.35)"><span style="font-size:14px">💬</span>Msg</div><div style="display:flex;flex-direction:column;align-items:center;gap:2px;font-size:6px;letter-spacing:.06em;text-transform:uppercase;color:rgba(168,196,158,.35)"><span style="font-size:14px">👤</span>Profile</div></div>
+</div></div>
+      <div class="pno"></div>
+      <div class="pbt"></div>
+      <div class="pvu"></div>
+      <div class="pvd"></div>
+    </div>
+    <div class="fnu">16</div>
+    <div class="flb">Forest — node tap</div>
+  </div>
+  <div class="fw">
+    <div class="ph">
+      <div class="psc"><div style="width:100%;height:100%;background:#f8f5ee;display:flex;flex-direction:column"><div class="sbar" style="color:var(--ink)"><span style="font-size:8.5px;font-weight:600">9:41</span><div style="display:flex;gap:3px;align-items:center"><div style="width:4px;height:4px;border-radius:50%;background:rgba(31,35,24,.4)"></div><div style="width:4px;height:4px;border-radius:50%;background:rgba(31,35,24,.4)"></div><div style="width:4px;height:4px;border-radius:50%;background:rgba(31,35,24,.4)"></div></div></div><div style="padding:2px 14px 8px;flex-shrink:0">
+  <div style="font-family:'Lora',Georgia,serif;font-style:italic;font-size:.88rem;color:#1f2318">Settings</div>
+</div>
+<div style="flex:1;overflow:hidden;padding:0 12px;display:flex;flex-direction:column;gap:3px">
+  <div style="font-size:6.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#8a9180;margin:5px 0 3px">Visibility</div>
+  <div style="background:white;border-radius:10px;padding:9px 12px;border:1px solid #e8e2d4;display:flex;align-items:center;justify-content:space-between">
+    <span style="font-size:8.5px;color:#1f2318">Show desk to my forest</span>
+    <div style="width:26px;height:14px;border-radius:7px;background:#5c7a52;position:relative"><div style="position:absolute;top:2px;left:13px;width:10px;height:10px;border-radius:50%;background:white;box-shadow:0 1px 3px rgba(0,0,0,.2)"></div></div>
+  </div>
+  <div style="background:white;border-radius:10px;padding:9px 12px;border:1px solid #e8e2d4;display:flex;align-items:center;justify-content:space-between">
+    <span style="font-size:8.5px;color:#1f2318">Show exploring field</span>
+    <div style="width:26px;height:14px;border-radius:7px;background:#5c7a52;position:relative"><div style="position:absolute;top:2px;left:13px;width:10px;height:10px;border-radius:50%;background:white;box-shadow:0 1px 3px rgba(0,0,0,.2)"></div></div>
+  </div>
+  <div style="background:white;border-radius:10px;padding:9px 12px;border:1px solid #e8e2d4;display:flex;align-items:center;justify-content:space-between">
+    <span style="font-size:8.5px;color:#1f2318">Appear in Discover</span>
+    <div style="width:26px;height:14px;border-radius:7px;background:#e8e2d4;position:relative"><div style="position:absolute;top:2px;left:2px;width:10px;height:10px;border-radius:50%;background:white;box-shadow:0 1px 3px rgba(0,0,0,.2)"></div></div>
+  </div>
+  <div style="font-size:6.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#8a9180;margin:6px 0 3px">Notifications</div>
+  <div style="background:white;border-radius:10px;padding:9px 12px;border:1px solid #e8e2d4;display:flex;align-items:center;justify-content:space-between">
+    <span style="font-size:8.5px;color:#1f2318">Reactions to my posts</span>
+    <div style="width:26px;height:14px;border-radius:7px;background:#5c7a52;position:relative"><div style="position:absolute;top:2px;left:13px;width:10px;height:10px;border-radius:50%;background:white;box-shadow:0 1px 3px rgba(0,0,0,.2)"></div></div>
+  </div>
+  <div style="background:white;border-radius:10px;padding:9px 12px;border:1px solid #e8e2d4;display:flex;align-items:center;justify-content:space-between">
+    <span style="font-size:8.5px;color:#1f2318">Thread replies</span>
+    <div style="width:26px;height:14px;border-radius:7px;background:#5c7a52;position:relative"><div style="position:absolute;top:2px;left:13px;width:10px;height:10px;border-radius:50%;background:white;box-shadow:0 1px 3px rgba(0,0,0,.2)"></div></div>
+  </div>
+  <div style="background:white;border-radius:10px;padding:9px 12px;border:1px solid #e8e2d4;display:flex;align-items:center;justify-content:space-between">
+    <span style="font-size:8.5px;color:#1f2318">New people in spaces</span>
+    <div style="width:26px;height:14px;border-radius:7px;background:#e8e2d4;position:relative"><div style="position:absolute;top:2px;left:2px;width:10px;height:10px;border-radius:50%;background:white;box-shadow:0 1px 3px rgba(0,0,0,.2)"></div></div>
+  </div>
+  <div style="font-size:6.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#8a9180;margin:6px 0 3px">Account</div>
+  <div style="background:white;border-radius:10px;padding:9px 12px;border:1px solid #e8e2d4;display:flex;align-items:center;justify-content:space-between">
+    <span style="font-size:8.5px;color:#1f2318">Email</span>
+    <span style="font-size:7.5px;color:#8a9180">ren@okamoto.io</span>
+  </div>
+</div></div></div>
+      <div class="pno"></div>
+      <div class="pbt"></div>
+      <div class="pvu"></div>
+      <div class="pvd"></div>
+    </div>
+    <div class="fnu">17</div>
+    <div class="flb">Settings</div>
+  </div>
+  <div class="fw">
+    <div class="ph">
+      <div class="psc"><div style="width:100%;height:100%;background:#f8f5ee;display:flex;flex-direction:column"><div class="sbar" style="color:var(--ink)"><span style="font-size:8.5px;font-weight:600">9:41</span><div style="display:flex;gap:3px;align-items:center"><div style="width:4px;height:4px;border-radius:50%;background:rgba(31,35,24,.4)"></div><div style="width:4px;height:4px;border-radius:50%;background:rgba(31,35,24,.4)"></div><div style="width:4px;height:4px;border-radius:50%;background:rgba(31,35,24,.4)"></div></div></div><div style="padding:2px 14px 6px;flex-shrink:0">
+  <div style="font-family:'Lora',Georgia,serif;font-style:italic;font-size:.88rem;color:#1f2318">Messages</div>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;text-align:center">
+  <div style="width:72px;height:72px;border-radius:50%;background:rgba(92,122,82,.08);display:flex;align-items:center;justify-content:center;font-size:36px;margin-bottom:14px">🌱</div>
+  <div style="font-family:'Lora',Georgia,serif;font-style:italic;font-size:.88rem;color:#1f2318;margin-bottom:7px">Your forest is quiet.</div>
+  <div style="font-size:8px;color:#8a9180;line-height:1.65;max-width:140px;margin-bottom:16px">Messages start through shared spaces or desk objects — not cold outreach.</div>
+  <div style="background:#2d4a2a;color:white;font-size:8.5px;font-weight:600;padding:9px 20px;border-radius:11px;letter-spacing:.04em;box-shadow:0 4px 12px rgba(45,74,42,.25)">Explore spaces →</div>
+</div>
+<div style="background:var(--ivory);border-top:1px solid var(--cream);display:flex;justify-content:space-around;align-items:center;padding:7px 0 14px;flex-shrink:0"><div style="display:flex;flex-direction:column;align-items:center;gap:2px;font-size:6px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink3)"><span style="font-size:14px">🌿</span>Feed</div><div style="display:flex;flex-direction:column;align-items:center;gap:2px;font-size:6px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink3)"><span style="font-size:14px">🌲</span>Forest</div><div style="display:flex;flex-direction:column;align-items:center;gap:2px;font-size:6px;letter-spacing:.06em;text-transform:uppercase;color:var(--matcha)"><span style="font-size:14px">💬</span>Msg</div><div style="display:flex;flex-direction:column;align-items:center;gap:2px;font-size:6px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink3)"><span style="font-size:14px">👤</span>Profile</div></div></div></div>
+      <div class="pno"></div>
+      <div class="pbt"></div>
+      <div class="pvu"></div>
+      <div class="pvd"></div>
+    </div>
+    <div class="fnu">18</div>
+    <div class="flb">Empty state</div>
+  </div>
+  <div class="fw">
+    <div class="ph">
+      <div class="psc"><div style="width:100%;height:100%;background:#f8f5ee;display:flex;flex-direction:column"><div class="sbar" style="color:var(--ink)"><span style="font-size:8.5px;font-weight:600">9:41</span><div style="display:flex;gap:3px;align-items:center"><div style="width:4px;height:4px;border-radius:50%;background:rgba(31,35,24,.4)"></div><div style="width:4px;height:4px;border-radius:50%;background:rgba(31,35,24,.4)"></div><div style="width:4px;height:4px;border-radius:50%;background:rgba(31,35,24,.4)"></div></div></div><div style="height:2.5px;background:#e8e2d4;margin:0 14px 10px"><div style="height:100%;width:100%;background:#5c7a52;border-radius:2px"></div></div>
+<div style="flex:1;padding:0 16px;display:flex;flex-direction:column">
+  <div style="font-size:7.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#5c7a52;margin-bottom:5px">Final step</div>
+  <div style="font-family:'Lora',Georgia,serif;font-style:italic;font-size:.88rem;color:#1f2318;margin-bottom:7px;line-height:1.25">Your forest<br>starts here.</div>
+  <div style="font-size:7.5px;color:#4a5240;line-height:1.62;margin-bottom:12px">Your network is a living ecosystem. Connections form branches. Depth becomes distance. Understanding replaces performance.</div>
+  <div style="flex:1;background:linear-gradient(175deg,#1a2416 0%,#0d1509 100%);border-radius:14px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;margin-bottom:12px">
+    <div style="position:absolute;inset:0;background-image:radial-gradient(circle,rgba(92,122,82,.08) 1px,transparent 1px);background-size:16px 16px"></div>
+    <svg width="150" height="110" viewBox="0 0 150 110" fill="none" style="position:relative;z-index:2">
+      <line x1="75" y1="55" x2="34" y2="78" stroke="#7a9e70" stroke-width="1.6"/><line x1="75" y1="55" x2="116" y2="75" stroke="#7a9e70" stroke-width="1.6"/>
+      <line x1="75" y1="55" x2="36" y2="32" stroke="#7a9e70" stroke-width="1.6"/><line x1="75" y1="55" x2="114" y2="30" stroke="#7a9e70" stroke-width="1.6"/>
+      <circle cx="34" cy="78" r="11" fill="#5c7a52" stroke="#a8c49e" stroke-width="1.2"/><text x="34" y="82" text-anchor="middle" font-size="10" fill="white">🌲</text>
+      <circle cx="116" cy="75" r="11" fill="#5c7a52" stroke="#a8c49e" stroke-width="1.2"/><text x="116" y="79" text-anchor="middle" font-size="10" fill="white">🌲</text>
+      <circle cx="36" cy="32" r="11" fill="#5c7a52" stroke="#a8c49e" stroke-width="1.2"/><text x="36" y="36" text-anchor="middle" font-size="10" fill="white">🌲</text>
+      <circle cx="114" cy="30" r="11" fill="#5c7a52" stroke="#a8c49e" stroke-width="1.2"/><text x="114" y="34" text-anchor="middle" font-size="10" fill="white">🌲</text>
+      <circle cx="75" cy="55" r="19" fill="#2d4a2a" stroke="#7a9e70" stroke-width="2"/>
+      <circle cx="75" cy="55" r="25" fill="none" stroke="rgba(122,158,126,.18)" stroke-width="1" stroke-dasharray="3 3"/>
+      <text x="75" y="60" text-anchor="middle" font-size="15" fill="white">🌲</text>
+    </svg>
+  </div>
+  <div style="background:#2d4a2a;color:white;border-radius:11px;padding:10px;text-align:center;font-size:9px;font-weight:600;letter-spacing:.05em;box-shadow:0 4px 12px rgba(45,74,42,.3)">Enter your forest →</div>
+</div>
+<div style="height:12px"></div></div></div>
+      <div class="pno"></div>
+      <div class="pbt"></div>
+      <div class="pvu"></div>
+      <div class="pvd"></div>
+    </div>
+    <div class="fnu">19</div>
+    <div class="flb">Onboarding — forest intro</div>
+  </div>
+  <div class="fw">
+    <div class="ph">
+      <div class="psc"><div style="width:100%;height:100%;background:#f8f5ee;display:flex;flex-direction:column"><div class="sbar" style="color:var(--ink)"><span style="font-size:8.5px;font-weight:600">9:41</span><div style="display:flex;gap:3px;align-items:center"><div style="width:4px;height:4px;border-radius:50%;background:rgba(31,35,24,.4)"></div><div style="width:4px;height:4px;border-radius:50%;background:rgba(31,35,24,.4)"></div><div style="width:4px;height:4px;border-radius:50%;background:rgba(31,35,24,.4)"></div></div></div><div style="padding:3px 14px 9px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #e8e2d4;flex-shrink:0">
+  <div style="font-size:8px;color:#8a9180">Cancel</div>
+  <div style="font-size:8.5px;font-weight:500;color:#1f2318">Edit profile</div>
+  <div style="font-size:8px;font-weight:600;color:#5c7a52">Save</div>
+</div>
+<div style="flex:1;overflow:hidden;padding:10px 14px 0;display:flex;flex-direction:column;gap:9px">
+  <div style="display:flex;align-items:center;gap:10px">
+    <div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#8faa86,#5c7a52);display:flex;align-items:center;justify-content:center;font-size:19px;border:2.5px solid #e8e2d4;flex-shrink:0">🌿</div>
+    <div>
+      <div style="font-size:7.5px;color:#5c7a52;font-weight:500">Change photo</div>
+      <div style="font-size:6.5px;color:#8a9180;margin-top:1px">Used in your forest node</div>
+    </div>
+  </div>
+  <div>
+    <div style="font-size:6.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#8a9180;margin-bottom:4px">Name</div>
+    <div style="background:white;border:1.5px solid #5c7a52;border-radius:9px;padding:8px 10px;font-size:9px;color:#1f2318;box-shadow:0 0 0 3px rgba(92,122,82,.08)">Ren Okamoto</div>
+  </div>
+  <div>
+    <div style="font-size:6.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#8a9180;margin-bottom:4px">Role &amp; location</div>
+    <div style="background:white;border:1px solid #e8e2d4;border-radius:9px;padding:8px 10px;font-size:9px;color:#4a5240">Systems Designer · Tokyo</div>
+  </div>
+  <div>
+    <div style="font-size:6.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#8a9180;margin-bottom:4px">Short bio</div>
+    <div style="background:white;border:1px solid #e8e2d4;border-radius:9px;padding:8px 10px;font-size:8px;color:#4a5240">Interested in ecological thinking and interface design.</div>
+  </div>
+  <div>
+    <div style="font-size:6.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#8a9180;margin-bottom:4px">Currently exploring</div>
+    <div style="background:rgba(92,122,82,.07);border:1px solid rgba(92,122,82,.2);border-radius:9px;padding:8px 10px;font-size:8px;color:#4a5240;font-style:italic;font-family:'Lora',Georgia,serif;line-height:1.55;min-height:44px">How mycelium communication patterns might inform distributed system architecture…</div>
+  </div>
+</div></div></div>
+      <div class="pno"></div>
+      <div class="pbt"></div>
+      <div class="pvu"></div>
+      <div class="pvd"></div>
+    </div>
+    <div class="fnu">20</div>
+    <div class="flb">Edit profile</div>
+  </div>
+  <div class="fw">
+    <div class="ph">
+      <div class="psc"><div style="width:100%;height:100%;background:linear-gradient(175deg,#141e12 0%,#0a1208 100%);display:flex;flex-direction:column;position:relative;overflow:hidden">
+  <div style="position:absolute;inset:0;background-image:radial-gradient(circle,rgba(92,122,82,.06) 1px,transparent 1px);background-size:24px 24px"></div>
+  <div class="sbar" style="color:rgba(255,255,255,.7)"><span style="font-size:8.5px;font-weight:600">9:41</span><div style="display:flex;gap:3px;align-items:center"><div style="width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.5)"></div><div style="width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.5)"></div><div style="width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.5)"></div></div></div>
+  <div style="padding:0 14px 4px;display:flex;justify-content:space-between;align-items:center;position:relative;z-index:5;flex-shrink:0">
+    <div style="font-family:'Lora',Georgia,serif;font-style:italic;font-size:.78rem;color:rgba(248,245,238,.75)">Forest · depth view</div>
+    <div style="display:flex;gap:5px">
+      <div style="font-size:6.5px;color:rgba(168,196,158,.55);border:1px solid rgba(168,196,158,.2);border-radius:6px;padding:2px 7px">1°</div>
+      <div style="font-size:6.5px;color:rgba(168,196,158,.9);border:1px solid rgba(168,196,158,.4);border-radius:6px;padding:2px 7px;background:rgba(92,122,82,.12)">2°</div>
+    </div>
+  </div>
+  <div style="flex:1;display:flex;align-items:center;justify-content:center;position:relative">
+    <svg width="220" height="270" viewBox="0 0 220 270" fill="none">
+      <!-- 3rd degree very faint -->
+      <g opacity="0.06">
+        <line x1="110" y1="135" x2="10" y2="240" stroke="#5c7a52" stroke-width="0.6"/><line x1="110" y1="135" x2="210" y2="235" stroke="#5c7a52" stroke-width="0.6"/>
+        <circle cx="10" cy="240" r="4" fill="#1a2a18"/><circle cx="210" cy="235" r="4" fill="#1a2a18"/>
+      </g>
+      <!-- 2nd degree -->
+      <g opacity="0.2">
+        <line x1="110" y1="135" x2="22" y2="200" stroke="#5c7a52" stroke-width="0.9"/><line x1="110" y1="135" x2="198" y2="195" stroke="#5c7a52" stroke-width="0.9"/>
+        <line x1="110" y1="135" x2="20" y2="70" stroke="#5c7a52" stroke-width="0.9"/><line x1="110" y1="135" x2="200" y2="68" stroke="#5c7a52" stroke-width="0.9"/>
+        <circle cx="22" cy="200" r="9" fill="#233820"/><text x="22" y="204" text-anchor="middle" font-size="8" fill="rgba(168,196,158,.45)">🌲</text>
+        <circle cx="198" cy="195" r="9" fill="#233820"/><text x="198" y="199" text-anchor="middle" font-size="8" fill="rgba(168,196,158,.45)">🌲</text>
+        <circle cx="20" cy="70" r="9" fill="#233820"/><text x="20" y="74" text-anchor="middle" font-size="8" fill="rgba(168,196,158,.45)">🌲</text>
+        <circle cx="200" cy="68" r="9" fill="#233820"/><text x="200" y="72" text-anchor="middle" font-size="8" fill="rgba(168,196,158,.45)">🌲</text>
+      </g>
+      <!-- 1st degree -->
+      <line x1="110" y1="135" x2="55" y2="180" stroke="#7a9e70" stroke-width="1.8"/><line x1="110" y1="135" x2="165" y2="175" stroke="#7a9e70" stroke-width="1.8"/>
+      <line x1="110" y1="135" x2="58" y2="90" stroke="#7a9e70" stroke-width="1.8"/><line x1="110" y1="135" x2="162" y2="88" stroke="#7a9e70" stroke-width="1.8"/>
+      <line x1="110" y1="135" x2="110" y2="60" stroke="#7a9e70" stroke-width="1.8"/>
+      <circle cx="55" cy="180" r="14" fill="#4a6e40" stroke="#a8c49e" stroke-width="1.5"/><text x="55" y="184" text-anchor="middle" font-size="11" fill="white">🌲</text>
+      <text x="55" y="200" text-anchor="middle" font-size="6.5" fill="rgba(200,220,190,.5)">Priya</text>
+      <circle cx="165" cy="175" r="14" fill="#4a6e40" stroke="#a8c49e" stroke-width="1.5"/><text x="165" y="179" text-anchor="middle" font-size="11" fill="white">🌲</text>
+      <text x="165" y="195" text-anchor="middle" font-size="6.5" fill="rgba(200,220,190,.5)">Jo</text>
+      <circle cx="58" cy="90" r="14" fill="#4a6e40" stroke="#a8c49e" stroke-width="1.5"/><text x="58" y="94" text-anchor="middle" font-size="11" fill="white">🌲</text>
+      <text x="58" y="110" text-anchor="middle" font-size="6.5" fill="rgba(200,220,190,.5)">Ren K.</text>
+      <circle cx="162" cy="88" r="14" fill="#4a6e40" stroke="#a8c49e" stroke-width="1.5"/><text x="162" y="92" text-anchor="middle" font-size="11" fill="white">🌲</text>
+      <text x="162" y="108" text-anchor="middle" font-size="6.5" fill="rgba(200,220,190,.5)">Sam</text>
+      <circle cx="110" cy="60" r="14" fill="#4a6e40" stroke="#a8c49e" stroke-width="1.5"/><text x="110" y="64" text-anchor="middle" font-size="11" fill="white">🌲</text>
+      <text x="110" y="80" text-anchor="middle" font-size="6.5" fill="rgba(200,220,190,.5)">Maya T.</text>
+      <!-- You -->
+      <circle cx="110" cy="135" r="22" fill="#2d4a2a" stroke="#7a9e70" stroke-width="2.5"/>
+      <circle cx="110" cy="135" r="28" fill="none" stroke="rgba(122,158,126,.18)" stroke-width="1" stroke-dasharray="3 3"/>
+      <text x="110" y="140" text-anchor="middle" font-size="16" fill="white">🌲</text>
+      <text x="110" y="154" text-anchor="middle" font-size="6.5" fill="rgba(200,220,190,.6)">you</text>
+    </svg>
+    <!-- legend -->
+    <div style="position:absolute;bottom:10px;left:50%;transform:translateX(-50%);display:flex;gap:10px">
+      <div style="display:flex;align-items:center;gap:4px;font-size:6px;color:rgba(168,196,158,.55)"><div style="width:8px;height:1px;background:rgba(122,158,126,.4)"></div>1st degree</div>
+      <div style="display:flex;align-items:center;gap:4px;font-size:6px;color:rgba(168,196,158,.35)"><div style="width:8px;height:1px;background:rgba(92,122,82,.25)"></div>2nd degree</div>
+    </div>
+  </div>
+  <div style="background:rgba(13,21,10,.92);border-top:1px solid rgba(255,255,255,.06);display:flex;justify-content:space-around;align-items:center;padding:7px 0 14px;flex-shrink:0"><div style="display:flex;flex-direction:column;align-items:center;gap:2px;font-size:6px;letter-spacing:.06em;text-transform:uppercase;color:rgba(168,196,158,.35)"><span style="font-size:14px">🌿</span>Feed</div><div style="display:flex;flex-direction:column;align-items:center;gap:2px;font-size:6px;letter-spacing:.06em;text-transform:uppercase;color:rgba(168,196,158,.9)"><span style="font-size:14px">🌲</span>Forest</div><div style="display:flex;flex-direction:column;align-items:center;gap:2px;font-size:6px;letter-spacing:.06em;text-transform:uppercase;color:rgba(168,196,158,.35)"><span style="font-size:14px">💬</span>Msg</div><div style="display:flex;flex-direction:column;align-items:center;gap:2px;font-size:6px;letter-spacing:.06em;text-transform:uppercase;color:rgba(168,196,158,.35)"><span style="font-size:14px">👤</span>Profile</div></div>
+</div></div>
+      <div class="pno"></div>
+      <div class="pbt"></div>
+      <div class="pvu"></div>
+      <div class="pvd"></div>
+    </div>
+    <div class="fnu">21</div>
+    <div class="flb">Forest — depth view</div>
+  </div>
+  <div class="fw">
+    <div class="ph">
+      <div class="psc"><div style="width:100%;height:100%;background:#f8f5ee;display:flex;flex-direction:column"><div class="sbar" style="color:var(--ink)"><span style="font-size:8.5px;font-weight:600">9:41</span><div style="display:flex;gap:3px;align-items:center"><div style="width:4px;height:4px;border-radius:50%;background:rgba(31,35,24,.4)"></div><div style="width:4px;height:4px;border-radius:50%;background:rgba(31,35,24,.4)"></div><div style="width:4px;height:4px;border-radius:50%;background:rgba(31,35,24,.4)"></div></div></div><div style="height:2.5px;background:#e8e2d4;margin:0 14px 12px"><div style="height:100%;width:66%;background:linear-gradient(90deg,#5c7a52,#7a9e70);border-radius:2px"></div></div>
+<div style="flex:1;padding:0 14px;overflow:hidden">
+  <div style="font-size:6.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#5c7a52;margin-bottom:4px">Step 2 of 3</div>
+  <div style="font-family:'Lora',Georgia,serif;font-style:italic;font-size:.9rem;color:#1f2318;margin-bottom:5px;line-height:1.25">Where are you in your work right now?</div>
+  <div style="font-size:7.5px;color:#8a9180;margin-bottom:12px">Not your job title — what you&apos;re actually doing.</div>
+  <div style="display:flex;flex-direction:column;gap:5px">
+    <div style="background:white;border:1.5px solid #5c7a52;border-radius:11px;padding:10px 12px;display:flex;align-items:center;gap:8px;box-shadow:0 0 0 3px rgba(92,122,82,.08)">
+      <span style="font-size:16px">🌱</span>
+      <div>
+        <div style="font-size:8.5px;font-weight:500;color:#1f2318;margin-bottom:2px">Building something new</div>
+        <div style="font-size:7px;color:#8a9180">Founding, prototyping, or starting fresh</div>
+      </div>
+      <div style="margin-left:auto;width:16px;height:16px;border-radius:50%;background:#5c7a52;display:flex;align-items:center;justify-content:center;flex-shrink:0"><span style="color:white;font-size:8px">✓</span></div>
+    </div>
+    <div style="background:white;border:1px solid #e8e2d4;border-radius:11px;padding:10px 12px;display:flex;align-items:center;gap:8px">
+      <span style="font-size:16px">🌿</span>
+      <div>
+        <div style="font-size:8.5px;font-weight:500;color:#1f2318;margin-bottom:2px">Growing steadily</div>
+        <div style="font-size:7px;color:#8a9180">In role, exploring within it</div>
+      </div>
+    </div>
+    <div style="background:white;border:1px solid #e8e2d4;border-radius:11px;padding:10px 12px;display:flex;align-items:center;gap:8px">
+      <span style="font-size:16px">🌲</span>
+      <div>
+        <div style="font-size:8.5px;font-weight:500;color:#1f2318;margin-bottom:2px">Transitioning</div>
+        <div style="font-size:7px;color:#8a9180">Between paths or figuring out what&apos;s next</div>
+      </div>
+    </div>
+    <div style="background:white;border:1px solid #e8e2d4;border-radius:11px;padding:10px 12px;display:flex;align-items:center;gap:8px">
+      <span style="font-size:16px">🍂</span>
+      <div>
+        <div style="font-size:8.5px;font-weight:500;color:#1f2318;margin-bottom:2px">Reflecting &amp; resting</div>
+        <div style="font-size:7px;color:#8a9180">Between chapters, intentionally slow</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div style="padding:10px 14px 12px">
+  <div style="background:#2d4a2a;color:white;border-radius:11px;padding:10px;text-align:center;font-size:9px;font-weight:600;letter-spacing:.05em;box-shadow:0 4px 12px rgba(45,74,42,.25)">Continue →</div>
+</div></div></div>
+      <div class="pno"></div>
+      <div class="pbt"></div>
+      <div class="pvu"></div>
+      <div class="pvd"></div>
+    </div>
+    <div class="fnu">22</div>
+    <div class="flb">Onboarding — context step</div>
+  </div>
+  <div class="fw">
+    <div class="ph">
+      <div class="psc"><div style="width:100%;height:100%;background:linear-gradient(175deg,#1a2416 0%,#0d1509 100%);display:flex;flex-direction:column;position:relative;overflow:hidden">
+  <div style="position:absolute;inset:0;background-image:radial-gradient(circle,rgba(92,122,82,.08) 1px,transparent 1px);background-size:20px 20px"></div>
+  <div class="sbar" style="color:rgba(255,255,255,.7)"><span style="font-size:8.5px;font-weight:600">9:41</span><div style="display:flex;gap:3px;align-items:center"><div style="width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.5)"></div><div style="width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.5)"></div><div style="width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.5)"></div></div></div>
+  <div style="padding:0 14px 6px;position:relative;z-index:5;flex-shrink:0">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+      <div style="font-family:'Lora',Georgia,serif;font-style:italic;font-size:.78rem;color:rgba(248,245,238,.8)">Forest · filtered</div>
+      <div style="font-size:7px;color:rgba(168,196,158,.65);border:1px solid rgba(168,196,158,.25);border-radius:7px;padding:2px 8px">✕ Clear</div>
+    </div>
+    <div style="background:rgba(92,122,82,.15);border:1px solid rgba(92,122,82,.3);border-radius:9px;padding:5px 10px;display:flex;align-items:center;gap:5px">
+      <span style="font-size:10px">🌿</span>
+      <span style="font-size:7.5px;color:rgba(168,196,158,.85);font-weight:500">Biomimicry space</span>
+      <span style="font-size:6.5px;color:rgba(168,196,158,.5);margin-left:auto">14 people</span>
+    </div>
+  </div>
+  <div style="flex:1;display:flex;align-items:center;justify-content:center;position:relative">
+    <svg width="210" height="220" viewBox="0 0 210 220" fill="none">
+      <line x1="105" y1="110" x2="52" y2="155" stroke="#7a9e70" stroke-width="2"/><line x1="105" y1="110" x2="158" y2="150" stroke="#7a9e70" stroke-width="2"/>
+      <line x1="105" y1="110" x2="55" y2="65" stroke="#7a9e70" stroke-width="2"/><line x1="105" y1="110" x2="155" y2="62" stroke="#7a9e70" stroke-width="2"/>
+      <line x1="105" y1="110" x2="105" y2="45" stroke="#7a9e70" stroke-width="2"/>
+      <!-- Space highlight ring -->
+      <circle cx="105" cy="110" r="60" fill="none" stroke="rgba(92,122,82,.12)" stroke-width="1.5" stroke-dasharray="5 4"/>
+      <circle cx="52" cy="155" r="16" fill="#5c7a52" stroke="#a8c49e" stroke-width="1.8"/><text x="52" y="159" text-anchor="middle" font-size="13" fill="white">🌲</text>
+      <text x="52" y="178" text-anchor="middle" font-size="6.5" fill="rgba(200,220,190,.55)">Priya</text>
+      <circle cx="158" cy="150" r="16" fill="#5c7a52" stroke="#a8c49e" stroke-width="1.8"/><text x="158" y="154" text-anchor="middle" font-size="13" fill="white">🌲</text>
+      <text x="158" y="173" text-anchor="middle" font-size="6.5" fill="rgba(200,220,190,.55)">Jo</text>
+      <circle cx="55" cy="65" r="16" fill="#5c7a52" stroke="#a8c49e" stroke-width="1.8"/><text x="55" y="69" text-anchor="middle" font-size="13" fill="white">🌲</text>
+      <text x="55" y="88" text-anchor="middle" font-size="6.5" fill="rgba(200,220,190,.55)">Sam</text>
+      <circle cx="155" cy="62" r="16" fill="#5c7a52" stroke="#a8c49e" stroke-width="1.8"/><text x="155" y="66" text-anchor="middle" font-size="13" fill="white">🌲</text>
+      <text x="155" y="85" text-anchor="middle" font-size="6.5" fill="rgba(200,220,190,.55)">Maya T.</text>
+      <circle cx="105" cy="45" r="16" fill="#5c7a52" stroke="#a8c49e" stroke-width="1.8"/><text x="105" y="49" text-anchor="middle" font-size="13" fill="white">🌲</text>
+      <text x="105" y="68" text-anchor="middle" font-size="6.5" fill="rgba(200,220,190,.55)">Ava L.</text>
+      <!-- You -->
+      <circle cx="105" cy="110" r="22" fill="#2d4a2a" stroke="#7a9e70" stroke-width="2.5"/>
+      <circle cx="105" cy="110" r="28" fill="none" stroke="rgba(122,158,126,.18)" stroke-width="1" stroke-dasharray="3 3"/>
+      <text x="105" y="115" text-anchor="middle" font-size="16" fill="white">🌲</text>
+      <text x="105" y="130" text-anchor="middle" font-size="6.5" fill="rgba(200,220,190,.6)">you</text>
+    </svg>
+  </div>
+  <div style="background:rgba(13,21,10,.92);border-top:1px solid rgba(255,255,255,.06);display:flex;justify-content:space-around;align-items:center;padding:7px 0 14px;flex-shrink:0"><div style="display:flex;flex-direction:column;align-items:center;gap:2px;font-size:6px;letter-spacing:.06em;text-transform:uppercase;color:rgba(168,196,158,.35)"><span style="font-size:14px">🌿</span>Feed</div><div style="display:flex;flex-direction:column;align-items:center;gap:2px;font-size:6px;letter-spacing:.06em;text-transform:uppercase;color:rgba(168,196,158,.9)"><span style="font-size:14px">🌲</span>Forest</div><div style="display:flex;flex-direction:column;align-items:center;gap:2px;font-size:6px;letter-spacing:.06em;text-transform:uppercase;color:rgba(168,196,158,.35)"><span style="font-size:14px">💬</span>Msg</div><div style="display:flex;flex-direction:column;align-items:center;gap:2px;font-size:6px;letter-spacing:.06em;text-transform:uppercase;color:rgba(168,196,158,.35)"><span style="font-size:14px">👤</span>Profile</div></div>
+</div></div>
+      <div class="pno"></div>
+      <div class="pbt"></div>
+      <div class="pvu"></div>
+      <div class="pvd"></div>
+    </div>
+    <div class="fnu">23</div>
+    <div class="flb">Forest — filtered by space</div>
+  </div>
+  <div class="fw">
+    <div class="ph">
+      <div class="psc"><div style="width:100%;height:100%;background:#f8f5ee;display:flex;flex-direction:column"><div class="sbar" style="color:var(--ink)"><span style="font-size:8.5px;font-weight:600">9:41</span><div style="display:flex;gap:3px;align-items:center"><div style="width:4px;height:4px;border-radius:50%;background:rgba(31,35,24,.4)"></div><div style="width:4px;height:4px;border-radius:50%;background:rgba(31,35,24,.4)"></div><div style="width:4px;height:4px;border-radius:50%;background:rgba(31,35,24,.4)"></div></div></div><div style="padding:3px 14px 8px;display:flex;align-items:center;gap:8px;flex-shrink:0">
+  <div style="font-size:10px;color:#5c7a52">←</div>
+  <div style="font-size:8.5px;font-weight:500;color:#1f2318">Post</div>
+</div>
+<div style="flex:1;overflow:hidden;padding:0 12px;display:flex;flex-direction:column;gap:8px">
+  <div style="background:white;border-radius:13px;padding:12px;border:1px solid rgba(92,122,82,.1);box-shadow:0 1px 6px rgba(31,35,24,.05)">
+    <div style="display:flex;align-items:center;gap:7px;margin-bottom:9px">
+      <div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#8faa86,#5c7a52);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0">🌿</div>
+      <div style="flex:1">
+        <div style="font-size:9px;font-weight:500;color:#1f2318">Ren Okamoto</div>
+        <div style="font-size:7px;color:#8a9180">Systems Designer · Tokyo · 6 hours ago</div>
+      </div>
+      <div style="font-size:7.5px;color:#5c7a52;border:1px solid rgba(92,122,82,.22);padding:3px 8px;border-radius:7px">Follow</div>
+    </div>
+    <div style="font-size:9px;color:#4a5240;font-style:italic;font-family:'Lora',Georgia,serif;line-height:1.65;margin-bottom:10px">"Something about the way lichen grows on rocks — it doesn&apos;t consume, it collaborates. What if interface affordances worked that way? Not taking attention, but sharing it. Designing for mutual benefit rather than engagement capture."</div>
+    <div style="background:rgba(92,122,82,.06);border:1px solid rgba(92,122,82,.15);border-radius:8px;padding:6px 9px;display:flex;align-items:center;gap:5px;margin-bottom:10px">
+      <span style="font-size:9px">🌿</span>
+      <span style="font-size:7px;color:#5c7a52">Biomimicry space</span>
+    </div>
+    <div style="display:flex;gap:5px;flex-wrap:wrap">
+      <div style="display:flex;align-items:center;gap:3px;font-size:7.5px;padding:4px 9px;border-radius:9px;background:rgba(92,122,82,.1);border:1px solid rgba(92,122,82,.22);color:#5c7a52">🌲 resonates · 12</div>
+      <div style="display:flex;align-items:center;gap:3px;font-size:7.5px;padding:4px 8px;border-radius:9px;border:1px solid #e8e2d4;color:#8a9180;background:#f0ece2">🌱 5</div>
+      <div style="display:flex;align-items:center;gap:3px;font-size:7.5px;padding:4px 8px;border-radius:9px;border:1px solid #e8e2d4;color:#8a9180;background:#f0ece2">🌸 3</div>
+      <div style="display:flex;align-items:center;gap:3px;font-size:7.5px;padding:4px 8px;border-radius:9px;border:1px solid #e8e2d4;color:#8a9180;background:#f0ece2">💬 7</div>
+    </div>
+  </div>
+  <div style="font-size:7px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#8a9180;margin:2px 0">7 replies from your forest</div>
+  <div style="display:flex;gap:5px;align-items:flex-start">
+    <div style="width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#8db4cc,#5a7a9e);flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;font-size:10px">☁️</div>
+    <div style="background:white;border-radius:11px;padding:7px 9px;border:1px solid #e8e2d4;flex:1">
+      <div style="font-size:7.5px;font-weight:500;color:#1f2318;margin-bottom:3px">Jo W.</div>
+      <div style="font-size:7.5px;color:#4a5240;line-height:1.55">Lichen as a model for interface design is exactly the kind of metaphor I didn&apos;t know I needed.</div>
+    </div>
+  </div>
+  <div style="display:flex;gap:5px;align-items:flex-start;padding-left:20px">
+    <div style="width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#8faa86,#5c7a52);flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;font-size:10px">🌿</div>
+    <div style="background:rgba(92,122,82,.08);border-radius:11px;padding:7px 9px;border:1px solid rgba(92,122,82,.18);flex:1">
+      <div style="font-size:7.5px;font-weight:500;color:#5c7a52;margin-bottom:3px">Ren O. (author)</div>
+      <div style="font-size:7.5px;color:#4a5240;line-height:1.55">Right — and lichen&apos;s success comes from neither partner dominating. The design parallel there is really interesting.</div>
+    </div>
+  </div>
+</div>
+<div style="padding:6px 12px 8px;display:flex;gap:6px;border-top:1px solid #e8e2d4;flex-shrink:0">
+  <div style="flex:1;background:white;border:1px solid #e8e2d4;border-radius:9px;padding:7px 11px;font-size:7.5px;color:#8a9180;font-style:italic;font-family:'Lora',Georgia,serif">Add to the thread…</div>
+  <div style="width:28px;height:28px;border-radius:50%;background:#5c7a52;display:flex;align-items:center;justify-content:center;color:white;font-size:11px;flex-shrink:0">→</div>
+</div></div></div>
+      <div class="pno"></div>
+      <div class="pbt"></div>
+      <div class="pvu"></div>
+      <div class="pvd"></div>
+    </div>
+    <div class="fnu">24</div>
+    <div class="flb">Post detail</div>
+  </div>
+  <div class="fw">
+    <div class="ph">
+      <div class="psc"><div style="width:100%;height:100%;background:linear-gradient(175deg,#1c2a18 0%,#0e1a0a 100%);display:flex;flex-direction:column;position:relative;overflow:hidden">
+  <div style="position:absolute;inset:0;background-image:radial-gradient(circle,rgba(92,122,82,.07) 1px,transparent 1px);background-size:18px 18px"></div>
+  <div class="sbar" style="color:rgba(255,255,255,.7)"><span style="font-size:8.5px;font-weight:600">9:41</span><div style="display:flex;gap:3px;align-items:center"><div style="width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.5)"></div><div style="width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.5)"></div><div style="width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.5)"></div></div></div>
+  <div style="padding:0 14px 8px;position:relative;z-index:5;flex-shrink:0">
+    <div style="display:flex;align-items:center;gap:7px;margin-bottom:6px">
+      <div style="width:24px;height:24px;border-radius:7px;background:rgba(92,122,82,.25);border:1px solid rgba(92,122,82,.4);display:flex;align-items:center;justify-content:center;font-size:13px">🌿</div>
+      <div>
+        <div style="font-family:'Lora',Georgia,serif;font-style:italic;font-size:.78rem;color:rgba(248,245,238,.88)">Biomimicry space</div>
+        <div style="font-size:6.5px;color:rgba(168,196,158,.55)">14 people nearby · 3 thinking together</div>
+      </div>
+    </div>
+    <div style="background:rgba(92,122,82,.12);border:1px solid rgba(92,122,82,.22);border-radius:9px;padding:5px 9px;font-size:7px;color:rgba(168,196,158,.7);font-style:italic;font-family:'Lora',Georgia,serif">
+      "How do natural systems inform human-made ones?"
+    </div>
+  </div>
+  <div style="flex:1;overflow:hidden;padding:0 10px;display:flex;flex-direction:column;gap:6px;position:relative;z-index:5">
+    <div style="background:rgba(255,255,255,.06);backdrop-filter:blur(4px);border-radius:13px;padding:10px 11px;border:1px solid rgba(92,122,82,.18)">
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px">
+        <div style="width:20px;height:20px;border-radius:50%;background:linear-gradient(135deg,#8faa86,#5c7a52);display:flex;align-items:center;justify-content:center;font-size:9px;flex-shrink:0">🌿</div>
+        <div style="font-size:8px;font-weight:500;color:rgba(248,245,238,.8)">Ren O.</div>
+        <div style="font-size:6.5px;color:rgba(168,196,158,.4);margin-left:auto">now</div>
+      </div>
+      <div style="font-size:8px;color:rgba(248,245,238,.65);font-style:italic;font-family:'Lora',Georgia,serif;line-height:1.58;margin-bottom:7px">"Mycelium&apos;s redundancy is the key part of the metaphor. No single node is critical — the network routes around damage."</div>
+      <div style="display:flex;gap:4px">
+        <div style="font-size:7px;padding:2px 7px;border-radius:8px;background:rgba(92,122,82,.2);color:rgba(168,196,158,.8);border:1px solid rgba(92,122,82,.3)">🌲 resonates</div>
+        <div style="font-size:7px;padding:2px 7px;border-radius:8px;border:1px solid rgba(255,255,255,.1);color:rgba(248,245,238,.35)">🌱</div>
+      </div>
+    </div>
+    <div style="background:rgba(255,255,255,.04);backdrop-filter:blur(4px);border-radius:13px;padding:10px 11px;border:1px solid rgba(92,122,82,.12)">
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px">
+        <div style="width:20px;height:20px;border-radius:50%;background:linear-gradient(135deg,#8db4cc,#5a7a9e);display:flex;align-items:center;justify-content:center;font-size:9px;flex-shrink:0">☁️</div>
+        <div style="font-size:8px;font-weight:500;color:rgba(248,245,238,.75)">Jo W.</div>
+        <div style="font-size:6.5px;color:rgba(168,196,158,.4);margin-left:auto">12m</div>
+      </div>
+      <div style="font-size:8px;color:rgba(248,245,238,.6);font-style:italic;font-family:'Lora',Georgia,serif;line-height:1.58;margin-bottom:7px">"The distributed intelligence piece is what gets me. No CEO fungus giving orders. How do we design orgs like that?"</div>
+      <div style="display:flex;gap:4px">
+        <div style="font-size:7px;padding:2px 7px;border-radius:8px;border:1px solid rgba(255,255,255,.1);color:rgba(248,245,238,.35)">🌲</div>
+        <div style="font-size:7px;padding:2px 7px;border-radius:8px;background:rgba(92,122,82,.2);color:rgba(168,196,158,.8);border:1px solid rgba(92,122,82,.3)">🌸 celebrated</div>
+      </div>
+    </div>
+    <div style="background:rgba(255,255,255,.03);backdrop-filter:blur(4px);border-radius:13px;padding:8px 11px;border:1px solid rgba(255,255,255,.07);display:flex;align-items:center;gap:8px">
+      <div style="flex:1;font-size:7.5px;color:rgba(168,196,158,.5);font-style:italic;font-family:'Lora',Georgia,serif">Share a thought with this space…</div>
+      <div style="width:22px;height:22px;border-radius:50%;background:rgba(92,122,82,.3);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.7);font-size:10px;flex-shrink:0">→</div>
+    </div>
+  </div>
+  <div style="background:rgba(13,21,10,.92);border-top:1px solid rgba(255,255,255,.06);display:flex;justify-content:space-around;align-items:center;padding:7px 0 14px;flex-shrink:0"><div style="display:flex;flex-direction:column;align-items:center;gap:2px;font-size:6px;letter-spacing:.06em;text-transform:uppercase;color:rgba(168,196,158,.35)"><span style="font-size:14px">🌿</span>Feed</div><div style="display:flex;flex-direction:column;align-items:center;gap:2px;font-size:6px;letter-spacing:.06em;text-transform:uppercase;color:rgba(168,196,158,.9)"><span style="font-size:14px">🌲</span>Forest</div><div style="display:flex;flex-direction:column;align-items:center;gap:2px;font-size:6px;letter-spacing:.06em;text-transform:uppercase;color:rgba(168,196,158,.35)"><span style="font-size:14px">💬</span>Msg</div><div style="display:flex;flex-direction:column;align-items:center;gap:2px;font-size:6px;letter-spacing:.06em;text-transform:uppercase;color:rgba(168,196,158,.35)"><span style="font-size:14px">👤</span>Profile</div></div>
+</div></div>
+      <div class="pno"></div>
+      <div class="pbt"></div>
+      <div class="pvu"></div>
+      <div class="pvd"></div>
+    </div>
+    <div class="fnu">25</div>
+    <div class="flb">Space ambient feed</div>
+  </div>
+</div>
+</body>
+</html>

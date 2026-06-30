@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Games — Thea</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+body { background: var(--paper); }
+
+/* ===== HERO ===== */
+.page-hero {
+  padding: 62px 8vw 62px; position: relative; overflow: hidden;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center;
+}
+.page-hero::before {
+  content:''; position:absolute; top:-100px; right:-120px;
+  width:520px; height:520px; border-radius:50%;
+  background:radial-gradient(circle,rgba(122,158,126,.2) 0%,transparent 65%);
+  pointer-events:none;
+}
+.page-hero-label {
+  display:inline-flex; align-items:center; gap:8px;
+  font-family:var(--f-ui); font-size:.65rem; font-weight:700;
+  letter-spacing:.12em; text-transform:uppercase;
+  color:var(--sage); background:rgba(122,158,126,.1);
+  border:1px solid rgba(122,158,126,.28); padding:5px 12px;
+  border-radius:24px; margin-bottom:18px;
+}
+.page-hero h1 {
+  font-family:var(--f-display); font-style:italic;
+  font-size:clamp(2.4rem,5vw,4.2rem); line-height:1.0;
+  color:var(--ink); max-width:720px; margin-bottom:14px;
+}
+.page-hero h1 em { color:var(--sage); font-style:normal; }
+.page-hero .hero-sub {
+  font-family:var(--f-heading); font-style:italic;
+  font-size:.95rem; color:var(--ink2); margin-top:0;
+  max-width:480px; line-height:1.6; opacity:.7;
+}
+.genre-pills { display:flex; flex-wrap:wrap; gap:7px; margin-top:20px; margin-bottom:0; }
+.genre-pill {
+  font-family:var(--f-ui); font-size:.62rem; font-weight:600;
+  letter-spacing:.07em; text-transform:uppercase;
+  color:var(--ink2); background:white;
+  border:1.5px solid rgba(28,21,16,.1); padding:6px 14px; border-radius:20px;
+  box-shadow:2px 3px 8px var(--shadow); transition:all .2s ease;
+}
+.genre-pill:hover { background:var(--sage); color:white; border-color:var(--sage); }
+.hero-stats {
+  display:flex; gap:32px; margin-top:28px; padding-top:24px;
+  border-top:1px solid rgba(28,21,16,.07);
+}
+.stat-item .stat-num {
+  font-family:var(--f-display); font-style:italic;
+  font-size:1.6rem; color:var(--ink);
+}
+.stat-item .stat-lbl {
+  font-family:var(--f-ui); font-size:.65rem; font-weight:600;
+  letter-spacing:.1em; text-transform:uppercase;
+  color:var(--ink2); opacity:.5; margin-top:2px;
+}
+
+/* hero right — image */
+.hero-image {
+  position:relative; overflow:hidden; border-radius:20px;
+  height:320px;
+}
+.hero-image img {
+  width:100%; height:100%; object-fit:cover; display:block; border-radius:20px;
+  transition:transform .5s ease;
+}
+.hero-image:hover img { transform:scale(1.03); }
+.hero-chip {
+  position:absolute; bottom:18px; left:18px; z-index:4;
+  background:white; border-radius:12px; padding:7px 12px;
+  box-shadow:4px 6px 20px var(--shadow-md);
+  display:flex; align-items:center; gap:7px;
+  font-family:var(--f-ui); font-size:.6rem; font-weight:700;
+  letter-spacing:.08em; text-transform:uppercase; color:var(--ink2);
+  animation:chipFloat 4s ease-in-out infinite;
+}
+@keyframes chipFloat { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-4px);} }
+.hero-chip-dot { width:7px; height:7px; border-radius:50%; background:var(--sage); flex-shrink:0; }
+
+/* ===== PROCESS STRIP ===== */
+.process-strip { background:var(--ink); overflow:hidden; padding:16px 8vw; }
+.process-inner {
+  display:flex; align-items:center; white-space:nowrap;
+  animation:marquee 26s linear infinite;
+}
+.process-inner:hover { animation-play-state:paused; }
+@keyframes marquee { from{transform:translateX(0);} to{transform:translateX(-50%);} }
+.proc-item {
+  display:inline-flex; align-items:center; gap:10px; padding:0 28px;
+  font-family:var(--f-ui); font-size:.68rem; font-weight:600;
+  letter-spacing:.1em; text-transform:uppercase; color:rgba(250,247,242,.4);
+}
+.proc-dot { width:4px; height:4px; border-radius:50%; background:var(--sage); flex-shrink:0; }
+
+/* ===== PROJECTS ===== */
+.games-section { padding:72px 8vw; }
+.section-label { display:flex; align-items:center; justify-content:space-between; margin-bottom:28px; }
+.section-label h2 { font-family:var(--f-display); font-style:italic; font-size:2rem; color:var(--ink); }
+
+/* FEATURED CARD */
+.game-featured {
+  display:grid; grid-template-columns:1.05fr 1fr;
+  border-radius:28px; overflow:hidden;
+  box-shadow:8px 14px 52px var(--shadow-md);
+  cursor:pointer; text-decoration:none; color:inherit;
+  background:white; margin-bottom:32px;
+  transition:transform .45s cubic-bezier(.22,1,.36,1), box-shadow .35s ease;
+}
+.game-featured:hover { transform:translateY(-7px); box-shadow:10px 28px 72px var(--shadow-lg); }
+.game-featured.flip { grid-template-columns:1fr 1.05fr; }
+.game-featured.flip .gf-scene { order:2; }
+.game-featured.flip .gf-info  { order:1; }
+
+.gf-scene {
+  position:relative; min-height:480px; height:480px; overflow:hidden;
+}
+/* image-based scene */
+.gf-scene-img {
+  position:relative; min-height:480px; height:480px; overflow:hidden;
+}
+.gf-scene-img img {
+  width:100%; height:100%; object-fit:cover; display:block;
+  transition:transform .55s ease;
+}
+.game-featured:hover .gf-scene-img img { transform:scale(1.04); }
+.gf-scene-img .gf-scene-fade {
+  position:absolute; inset:0;
+  background:linear-gradient(to right,transparent 55%,rgba(255,255,255,.04) 100%);
+  pointer-events:none; z-index:2;
+}
+.game-featured.flip .gf-scene-img .gf-scene-fade {
+  background:linear-gradient(to left,transparent 55%,rgba(255,255,255,.04) 100%);
+}
+
+.gf-scene.garden   { background:linear-gradient(160deg,#0d2a10 0%,#1c4e20 45%,#0a1e0d 100%); }
+.gf-scene.mountain { background:linear-gradient(160deg,#1a2a1a 0%,#2a3d2a 40%,#3a2a1a 100%); }
+.gf-scene.uefn     { background:linear-gradient(160deg,#1a2616 0%,#2a3e20 45%,#1e3018 100%); }
+
+.gf-glow {
+  position:absolute; border-radius:50%; pointer-events:none;
+  background:radial-gradient(circle,var(--gc) 0%,transparent 65%);
+  animation:scaleBreath var(--gd,5s) ease-in-out infinite; animation-delay:var(--gdel,0s);
+}
+@keyframes scaleBreath { 0%,100%{opacity:var(--go,.3);transform:scale(1);} 50%{opacity:calc(var(--go,.3)*1.6);transform:scale(1.08);} }
+.gf-stage { position:relative; z-index:3; display:flex; align-items:flex-end; gap:16px; padding-bottom:20px; }
+.gf-char {
+  font-size:var(--cs,5rem); line-height:1;
+  filter:drop-shadow(0 8px 20px rgba(0,0,0,.4));
+  animation:flt var(--cd,5s) ease-in-out infinite; animation-delay:var(--cdel,0s);
+}
+@keyframes flt { 0%,100%{transform:translateY(0px) rotate(-2deg);} 45%{transform:translateY(-12px) rotate(2deg);} }
+.gf-particle {
+  position:absolute; font-size:var(--ps,1.4rem);
+  animation:fltb var(--pd,4s) ease-in-out infinite; animation-delay:var(--pdel,0s);
+  opacity:var(--pop,.75); filter:drop-shadow(0 2px 8px rgba(0,0,0,.3));
+}
+@keyframes fltb { 0%,100%{transform:translateY(0px);} 50%{transform:translateY(-7px);} }
+.gf-scene-fade {
+  position:absolute; inset:0;
+  background:linear-gradient(to right,transparent 55%,rgba(255,255,255,.04) 100%);
+  pointer-events:none; z-index:2;
+}
+.game-featured.flip .gf-scene-fade { background:linear-gradient(to left,transparent 55%,rgba(255,255,255,.04) 100%); }
+
+.gf-info { padding:36px 40px; display:flex; flex-direction:column; justify-content:center; }
+.gf-badge {
+  display:inline-flex; align-items:center; gap:6px;
+  font-family:var(--f-ui); font-size:.65rem; font-weight:700;
+  letter-spacing:.1em; text-transform:uppercase;
+  background:var(--gf-badge-bg,rgba(122,158,126,.1));
+  border:1px solid var(--gf-badge-border,rgba(122,158,126,.25));
+  color:var(--gf-badge-c,var(--sage));
+  padding:5px 12px; border-radius:18px; margin-bottom:16px; width:fit-content;
+}
+.gf-title { font-family:var(--f-display); font-style:italic; font-size:1.9rem; line-height:1.1; color:var(--ink); margin-bottom:14px; }
+.gf-desc  { font-size:.9rem; line-height:1.74; color:var(--ink2); margin-bottom:22px; }
+.gf-meta  { display:flex; flex-direction:column; gap:8px; margin-bottom:22px; }
+.gf-meta-row { display:flex; gap:8px; align-items:flex-start; font-size:.82rem; }
+.gf-meta-row .key {
+  font-family:var(--f-ui); font-size:.66rem; font-weight:700;
+  letter-spacing:.09em; text-transform:uppercase;
+  color:var(--ink2); opacity:.4; min-width:50px; margin-top:1px;
+}
+.gf-meta-row .val { color:var(--ink); }
+.gf-tags  { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:24px; }
+.gf-tag   { font-size:.7rem; padding:4px 12px; border-radius:14px; background:var(--paper2); color:var(--ink2); border:1px solid var(--paper3); }
+.gf-cta {
+  display:inline-flex; align-items:center; gap:8px;
+  font-family:var(--f-ui); font-size:.74rem; font-weight:700;
+  letter-spacing:.09em; text-transform:uppercase;
+  color:white; background:var(--gf-cta-bg,var(--ink));
+  padding:12px 22px; border-radius:26px; width:fit-content; transition:all .25s ease;
+  cursor:pointer; border:none; text-decoration:none;
+}
+.gf-cta:hover { background:var(--gf-cta-hover,var(--sage)); transform:translateX(3px); }
+.gf-cta .arr { transition:transform .2s; }
+.gf-cta:hover .arr { transform:translateX(4px); }
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:960px) {
+  .page-hero { grid-template-columns:1fr; padding:36px 6vw; }
+  .hero-image { height:260px; }
+  .game-featured, .game-featured.flip { grid-template-columns:1fr; }
+  .game-featured.flip .gf-scene { order:0; }
+  .game-featured.flip .gf-info  { order:0; }
+  .gf-scene, .gf-scene-img { min-height:280px; height:auto; }
+  .gf-info  { padding:32px 28px; }
+}
+@media(max-width:600px) {
+  .games-section { padding:48px 6vw; }
+  .gf-meta { display:grid; grid-template-columns:1fr 1fr; gap:12px 16px; }
+}
+</style>
+</head>
+<body class="page-games">
+<div id="cur"></div><div id="cur-ring"></div><div id="transition-overlay"></div>
+
+<nav class="site-nav">
+  <a href="index.html" class="nav-wordmark">Thea<sup>✦</sup></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="uxui.html">UX/UI</a></li>
+    <li><a href="games.html" class="active">Games</a></li>
+    <li><a href="art.html">Art</a></li>
+    <li><a href="about.html">About</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap">
+
+  <!-- ── HERO ── -->
+  <section class="page-hero">
+
+    <!-- LEFT -->
+    <div>
+      <div class="page-hero-label reveal">🎮 &nbsp;Game Design</div>
+      <h1 class="reveal reveal-delay-1">Thoughtful worlds,<br><em>memorable</em> play.</h1>
+      <p class="hero-sub reveal reveal-delay-2">Immersive games built around intentional mechanics, cohesive visual storytelling, and social or environmental good.</p>
+      <div class="genre-pills reveal reveal-delay-3">
+        <span class="genre-pill">✦ Game UI / UX</span>
+        <span class="genre-pill">✦ Narrative</span>
+        <span class="genre-pill">✦ Concept Art</span>
+        <span class="genre-pill">✦ Game Devleopment</span>
+      </div>
+      <div class="hero-stats reveal reveal-delay-3">
+        <div class="stat-item"><div class="stat-num">2</div><div class="stat-lbl">Game Projects</div></div>
+        <div class="stat-item"><div class="stat-num">2</div><div class="stat-lbl">Jam Placements</div></div>
+        <div class="stat-item"><div class="stat-num">∞</div><div class="stat-lbl">Sketchbook pages</div></div>
+      </div>
+    </div>
+
+    <!-- RIGHT — real image -->
+    <div class="hero-image reveal reveal-delay-2">
+      <img src="pics/games/gardenguardians/uefnbackground.png" alt="Game art">
+      <div class="hero-chip">
+        <div class="hero-chip-dot"></div>
+        2 games in progress
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ── STRIP ── -->
+  <div class="process-strip">
+    <div class="process-inner">
+      <span class="proc-item"><span class="proc-dot"></span>Concept</span>
+      <span class="proc-item"><span class="proc-dot"></span>Prototype</span>
+      <span class="proc-item"><span class="proc-dot"></span>Playtest</span>
+      <span class="proc-item"><span class="proc-dot"></span>Iterate</span>
+      <span class="proc-item"><span class="proc-dot"></span>Art Pass</span>
+      <span class="proc-item"><span class="proc-dot"></span>Polish</span>
+      <span class="proc-item"><span class="proc-dot"></span>Ship ✦</span>
+      <span class="proc-item"><span class="proc-dot"></span>Concept</span>
+      <span class="proc-item"><span class="proc-dot"></span>Prototype</span>
+      <span class="proc-item"><span class="proc-dot"></span>Playtest</span>
+      <span class="proc-item"><span class="proc-dot"></span>Iterate</span>
+      <span class="proc-item"><span class="proc-dot"></span>Art Pass</span>
+      <span class="proc-item"><span class="proc-dot"></span>Polish</span>
+      <span class="proc-item"><span class="proc-dot"></span>Ship ✦</span>
+    </div>
+  </div>
+
+  <!-- ── PROJECTS ── -->
+  <section class="games-section">
+
+    <div class="section-label reveal"><h2>Featured Work</h2></div>
+
+    <!-- GARDEN GUARDIANS -->
+    <a href="garden-guardians.html" class="game-featured reveal reveal-delay-1">
+      <div class="gf-scene-img">
+        <img src="pics/games/gardenguardians/waterplants.png" alt="Garden Guardians">
+        <div class="gf-scene-fade"></div>
+      </div>
+      <div class="gf-info">
+        <div class="gf-badge">🌿 Sustainability · Learning · Designathon 3rd Place · 2024</div>
+        <h3 class="gf-title">Garden Guardians</h3>
+        <p class="gf-desc">A simple point-and-click children's game that teaches gardening and sustainability through interactive play. 
+          Designed in Figma with Unreal Engine Fortnite and Procreate assets, encouraging young players to plant 
+          virtual gardens and complete eco-themed challenges.</p>
+        <div class="gf-meta">
+          <div class="gf-meta-row"><span class="key">Engine</span><span class="val">Figma · Unreal Engine Fortnite</span></div>
+          <div class="gf-meta-row"><span class="key">Genre</span><span class="val">Game-based learning</span></div>
+          <div class="gf-meta-row"><span class="key">Role</span><span class="val">Game Designer · Artist</span></div>
+          <div class="gf-meta-row"><span class="key">Platform</span><span class="val">Web</span></div>
+        </div>
+        <div class="gf-tags">
+          <span class="gf-tag">UI Design</span>
+          <span class="gf-tag">Procreate Art</span>
+          <span class="gf-tag">Narrative Design</span>
+          <span class="gf-tag">UEFN Environment Design</span>
+          <span class="gf-tag">User Research</span>
+        </div>
+        <span class="gf-cta">View Project <span class="arr">→</span></span>
+      </div>
+    </a>
+
+    <!-- TOUCHY EMOTIONS -->
+    <a href="touchy-emotions.html" class="game-featured flip reveal"
+      style="--gf-badge-bg:rgba(90,158,122,.1);--gf-badge-border:rgba(90,158,122,.25);--gf-badge-c:#5a9e7a;--gf-cta-hover:#5a9e7a;">
+      <div class="gf-scene-img">
+        <img src="pics/games/emotions/tent.png" alt="Touchy Emotions">
+        <div class="gf-scene-fade"></div>
+      </div>
+      <div class="gf-info">
+        <div class="gf-badge">Typing Game · Internship · Pixel Art · 2026</div>
+        <h3 class="gf-title">Touchy Emotions</h3>
+        <p class="gf-desc">Part of my internship with ResolveX. A pixel art typing game designed for crisis line workers to build fluency with emotional vocabulary and improve their typing skills. 
+          Players type feeling words to help a character climb a mountain. Naming feelings is an important step toward helping others navigate them.</p>
+        <div class="gf-meta">
+          <div class="gf-meta-row"><span class="key">Engine</span><span class="val">HTML · CSS · JavaScript</span></div>
+          <div class="gf-meta-row"><span class="key">Genre</span><span class="val">Typing game · Wellness tool</span></div>
+          <div class="gf-meta-row"><span class="key">Role</span><span class="val">Designer · Artist · Developer</span></div>
+          <div class="gf-meta-row"><span class="key">Platform</span><span class="val">Browser</span></div>
+        </div>
+        <div class="gf-tags">
+          <span class="gf-tag">Pixel Art</span>
+          <span class="gf-tag">JavaScript</span>
+          <span class="gf-tag">Game Design</span>
+          <span class="gf-tag">Typing</span>
+        </div>
+        <span class="gf-cta">View Project <span class="arr">→</span></span>
+      </div>
+    </a>
+
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-mark">Thea ✦ Creative Portfolio</div>
+  <ul class="footer-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="uxui.html">UX/UI</a></li>
+    <li><a href="art.html">Art</a></li>
+    <li><a href="about.html">About</a></li>
+  </ul>
+</footer>
+<script src="nav.js"></script>
+</body>
+</html>

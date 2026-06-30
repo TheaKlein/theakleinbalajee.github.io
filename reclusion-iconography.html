@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reclusion — Icon System — Maya</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+:root {
+  --rc-ink:      #1c1c1a;
+  --rc-ink2:     #3a3a36;
+  --rc-ink3:     #6a6a64;
+  --rc-cream:    #f7f4ef;
+  --rc-cream2:   #eeebe4;
+  --rc-cream3:   #e2ddd4;
+  --rc-rule:     rgba(28,28,26,.1);
+  --rc-rule-md:  rgba(28,28,26,.18);
+  --rc-shadow:   rgba(28,28,26,.08);
+}
+body { background: var(--rc-cream); color: var(--rc-ink); }
+
+/* ── NAV ── */
+.site-nav {
+  background: rgba(247,244,239,.96);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--rc-rule-md);
+}
+
+/* ── HERO ── */
+.rc-hero {
+  padding: 100px 8vw 80px;
+  border-bottom: 1px solid var(--rc-rule-md);
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 80px;
+  align-items: end;
+}
+.rc-overline {
+  font-family: var(--f-ui); font-size: .65rem; font-weight: 700;
+  letter-spacing: .18em; text-transform: uppercase;
+  color: var(--rc-ink3); margin-bottom: 20px;
+  display: flex; align-items: center; gap: 12px;
+}
+.rc-overline::after {
+  content: ''; flex: 1; height: 1px; background: var(--rc-rule-md);
+}
+.rc-role-pill {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--f-ui); font-size: .65rem; font-weight: 700;
+  letter-spacing: .12em; text-transform: uppercase;
+  color: var(--rc-ink); border: 1.5px solid var(--rc-ink);
+  padding: 7px 16px; margin-bottom: 32px;
+}
+.rc-hero h1 {
+  font-family: var(--f-display); font-style: italic;
+  font-size: clamp(3rem, 6vw, 5.2rem); line-height: .98;
+  color: var(--rc-ink); margin-bottom: 32px; letter-spacing: -.01em;
+}
+.rc-hero h1 em { font-style: normal; border-bottom: 3px solid var(--rc-ink); }
+.rc-hero-desc {
+  font-family: var(--f-heading); font-style: italic;
+  font-size: 1.05rem; line-height: 1.78; color: var(--rc-ink2);
+  max-width: 440px;
+}
+.rc-meta-block { border-top: 1px solid var(--rc-rule-md); }
+.rc-meta-row {
+  display: grid; grid-template-columns: 1fr 1fr;
+  border-bottom: 1px solid var(--rc-rule);
+}
+.rc-meta {
+  padding: 16px 0; display: flex; flex-direction: column; gap: 5px;
+}
+.rc-meta:nth-child(odd)  { padding-right: 20px; border-right: 1px solid var(--rc-rule); }
+.rc-meta:nth-child(even) { padding-left: 20px; }
+.rc-meta-label {
+  font-family: var(--f-ui); font-size: .58rem; font-weight: 700;
+  letter-spacing: .12em; text-transform: uppercase; color: var(--rc-ink3);
+}
+.rc-meta-val { font-size: .86rem; color: var(--rc-ink); }
+
+/* ── INDEX BAR ── */
+.rc-index {
+  padding: 0 8vw; display: flex;
+  border-bottom: 1px solid var(--rc-rule-md); overflow-x: auto;
+}
+.rc-index-item {
+  padding: 14px 24px 14px 0; display: flex; align-items: center; gap: 10px;
+  font-family: var(--f-ui); font-size: .62rem; font-weight: 700;
+  letter-spacing: .1em; text-transform: uppercase; color: var(--rc-ink3);
+  white-space: nowrap; border-right: 1px solid var(--rc-rule);
+  margin-right: 24px; flex-shrink: 0;
+}
+.rc-index-item:last-child { border-right: none; }
+.rc-index-num {
+  font-family: var(--f-display); font-style: italic;
+  font-size: 1.1rem; color: var(--rc-ink); line-height: 1;
+}
+
+/* ── CONTENT ── */
+.rc-content { padding: 0 8vw; }
+.rc-section {
+  padding: 80px 0;
+  border-bottom: 1px solid var(--rc-rule-md);
+}
+.rc-section:last-child { border-bottom: none; }
+.rc-section-header {
+  display: grid; grid-template-columns: 80px 1fr;
+  gap: 32px; align-items: start; margin-bottom: 52px;
+}
+.rc-section-num {
+  font-family: var(--f-display); font-style: italic;
+  font-size: 3.5rem; color: var(--rc-cream3); line-height: 1; user-select: none;
+}
+.rc-section-label {
+  font-family: var(--f-ui); font-size: .62rem; font-weight: 700;
+  letter-spacing: .16em; text-transform: uppercase;
+  color: var(--rc-ink3); margin-bottom: 10px;
+}
+.rc-section h2 {
+  font-family: var(--f-display); font-style: italic;
+  font-size: clamp(1.8rem, 3.5vw, 2.6rem); color: var(--rc-ink);
+  margin-bottom: 0; line-height: 1.05;
+}
+.rc-section h2 em { font-style: normal; border-bottom: 2px solid var(--rc-ink); }
+.rc-section p {
+  font-size: .92rem; line-height: 1.82; color: var(--rc-ink2);
+  max-width: 680px; margin-bottom: 14px;
+}
+
+/* ── ANNOTATION ── */
+.rc-annotation {
+  background: var(--rc-cream2); border-left: 3px solid var(--rc-ink);
+  padding: 20px 24px; margin: 28px 0;
+  font-size: .86rem; line-height: 1.72; color: var(--rc-ink2);
+  font-family: var(--f-heading); font-style: italic; max-width: 700px;
+}
+.rc-annotation strong { color: var(--rc-ink); font-style: normal; }
+
+/* ── OVERVIEW GRID ── */
+.rc-overview-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 1px; background: var(--rc-rule-md);
+  border: 1px solid var(--rc-rule-md); margin-top: 40px;
+}
+.rc-overview-cell { background: var(--rc-cream); padding: 28px 26px; }
+.rc-overview-cell.wide { grid-column: span 2; background: var(--rc-cream2); }
+.rc-overview-cell-label {
+  font-family: var(--f-ui); font-size: .6rem; font-weight: 700;
+  letter-spacing: .14em; text-transform: uppercase;
+  color: var(--rc-ink3); margin-bottom: 10px;
+}
+.rc-overview-cell-body { font-size: .88rem; line-height: 1.72; color: var(--rc-ink2); }
+
+/* ── PROBLEMS ── */
+.rc-problems {
+  display: flex; flex-direction: column; gap: 1px;
+  background: var(--rc-rule-md); border: 1px solid var(--rc-rule-md); margin-top: 40px;
+}
+.rc-problem {
+  background: var(--rc-cream); padding: 28px 32px;
+  display: grid; grid-template-columns: 28px 1fr;
+  gap: 20px; align-items: start;
+}
+.rc-problem:nth-child(even) { background: var(--rc-cream2); }
+.rc-problem-num {
+  font-family: var(--f-display); font-style: italic;
+  font-size: 1.4rem; color: var(--rc-cream3); padding-top: 2px;
+}
+.rc-problem-q {
+  font-family: var(--f-display); font-style: italic;
+  font-size: 1rem; color: var(--rc-ink); margin-bottom: 8px;
+}
+.rc-problem-a { font-size: .84rem; line-height: 1.68; color: var(--rc-ink2); }
+
+/* ── WORLD CONTEXT ── */
+.rc-world-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 1px; background: var(--rc-rule-md);
+  border: 1px solid var(--rc-rule-md); margin-top: 40px;
+}
+.rc-world-cell { background: var(--rc-cream); padding: 32px 26px; position: relative; }
+.rc-world-cell::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0;
+  height: 2px; background: var(--rc-ink);
+}
+.rc-world-cell-num {
+  font-family: var(--f-display); font-style: italic;
+  font-size: 2.4rem; color: var(--rc-cream3); line-height: 1; margin-bottom: 12px;
+}
+.rc-world-cell-name {
+  font-family: var(--f-display); font-style: italic;
+  font-size: 1.1rem; color: var(--rc-ink); margin-bottom: 4px;
+}
+.rc-world-cell-sub {
+  font-family: var(--f-ui); font-size: .6rem; font-weight: 700;
+  letter-spacing: .1em; text-transform: uppercase;
+  color: var(--rc-ink3); margin-bottom: 12px;
+}
+.rc-world-cell-desc { font-size: .82rem; line-height: 1.65; color: var(--rc-ink2); }
+
+/* ── PRINCIPLES ── */
+.rc-principles {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 1px; background: var(--rc-rule-md);
+  border: 1px solid var(--rc-rule-md); margin-top: 40px;
+}
+.rc-principle-card { background: var(--rc-cream); padding: 32px 28px; }
+.rc-principle-card.invert { background: var(--rc-ink); }
+.rc-principle-card.invert .rpc-label  { color: rgba(255,255,255,.35); }
+.rc-principle-card.invert .rpc-title  { color: white; }
+.rc-principle-card.invert .rpc-title em { border-color: white; }
+.rc-principle-card.invert .rpc-desc   { color: rgba(255,255,255,.55); }
+.rpc-label {
+  font-family: var(--f-ui); font-size: .6rem; font-weight: 700;
+  letter-spacing: .14em; text-transform: uppercase;
+  color: var(--rc-ink3); margin-bottom: 12px;
+}
+.rpc-title {
+  font-family: var(--f-display); font-style: italic;
+  font-size: 1.05rem; color: var(--rc-ink); margin-bottom: 10px;
+}
+.rpc-title em { font-style: normal; border-bottom: 2px solid currentColor; }
+.rpc-desc { font-size: .84rem; line-height: 1.7; color: var(--rc-ink2); }
+
+/* ── SKETCHES ── */
+.rc-sketches-intro {
+  font-size: .88rem; line-height: 1.75; color: var(--rc-ink2);
+  max-width: 580px; margin-bottom: 40px;
+  padding: 22px 26px; border-left: 3px solid var(--rc-ink);
+  background: var(--rc-cream2);
+}
+.rc-sketches {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 1px; background: var(--rc-rule-md);
+  border: 1px solid var(--rc-rule-md);
+}
+.rc-sketch-item { background: var(--rc-cream); }
+.rc-sketch-ph {
+  aspect-ratio: 4/3; position: relative; overflow: hidden;
+  background: var(--rc-cream2);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 10px;
+  border-bottom: 1px solid var(--rc-rule);
+}
+/* lined paper */
+.rc-sketch-ph::before {
+  content: ''; position: absolute; inset: 0;
+  background-image: repeating-linear-gradient(
+    transparent, transparent 27px,
+    rgba(28,28,26,.06) 27px, rgba(28,28,26,.06) 28px
+  );
+}
+/* pencil mark */
+.rc-sketch-ph::after {
+  content: '✏'; position: absolute; top: 12px; left: 14px;
+  font-size: .75rem; color: var(--rc-ink3); opacity: .35;
+}
+.sph-label {
+  font-family: var(--f-ui); font-size: .62rem; font-weight: 700;
+  letter-spacing: .1em; text-transform: uppercase;
+  color: var(--rc-ink3); text-align: center; padding: 0 20px; z-index: 1;
+}
+.sph-sub {
+  font-family: var(--f-heading); font-style: italic;
+  font-size: .75rem; color: var(--rc-ink3); opacity: .5; z-index: 1;
+}
+.rc-sketch-caption { padding: 16px 20px 20px; }
+.rc-sketch-caption-title {
+  font-family: var(--f-display); font-style: italic;
+  font-size: .92rem; color: var(--rc-ink); margin-bottom: 3px;
+}
+.rc-sketch-caption-sub { font-size: .72rem; color: var(--rc-ink3); }
+
+/* ── ICON SYSTEM ── */
+.rc-icon-principles {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 1px; background: var(--rc-rule-md);
+  border: 1px solid var(--rc-rule-md); margin-bottom: 28px;
+}
+.rc-icon-principle { background: var(--rc-cream); padding: 22px 20px; }
+.rip-label {
+  font-family: var(--f-ui); font-size: .58rem; font-weight: 700;
+  letter-spacing: .12em; text-transform: uppercase;
+  color: var(--rc-ink3); margin-bottom: 8px;
+}
+.rip-val { font-size: .82rem; line-height: 1.65; color: var(--rc-ink2); }
+
+.rc-icons-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 1px; background: var(--rc-rule-md);
+  border: 1px solid var(--rc-rule-md);
+}
+.rc-icon-card { background: var(--rc-cream); transition: background .2s ease; }
+.rc-icon-card:hover { background: var(--rc-cream2); }
+.rc-icon-thumb {
+  aspect-ratio: 1; display: flex; align-items: center; justify-content: center;
+  font-size: 3rem; position: relative; overflow: hidden;
+  background: var(--rc-cream2); border-bottom: 1px solid var(--rc-rule);
+}
+/* crosshatch texture */
+.rc-icon-thumb::before {
+  content: ''; position: absolute; inset: 0;
+  background-image:
+    repeating-linear-gradient(45deg,  rgba(28,28,26,.04) 0px, rgba(28,28,26,.04) 1px, transparent 1px, transparent 8px),
+    repeating-linear-gradient(-45deg, rgba(28,28,26,.04) 0px, rgba(28,28,26,.04) 1px, transparent 1px, transparent 8px);
+}
+.rc-icon-emoji { z-index: 1; opacity: .15; filter: grayscale(1); }
+.rc-icon-ph-label {
+  position: absolute; bottom: 10px; left: 0; right: 0; text-align: center;
+  font-family: var(--f-ui); font-size: .55rem; font-weight: 700;
+  letter-spacing: .1em; text-transform: uppercase; color: var(--rc-ink3);
+}
+.rc-icon-body { padding: 16px 16px 20px; }
+.rc-icon-name {
+  font-family: var(--f-display); font-style: italic;
+  font-size: .96rem; color: var(--rc-ink); margin-bottom: 3px;
+}
+.rc-icon-type {
+  font-family: var(--f-ui); font-size: .58rem; font-weight: 700;
+  letter-spacing: .1em; text-transform: uppercase;
+  color: var(--rc-ink3); margin-bottom: 8px;
+}
+.rc-icon-desc { font-size: .78rem; line-height: 1.62; color: var(--rc-ink2); margin-bottom: 10px; }
+.rc-icon-notes {
+  font-size: .75rem; line-height: 1.6; color: var(--rc-ink3);
+  border-top: 1px solid var(--rc-rule); padding-top: 10px;
+  font-family: var(--f-heading); font-style: italic;
+}
+.rc-icon-status {
+  display: inline-block; margin-top: 8px;
+  font-family: var(--f-ui); font-size: .58rem; font-weight: 700;
+  letter-spacing: .1em; text-transform: uppercase;
+  color: var(--rc-ink3); border: 1px solid var(--rc-rule-md); padding: 3px 8px;
+}
+
+/* ── ROADMAP ── */
+.rc-roadmap {
+  display: flex; flex-direction: column; gap: 1px;
+  background: var(--rc-rule-md); border: 1px solid var(--rc-rule-md); margin-top: 40px;
+}
+.rc-phase {
+  background: var(--rc-cream);
+  display: grid; grid-template-columns: 160px 1fr;
+}
+.rc-phase.current { background: var(--rc-ink); }
+.rc-phase-left {
+  padding: 28px 24px; border-right: 1px solid var(--rc-rule);
+  display: flex; flex-direction: column; gap: 6px;
+}
+.rc-phase.current .rc-phase-left { border-right-color: rgba(255,255,255,.1); }
+.rc-phase-num {
+  font-family: var(--f-display); font-style: italic;
+  font-size: 2.4rem; color: var(--rc-cream3); line-height: 1;
+}
+.rc-phase.current .rc-phase-num { color: rgba(255,255,255,.18); }
+.rc-phase-label {
+  font-family: var(--f-ui); font-size: .58rem; font-weight: 700;
+  letter-spacing: .12em; text-transform: uppercase; color: var(--rc-ink3);
+}
+.rc-phase.current .rc-phase-label { color: rgba(255,255,255,.4); }
+.rc-phase-status {
+  font-family: var(--f-ui); font-size: .58rem; font-weight: 700;
+  letter-spacing: .1em; text-transform: uppercase;
+  color: var(--rc-ink); border: 1px solid var(--rc-rule-md);
+  padding: 3px 8px; width: fit-content; margin-top: 4px;
+}
+.rc-phase.current .rc-phase-status {
+  color: var(--rc-ink); background: white; border-color: white;
+}
+.rc-phase-right { padding: 28px; }
+.rc-phase-title {
+  font-family: var(--f-display); font-style: italic;
+  font-size: 1.05rem; color: var(--rc-ink); margin-bottom: 14px;
+}
+.rc-phase.current .rc-phase-title { color: white; }
+.rc-phase-tasks { display: flex; flex-direction: column; gap: 9px; }
+.rc-phase-task {
+  display: flex; align-items: flex-start; gap: 12px;
+  font-size: .82rem; line-height: 1.55; color: var(--rc-ink2);
+}
+.rc-phase.current .rc-phase-task { color: rgba(255,255,255,.55); }
+.rc-phase-task::before {
+  content: '—'; color: var(--rc-ink3); flex-shrink: 0;
+  font-family: var(--f-ui); font-size: .75rem; margin-top: 1px;
+}
+.rc-phase.current .rc-phase-task::before { color: rgba(255,255,255,.25); }
+
+/* ── RESPONSIVE ── */
+@media(max-width:960px) {
+  .rc-hero { grid-template-columns: 1fr; gap: 48px; }
+  .rc-world-grid { grid-template-columns: 1fr 1fr; }
+  .rc-icons-grid { grid-template-columns: repeat(2,1fr); }
+  .rc-icon-principles { grid-template-columns: 1fr; }
+  .rc-principles { grid-template-columns: 1fr; }
+  .rc-phase { grid-template-columns: 1fr; }
+  .rc-phase-left { border-right: none; border-bottom: 1px solid var(--rc-rule); }
+  .rc-phase.current .rc-phase-left { border-bottom-color: rgba(255,255,255,.1); }
+}
+@media(max-width:640px) {
+  .rc-hero { padding-left: 6vw; padding-right: 6vw; padding-top: 72px; }
+  .rc-index { padding-left: 6vw; }
+  .rc-content { padding: 0 6vw; }
+  .rc-overview-grid { grid-template-columns: 1fr; }
+  .rc-overview-cell.wide { grid-column: span 1; }
+  .rc-sketches { grid-template-columns: 1fr; }
+  .rc-world-grid { grid-template-columns: 1fr; }
+  .rc-section-header { grid-template-columns: 40px 1fr; gap: 16px; }
+  .rc-section-num { font-size: 2.4rem; }
+  .rc-meta-row { grid-template-columns: 1fr; }
+  .rc-meta:nth-child(odd) { border-right: none; border-bottom: 1px solid var(--rc-rule); }
+}
+</style>
+</head>
+<body>
+<div id="cur"></div><div id="cur-ring"></div><div id="transition-overlay"></div>
+
+<nav class="site-nav">
+  <a href="index.html" class="nav-wordmark">Maya<sup>✦</sup></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="uxui.html" class="active">UX/UI</a></li>
+    <li><a href="games.html">Games</a></li>
+    <li><a href="art.html">Art</a></li>
+    <li><a href="about.html">About</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap">
+
+  <!-- ── HERO ── -->
+  <section class="rc-hero reveal">
+    <div class="rc-hero-left">
+      <div class="rc-overline">UX Design &nbsp;·&nbsp; Iconography System &nbsp;·&nbsp; Card Game</div>
+      <div class="rc-role-pill">In-House UX Designer &nbsp;·&nbsp; Icon System Lead</div>
+      <h1>Reclusion<br><em>Icon System</em></h1>
+      <p class="rc-hero-desc">Designing a cohesive status effect iconography system for Reclusion — a multi-faction medieval deckbuilder. This page documents the problem space, early ideation, design principles, and roadmap.</p>
+    </div>
+    <div class="rc-hero-right">
+      <div class="rc-meta-block">
+        <div class="rc-meta-row">
+          <div class="rc-meta">
+            <div class="rc-meta-label">Company</div>
+            <div class="rc-meta-val">Reclusion</div>
+          </div>
+          <div class="rc-meta">
+            <div class="rc-meta-label">My Role</div>
+            <div class="rc-meta-val">UX Designer · Iconography Lead</div>
+          </div>
+        </div>
+        <div class="rc-meta-row">
+          <div class="rc-meta">
+            <div class="rc-meta-label">Game Type</div>
+            <div class="rc-meta-val">Multi-faction Deckbuilder</div>
+          </div>
+          <div class="rc-meta">
+            <div class="rc-meta-label">Tools</div>
+            <div class="rc-meta-val">Figma · Illustrator · Procreate</div>
+          </div>
+        </div>
+        <div class="rc-meta-row">
+          <div class="rc-meta">
+            <div class="rc-meta-label">Stage</div>
+            <div class="rc-meta-val">Early ideation & research</div>
+          </div>
+          <div class="rc-meta">
+            <div class="rc-meta-label">Status</div>
+            <div class="rc-meta-val">In progress · 2025</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── INDEX ── -->
+  <div class="rc-index reveal">
+    <div class="rc-index-item"><span class="rc-index-num">01</span> Overview</div>
+    <div class="rc-index-item"><span class="rc-index-num">02</span> The Problem</div>
+    <div class="rc-index-item"><span class="rc-index-num">03</span> World Context</div>
+    <div class="rc-index-item"><span class="rc-index-num">04</span> Design Principles</div>
+    <div class="rc-index-item"><span class="rc-index-num">05</span> Early Sketches</div>
+    <div class="rc-index-item"><span class="rc-index-num">06</span> Status Effects</div>
+    <div class="rc-index-item"><span class="rc-index-num">07</span> Next Steps</div>
+  </div>
+
+  <div class="rc-content">
+
+    <!-- ── 01 OVERVIEW ── -->
+    <div class="rc-section reveal">
+      <div class="rc-section-header">
+        <div class="rc-section-num">01</div>
+        <div class="rc-section-head-right">
+          <div class="rc-section-label">Overview</div>
+          <h2>What is <em>Reclusion?</em></h2>
+        </div>
+      </div>
+      <p>Reclusion is a card advantage deckbuilder set across multiple historical and fantastical factions — spanning medieval Europe, ancient Rome, the forest wilds, and the China Sea. Players build decks, apply status effects to units, and outmanoeuvre opponents through layered buffs, debuffs, and card synergies.</p>
+      <p>Status effects are a core mechanical pillar of the game. They appear on card faces, battlefield tokens, and the game HUD throughout every match. As the UX designer responsible for the icon system, my scope covers the full design of a status effect iconography system — from initial silhouette explorations through to a Figma component library and handoff documentation.</p>
+
+      <div class="rc-overview-grid">
+        <div class="rc-overview-cell">
+          <div class="rc-overview-cell-label">Game context</div>
+          <div class="rc-overview-cell-body">Card advantage deckbuilder with multiple factions. Status effects applied and tracked via cards — icons must be instantly legible on card faces, battlefield tokens, and UI panels at the same time.</div>
+        </div>
+        <div class="rc-overview-cell">
+          <div class="rc-overview-cell-label">My scope</div>
+          <div class="rc-overview-cell-body">End-to-end icon system design. Shape language, colour system, size constraint testing, cross-cultural consideration, and Figma component documentation. Working in collaboration with the broader design team.</div>
+        </div>
+        <div class="rc-overview-cell">
+          <div class="rc-overview-cell-label">Effects in scope</div>
+          <div class="rc-overview-cell-body">Seven status effects for the initial system: Poisoned, Burning, Frozen, Stunned, Cursed, Weakened, and Hasted. Additional effects may be scoped after phase one is complete.</div>
+        </div>
+        <div class="rc-overview-cell">
+          <div class="rc-overview-cell-label">Core constraint</div>
+          <div class="rc-overview-cell-body">All icons must read clearly at 16×16px — the smallest display size used on battlefield tokens. Every design decision is tested at this size before development.</div>
+        </div>
+        <div class="rc-overview-cell wide">
+          <div class="rc-overview-cell-label">Where I am now</div>
+          <div class="rc-overview-cell-body">Early ideation and research phase. Establishing design principles, mapping the problem space, and exploring silhouette directions for each effect before any final shapes are committed to. This page is a living document — it will be updated as the work progresses.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── 02 THE PROBLEM ── -->
+    <div class="rc-section reveal">
+      <div class="rc-section-header">
+        <div class="rc-section-num">02</div>
+        <div class="rc-section-head-right">
+          <div class="rc-section-label">The Problem</div>
+          <h2>What makes this <em>hard?</em></h2>
+        </div>
+      </div>
+      <p>Status effect iconography in card games looks simple from the outside. It isn't. These are the core design tensions I'm working through before putting pencil to paper.</p>
+
+      <div class="rc-annotation">
+        <strong>Process note:</strong> I'm mapping these problems explicitly before sketching anything — because the biggest failure mode in icon design is jumping to visual solutions before understanding the constraints. Every problem below will shape the evaluation criteria for each design direction.
+      </div>
+
+      <div class="rc-problems">
+        <div class="rc-problem">
+          <div class="rc-problem-num">1</div>
+          <div class="rc-problem-body">
+            <div class="rc-problem-q">How do you keep icons legible at 16×16px?</div>
+            <div class="rc-problem-a">Card games are punishing for icon design. Intricate ornament and cultural detail look compelling at full size and collapse entirely at token size. Silhouette clarity is the foundational constraint — all exploration starts here, not at the finished render.</div>
+          </div>
+        </div>
+        <div class="rc-problem">
+          <div class="rc-problem-num">2</div>
+          <div class="rc-problem-body">
+            <div class="rc-problem-q">How do you distinguish similar-feeling effects from each other at speed?</div>
+            <div class="rc-problem-a">Poisoned, Burning, Weakened, and Cursed all feel like "bad things happening to your unit" — but each has a distinct mechanical meaning. Players need to tell them apart mid-combat without stopping to read a tooltip. Shape differentiation has to do this work, not colour alone.</div>
+          </div>
+        </div>
+        <div class="rc-problem">
+          <div class="rc-problem-num">3</div>
+          <div class="rc-problem-body">
+            <div class="rc-problem-q">How do you make one icon system feel right across three cultural contexts?</div>
+            <div class="rc-problem-a">The game spans Rome, forest, and China Sea factions — each with a distinct visual identity. Icons need to feel culturally resonant within each faction's card art without requiring players to learn a different visual language per faction. The system has to feel like one thing, not three.</div>
+          </div>
+        </div>
+        <div class="rc-problem">
+          <div class="rc-problem-num">4</div>
+          <div class="rc-problem-body">
+            <div class="rc-problem-q">How do you show buff vs debuff immediately — especially when only one effect is positive?</div>
+            <div class="rc-problem-a">Six of the seven effects are debuffs. Hasted is the sole buff in this set. Players should never have to wonder if something good or bad just happened to their unit. Directionality, shape energy, and expansion vs contraction need to carry this distinction beyond colour.</div>
+          </div>
+        </div>
+        <div class="rc-problem">
+          <div class="rc-problem-num">5</div>
+          <div class="rc-problem-body">
+            <div class="rc-problem-q">How do you signal both effect type and stack severity in a single icon?</div>
+            <div class="rc-problem-a">Players may need to know not just "Poisoned" but "Poisoned at level 3." The icon system needs a way to carry severity information — whether through the icon itself, a modifier system, or a separate but related visual — without cluttering the card layout.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── 03 DESIGN PRINCIPLES ── -->
+    <div class="rc-section reveal">
+      <div class="rc-section-header">
+        <div class="rc-section-num">03</div>
+        <div class="rc-section-head-right">
+          <div class="rc-section-label">Design Principles</div>
+          <h2>How I'm <em>approaching it</em></h2>
+        </div>
+      </div>
+      <p>These principles were established before any sketching began — so that every design direction has something concrete to be evaluated against. They're working principles, not final rules, and will be tested and refined through the process.</p>
+
+      <div class="rc-principles">
+        <div class="rc-principle-card invert">
+          <div class="rpc-label">Principle 01 — Foundation</div>
+          <div class="rpc-title"><em>Silhouette first.</em> Always.</div>
+          <div class="rpc-desc">Every icon must be fully distinguishable as a flat black silhouette before any colour, texture, or detail is applied. Colour reinforces — it does not carry — meaning. This ensures the system works in greyscale, at 16px, and in print reproduction.</div>
+        </div>
+        <div class="rc-principle-card">
+          <div class="rpc-label">Principle 02 — Size</div>
+          <div class="rpc-title">Design at <em>16px first.</em></div>
+          <div class="rpc-desc">All icons are sketched and tested at the smallest display size — the 16×16px battlefield token — before being scaled up. Detail is added only where it survives that constraint. Decorative complexity comes last, not first.</div>
+        </div>
+        <div class="rc-principle-card">
+          <div class="rpc-label">Principle 03 — Shape</div>
+          <div class="rpc-title">Shape <em>carries type.</em></div>
+          <div class="rpc-desc">Sharp, angular, and jagged = harm. Rounded and flowing = movement or speed. Broken or inverted = debilitation. Expanding or radiating = positive. This shape vocabulary is applied consistently across all seven effects so the system is learnable.</div>
+        </div>
+        <div class="rc-principle-card">
+          <div class="rpc-label">Principle 04 — Direction</div>
+          <div class="rpc-title">Buff vs debuff must be <em>immediate.</em></div>
+          <div class="rpc-desc">Upward-pointing and expanding forms signal positive effects. Downward, contracting, or broken forms signal negative effects. With only one buff in the set, this distinction needs to be unambiguous at a glance — directionality does this before colour is even considered.</div>
+        </div>
+        <div class="rc-principle-card">
+          <div class="rpc-label">Principle 05 — System</div>
+          <div class="rpc-title">One system, <em>three expressions.</em></div>
+          <div class="rpc-desc">One base silhouette per effect, with faction-flavoured surface treatments applied by the art team. Players don't relearn the system between factions — but the art team retains the ability to express cultural identity within each card's visual language.</div>
+        </div>
+        <div class="rc-principle-card">
+          <div class="rpc-label">Principle 06 — Construction</div>
+          <div class="rpc-title">Grid <em>discipline.</em></div>
+          <div class="rpc-desc">All icons share a 24×24 construction grid with consistent optical weight, padding zone, and stroke weight range. Icons should feel like a coherent family even when their individual forms are very different — a serpent coil and a snowflake should sit together naturally.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── 04 EARLY SKETCHES ── -->
+    <div class="rc-section reveal">
+      <div class="rc-section-header">
+        <div class="rc-section-num">04</div>
+        <div class="rc-section-head-right">
+          <div class="rc-section-label">Early Ideation</div>
+          <h2>First sketches & <em>explorations</em></h2>
+        </div>
+      </div>
+
+      <div class="rc-sketches-intro">
+        The initial sketch phase is focused entirely on silhouette — what shapes, motifs, and visual metaphors could anchor each status effect. Nothing is precious at this stage. The goal is to generate a range of directions, test what survives at 16px, and identify which directions are worth developing further. All sketches are intentionally rough.
+      </div>
+
+      <div class="rc-sketches">
+        <div class="rc-sketch-item">
+          <div class="rc-sketch-ph">
+            <!-- swap: <img src="sketch-poison-burn.jpg" style="width:100%;display:block;"> -->
+            <span class="sph-label">Replace — Poisoned & Burning sketches</span>
+            <span class="sph-sub">3 directions each · Silhouette pass</span>
+          </div>
+          <div class="rc-sketch-caption">
+            <div class="rc-sketch-caption-title">Poisoned & Burning — Direction Explorations</div>
+            <div class="rc-sketch-caption-sub">Pencil on paper · Testing DoT icon differentiation · Round 1</div>
+          </div>
+        </div>
+        <div class="rc-sketch-item">
+          <div class="rc-sketch-ph">
+            <!-- swap: <img src="sketch-frozen-stunned.jpg" style="width:100%;display:block;"> -->
+            <span class="sph-label">Replace — Frozen & Stunned sketches</span>
+            <span class="sph-sub">Distinguishing two immobilise states</span>
+          </div>
+          <div class="rc-sketch-caption">
+            <div class="rc-sketch-caption-title">Frozen & Stunned — Differentiation Problem</div>
+            <div class="rc-sketch-caption-sub">Pencil on paper · Two immobilise effects, different mechanisms · Round 1</div>
+          </div>
+        </div>
+        <div class="rc-sketch-item">
+          <div class="rc-sketch-ph">
+            <!-- swap: <img src="sketch-cursed-weakened.jpg" style="width:100%;display:block;"> -->
+            <span class="sph-label">Replace — Cursed & Weakened sketches</span>
+            <span class="sph-sub">Distinguishing two debuff states</span>
+          </div>
+          <div class="rc-sketch-caption">
+            <div class="rc-sketch-caption-title">Cursed & Weakened — Debuff Differentiation</div>
+            <div class="rc-sketch-caption-sub">Pencil on paper · How to tell two debuffs apart fast · Round 1</div>
+          </div>
+        </div>
+        <div class="rc-sketch-item">
+          <div class="rc-sketch-ph">
+            <!-- swap: <img src="sketch-hasted.jpg" style="width:100%;display:block;"> -->
+            <span class="sph-label">Replace — Hasted sketches</span>
+            <span class="sph-sub">The sole buff — making it read positive</span>
+          </div>
+          <div class="rc-sketch-caption">
+            <div class="rc-sketch-caption-title">Hasted — The Only Buff</div>
+            <div class="rc-sketch-caption-sub">Pencil on paper · Positive energy vs 6 negative effects · Round 1</div>
+          </div>
+        </div>
+        <div class="rc-sketch-item">
+          <div class="rc-sketch-ph">
+            <!-- swap: <img src="sketch-faction-variants.jpg" style="width:100%;display:block;"> -->
+            <span class="sph-label">Replace — Faction variant explorations</span>
+            <span class="sph-sub">One icon, three cultural expressions</span>
+          </div>
+          <div class="rc-sketch-caption">
+            <div class="rc-sketch-caption-title">Faction Variants — Poison Across All Three</div>
+            <div class="rc-sketch-caption-sub">Testing shared silhouette with faction-flavoured surface · Rome · Forest · China Sea</div>
+          </div>
+        </div>
+        <div class="rc-sketch-item">
+          <div class="rc-sketch-ph">
+            <!-- swap: <img src="sketch-size-tests.jpg" style="width:100%;display:block;"> -->
+            <span class="sph-label">Replace — 16px size reduction tests</span>
+            <span class="sph-sub">All 7 effects · What survives at token size</span>
+          </div>
+          <div class="rc-sketch-caption">
+            <div class="rc-sketch-caption-title">Size Reduction Tests — Full Set</div>
+            <div class="rc-sketch-caption-sub">64px · 32px · 16px · Identifying what breaks and what holds</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="rc-annotation">
+        <strong>Early observation:</strong> The hardest pair to differentiate at 16px is Frozen and Stunned — both represent immobilisation but triggered by different mechanisms. Snowflake and crystal forms lose identity quickly at small sizes. Currently exploring enclosed/crystalline silhouettes for Frozen vs orbital/spiral forms for Stunned as a potential solution path.
+      </div>
+    </div>
+
+    <!-- ── 05 STATUS EFFECTS ── -->
+    <div class="rc-section reveal">
+      <div class="rc-section-header">
+        <div class="rc-section-num">05</div>
+        <div class="rc-section-head-right">
+          <div class="rc-section-label">Icon System</div>
+          <h2>Status effects — <em>design intent</em></h2>
+        </div>
+      </div>
+      <p>Seven effects in active exploration. Each entry documents the mechanical meaning, motif directions being considered, open design questions, and current stage. Final icons will replace these placeholders as explorations are resolved.</p>
+
+      <div class="rc-icon-principles">
+        <div class="rc-icon-principle">
+          <div class="rip-label">Shape language</div>
+          <div class="rip-val">Sharp & angular = harm. Rounded & flowing = movement. Broken or inverted = debilitation. Expanding or radiating = buff.</div>
+        </div>
+        <div class="rc-icon-principle">
+          <div class="rip-label">Colour — secondary only</div>
+          <div class="rip-val">Each effect has a signature hue but colour never carries meaning alone. Greyscale silhouette must be fully legible and distinguishable first.</div>
+        </div>
+        <div class="rc-icon-principle">
+          <div class="rip-label">Construction grid</div>
+          <div class="rip-val">24×24 grid, consistent optical weight, same padding zone across all seven. The set should feel like a family at a glance.</div>
+        </div>
+      </div>
+
+      <div class="rc-icons-grid">
+
+        <div class="rc-icon-card">
+          <div class="rc-icon-thumb">
+            <span class="rc-icon-emoji">🐍</span>
+            <span class="rc-icon-ph-label">Sketch placeholder</span>
+          </div>
+          <div class="rc-icon-body">
+            <div class="rc-icon-name">Poisoned</div>
+            <div class="rc-icon-type">Damage over time · Negative</div>
+            <div class="rc-icon-desc">Deals damage each turn until cleansed. Motif directions: serpent coil, dripping fang, thorn-vine (forest), stylised asp (Rome).</div>
+            <div class="rc-icon-notes">Open question: does a drip motif read as "acid" rather than "poison" at 16px?</div>
+            <div class="rc-icon-status">Sketching</div>
+          </div>
+        </div>
+
+        <div class="rc-icon-card">
+          <div class="rc-icon-thumb">
+            <span class="rc-icon-emoji">🔥</span>
+            <span class="rc-icon-ph-label">Sketch placeholder</span>
+          </div>
+          <div class="rc-icon-body">
+            <div class="rc-icon-name">Burning</div>
+            <div class="rc-icon-type">Damage over time · Negative</div>
+            <div class="rc-icon-desc">Fire damage each turn. Must be visually distinct from Poisoned despite both being DoT effects. Motif directions: stylised flame, brazier, lantern.</div>
+            <div class="rc-icon-notes">Flame silhouettes are very common — needs a distinct reading that's still immediately recognisable as fire.</div>
+            <div class="rc-icon-status">Sketching</div>
+          </div>
+        </div>
+
+        <div class="rc-icon-card">
+          <div class="rc-icon-thumb">
+            <span class="rc-icon-emoji">❄️</span>
+            <span class="rc-icon-ph-label">Sketch placeholder</span>
+          </div>
+          <div class="rc-icon-body">
+            <div class="rc-icon-name">Frozen</div>
+            <div class="rc-icon-type">Immobilise · Negative</div>
+            <div class="rc-icon-desc">Unit cannot act. Motif directions: ice crystal, enclosed geometric form, encased silhouette. Must feel clearly different from Stunned.</div>
+            <div class="rc-icon-notes">Snowflakes collapse at 16px. Exploring crystal shard or fully enclosed shape as the direction instead.</div>
+            <div class="rc-icon-status">Sketching</div>
+          </div>
+        </div>
+
+        <div class="rc-icon-card">
+          <div class="rc-icon-thumb">
+            <span class="rc-icon-emoji">⚡</span>
+            <span class="rc-icon-ph-label">Sketch placeholder</span>
+          </div>
+          <div class="rc-icon-body">
+            <div class="rc-icon-name">Stunned</div>
+            <div class="rc-icon-type">Skip turn · Negative</div>
+            <div class="rc-icon-desc">Loses next action. Motif directions: orbiting stars, dazed spiral, lightning strike. Must feel distinct from Frozen despite both being immobilise states.</div>
+            <div class="rc-icon-notes">Orbital/spiral direction feels most distinct from Frozen's crystalline approach — testing this path first.</div>
+            <div class="rc-icon-status">Sketching</div>
+          </div>
+        </div>
+
+        <div class="rc-icon-card">
+          <div class="rc-icon-thumb">
+            <span class="rc-icon-emoji">💀</span>
+            <span class="rc-icon-ph-label">Sketch placeholder</span>
+          </div>
+          <div class="rc-icon-body">
+            <div class="rc-icon-name">Cursed</div>
+            <div class="rc-icon-type">Card debuff · Negative</div>
+            <div class="rc-icon-desc">Reduces effectiveness of future cards. Motif directions: hex symbol, broken seal, inverted crown, evil eye. Avoiding skull — reads too differently across cultural contexts.</div>
+            <div class="rc-icon-notes">Cross-cultural risk: skull is heavily Western. Broken seal or inverted symbol is the safer direction.</div>
+            <div class="rc-icon-status">Research phase</div>
+          </div>
+        </div>
+
+        <div class="rc-icon-card">
+          <div class="rc-icon-thumb">
+            <span class="rc-icon-emoji">🛡️</span>
+            <span class="rc-icon-ph-label">Sketch placeholder</span>
+          </div>
+          <div class="rc-icon-body">
+            <div class="rc-icon-name">Weakened</div>
+            <div class="rc-icon-type">Stat reduction · Negative</div>
+            <div class="rc-icon-desc">Reduces attack or defence stat. Motif directions: cracked shield, broken sword, drooping form. Must read clearly distinct from Cursed.</div>
+            <div class="rc-icon-notes">Cracked shield is strong for Rome — need a culturally equivalent read for Forest and China Sea factions.</div>
+            <div class="rc-icon-status">Sketching</div>
+          </div>
+        </div>
+
+        <div class="rc-icon-card">
+          <div class="rc-icon-thumb">
+            <span class="rc-icon-emoji">💨</span>
+            <span class="rc-icon-ph-label">Sketch placeholder</span>
+          </div>
+          <div class="rc-icon-body">
+            <div class="rc-icon-name">Hasted</div>
+            <div class="rc-icon-type">Speed buff · Positive</div>
+            <div class="rc-icon-desc">Grants extra action or movement. The only positive effect in the set — must read unambiguously as a buff. Motif directions: wind lines, wings, upward arrow burst, Mercury's heel.</div>
+            <div class="rc-icon-notes">As the sole buff, needs strongest possible upward/expanding energy to contrast with the debuff family.</div>
+            <div class="rc-icon-status">Sketching</div>
+          </div>
+        </div>
+
+        <div class="rc-icon-card" style="opacity:.4">
+          <div class="rc-icon-thumb">
+            <span class="rc-icon-emoji" style="font-size:2rem;opacity:.4">＋</span>
+            <span class="rc-icon-ph-label">Future</span>
+          </div>
+          <div class="rc-icon-body">
+            <div class="rc-icon-name">TBD</div>
+            <div class="rc-icon-type">Future · Not yet scoped</div>
+            <div class="rc-icon-desc">Additional effects to be added as the card system develops in collaboration with the game design team.</div>
+            <div class="rc-icon-status">Not started</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── 06 NEXT STEPS ── -->
+    <div class="rc-section reveal">
+      <div class="rc-section-header">
+        <div class="rc-section-num">06</div>
+        <div class="rc-section-head-right">
+          <div class="rc-section-label">Next Steps</div>
+          <h2>Roadmap & <em>phases</em></h2>
+        </div>
+      </div>
+      <p>Four phases from early exploration through to final handoff. Phase 1 is underway. Each phase is reviewed with the team before the next begins — no phase is skipped or compressed.</p>
+
+      <div class="rc-roadmap">
+
+        <div class="rc-phase current">
+          <div class="rc-phase-left">
+            <div class="rc-phase-num">1</div>
+            <div class="rc-phase-label">Phase</div>
+            <div class="rc-phase-status">Now</div>
+          </div>
+          <div class="rc-phase-right">
+            <div class="rc-phase-title">Research & Ideation</div>
+            <div class="rc-phase-tasks">
+              <div class="rc-phase-task">Cultural reference research — Roman, Forest, and China Sea visual vocabularies</div>
+              <div class="rc-phase-task">Establish and document design principles before any sketching begins</div>
+              <div class="rc-phase-task">Silhouette explorations for all 7 effects — minimum 3 directions each</div>
+              <div class="rc-phase-task">16px legibility testing on every sketch direction</div>
+              <div class="rc-phase-task">First team review — narrow to 1–2 directions per effect to develop further</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rc-phase">
+          <div class="rc-phase-left">
+            <div class="rc-phase-num">2</div>
+            <div class="rc-phase-label">Phase</div>
+            <div class="rc-phase-status">Up next</div>
+          </div>
+          <div class="rc-phase-right">
+            <div class="rc-phase-title">Vector Development & System Definition</div>
+            <div class="rc-phase-tasks">
+              <div class="rc-phase-task">Move approved sketch directions into vector in Figma and Illustrator</div>
+              <div class="rc-phase-task">Apply the 24×24 construction grid to all icons</div>
+              <div class="rc-phase-task">Define the colour system — signature hues, accessibility pass, greyscale test</div>
+              <div class="rc-phase-task">First faction variant explorations — one icon expressed across all three factions</div>
+              <div class="rc-phase-task">Team review — visual coherence check and mechanical accuracy sign-off with game designers</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rc-phase">
+          <div class="rc-phase-left">
+            <div class="rc-phase-num">3</div>
+            <div class="rc-phase-label">Phase</div>
+            <div class="rc-phase-status">Planned</div>
+          </div>
+          <div class="rc-phase-right">
+            <div class="rc-phase-title">In-Context Testing & Iteration</div>
+            <div class="rc-phase-tasks">
+              <div class="rc-phase-task">Place icons on real card layouts in Figma — test at all display sizes simultaneously</div>
+              <div class="rc-phase-task">Battlefield token mockups — icons at 16px and 32px in context</div>
+              <div class="rc-phase-task">HUD panel mockups — icon behaviour within the game UI</div>
+              <div class="rc-phase-task">Colour-blind accessibility audit across all 7 effects</div>
+              <div class="rc-phase-task">Iteration round based on team and early playtest feedback</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rc-phase">
+          <div class="rc-phase-left">
+            <div class="rc-phase-num">4</div>
+            <div class="rc-phase-label">Phase</div>
+            <div class="rc-phase-status">Planned</div>
+          </div>
+          <div class="rc-phase-right">
+            <div class="rc-phase-title">Documentation & Handoff</div>
+            <div class="rc-phase-tasks">
+              <div class="rc-phase-task">Figma component library — all icons as components with size and state variants</div>
+              <div class="rc-phase-task">Usage documentation — do/don't, size minimums, colour rules, spacing</div>
+              <div class="rc-phase-task">Faction variant guidelines for the art team</div>
+              <div class="rc-phase-task">Stack severity indicator system — how to show intensity levels on tokens</div>
+              <div class="rc-phase-task">Final sign-off and handoff to engineering and art teams</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-mark">Thea ✦ Creative Portfolio</div>
+  <ul class="footer-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="uxui.html">UX/UI</a></li>
+    <li><a href="games.html">Games</a></li>
+    <li><a href="about.html">About</a></li>
+  </ul>
+</footer>
+<script src="nav.js"></script>
+</body>
+</html>

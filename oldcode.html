@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ClearFlow — Maya</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+body { background: var(--paper); }
+.case-hero { background: linear-gradient(148deg,#eeeaf8 0%,#dcd6f0 100%); padding:80px 8vw 70px; position:relative; overflow:hidden; }
+.case-hero::after { content:''; position:absolute; bottom:-1px;left:0;right:0;height:56px;background:var(--paper);clip-path:ellipse(52% 100% at 50% 100%); }
+.back-link { display:inline-flex;align-items:center;gap:6px;font-family:var(--f-ui);font-size:.7rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--lavender);text-decoration:none;margin-bottom:32px;transition:gap .2s; }
+.back-link:hover{gap:10px;}
+.case-tag { display:inline-flex;align-items:center;gap:6px;font-family:var(--f-ui);font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--lavender);background:rgba(184,168,212,.14);border:1px solid rgba(184,168,212,.3);padding:5px 14px;border-radius:22px;margin-bottom:20px; }
+.case-hero h1 { font-family:var(--f-display);font-style:italic;font-size:clamp(2.4rem,5.5vw,4.2rem);line-height:1.05;color:var(--ink);max-width:680px;margin-bottom:18px; }
+.case-hero h1 em { color:var(--lavender);font-style:normal; }
+.case-hero-desc { font-family:var(--f-heading);font-style:italic;font-size:1.02rem;color:var(--ink2);max-width:540px;line-height:1.65;opacity:.72;margin-bottom:36px; }
+.case-meta { display:flex;gap:40px;flex-wrap:wrap; }
+.case-meta-item { display:flex;flex-direction:column;gap:3px; }
+.cm-label { font-family:var(--f-ui);font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink2);opacity:.38; }
+.cm-val { font-size:.88rem;color:var(--ink); }
+/* body */
+.case-body { padding:64px 8vw 80px; }
+.case-section { margin-bottom:64px; }
+.cs-heading { font-family:var(--f-display);font-style:italic;font-size:1.6rem;color:var(--ink);margin-bottom:18px;display:flex;align-items:center;gap:12px; }
+.cs-heading::before { content:'';display:block;width:4px;height:26px;background:var(--lavender);border-radius:2px;flex-shrink:0; }
+.cs-body { font-size:.93rem;line-height:1.78;color:var(--ink2);max-width:680px; }
+/* findings */
+.findings-grid { display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:20px 0; }
+.finding-card { background:white;border-radius:16px;padding:20px;box-shadow:3px 4px 16px var(--shadow);border-left:3px solid var(--lavender); }
+.fc-num { font-family:var(--f-display);font-style:italic;font-size:2rem;color:var(--ink);margin-bottom:5px; }
+.fc-label { font-family:var(--f-ui);font-size:.65rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--lavender);margin-bottom:7px; }
+.fc-desc { font-size:.82rem;line-height:1.6;color:var(--ink2);opacity:.7; }
+/* screens row */
+.screens-row { display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin:20px 0; }
+.screen-block { border-radius:14px;overflow:hidden;box-shadow:4px 6px 20px var(--shadow);background:white; }
+.sb-top { height:8px;background:var(--c,var(--lavender));opacity:.4; }
+.sb-body { padding:14px;background:#f8f6fe; }
+.sb-row { height:7px;background:rgba(28,21,16,.09);border-radius:3px;margin-bottom:6px; }
+.sb-card { height:32px;border-radius:8px;background:rgba(184,168,212,.18);margin-bottom:6px; }
+.sb-label { font-family:var(--f-ui);font-size:.6rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--lavender);margin-top:10px;opacity:.7; }
+/* outcomes */
+.outcomes-list { display:flex;flex-wrap:wrap;gap:10px;margin:18px 0; }
+.outcome-tag { display:flex;align-items:center;gap:7px;background:white;border-radius:30px;padding:9px 16px;box-shadow:2px 3px 12px var(--shadow);font-size:.82rem;color:var(--ink); }
+.ot-val { font-weight:700;color:var(--sage); }
+/* nav */
+.case-footer-nav { display:flex;justify-content:space-between;align-items:center;padding:32px 8vw 56px;border-top:1px solid rgba(28,21,16,.07); }
+.cfn-link { font-family:var(--f-ui);font-size:.72rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--ink);text-decoration:none;display:flex;align-items:center;gap:6px;transition:gap .2s; }
+.cfn-link:hover{gap:10px;}
+@media(max-width:700px){.findings-grid,.screens-row{grid-template-columns:1fr}.case-hero,.case-body{padding-left:6vw;padding-right:6vw;}}
+</style>
+</head>
+<body class="page-uxui">
+<div id="cur"></div>
+<div id="cur-ring"></div>
+<div id="transition-overlay"></div>
+<nav class="site-nav">
+  <a href="index.html" class="nav-wordmark">Maya<sup>✦</sup></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="uxui.html" class="active">UX/UI</a></li>
+    <li><a href="games.html">Games</a></li>
+    <li><a href="art.html">Art</a></li>
+    <li><a href="about.html">About</a></li>
+  </ul>
+</nav>
+<main class="page-wrap">
+  <section class="case-hero">
+    <a href="uxui.html" class="back-link reveal">← Back to UX/UI</a>
+    <div class="case-tag reveal">B2B SaaS · Product Design</div>
+    <h1 class="reveal reveal-delay-1">ClearFlow — <em>Analytics Redesign</em></h1>
+    <p class="case-hero-desc reveal reveal-delay-2">A full redesign of a B2B analytics platform, restructuring complex enterprise workflows to reduce friction and surface the right data at the right moment.</p>
+    <div class="case-meta reveal reveal-delay-3">
+      <div class="case-meta-item"><span class="cm-label">Role</span><span class="cm-val">Lead UX Designer</span></div>
+      <div class="case-meta-item"><span class="cm-label">Duration</span><span class="cm-val">14 weeks</span></div>
+      <div class="case-meta-item"><span class="cm-label">Tools</span><span class="cm-val">Figma · Maze · FigJam · Notion</span></div>
+      <div class="case-meta-item"><span class="cm-label">Team</span><span class="cm-val">2 designers · 3 engineers</span></div>
+    </div>
+  </section>
+  <div class="case-body">
+    <div class="case-section reveal">
+      <h2 class="cs-heading">The Problem</h2>
+      <p class="cs-body">ClearFlow's analytics platform had grown organically over 4 years, accumulating features without coherent structure. Power users were completing critical tasks through 5–7 step workarounds. New users couldn't orient themselves within the first session. Churn data pointed clearly to onboarding and daily workflow friction as the key drivers.</p>
+    </div>
+    <div class="case-section reveal">
+      <h2 class="cs-heading">Research & Findings</h2>
+      <p class="cs-body">I conducted 18 contextual inquiry interviews across 6 enterprise clients, ran a competitive audit across 8 analytics tools, and facilitated 3 card-sorting sessions to establish a new IA baseline.</p>
+      <div class="findings-grid">
+        <div class="finding-card"><div class="fc-label">Task completion</div><div class="fc-num">57%</div><div class="fc-desc">Of users completed key tasks on first attempt in the original design — below the industry baseline of 78%.</div></div>
+        <div class="finding-card"><div class="fc-label">Time-on-task</div><div class="fc-num">4.2×</div><div class="fc-desc">Longer than benchmark for primary workflows, driven by navigation and search failures.</div></div>
+        <div class="finding-card"><div class="fc-label">Nav confusion rate</div><div class="fc-num">71%</div><div class="fc-desc">Of participants expressed confusion about primary navigation during moderated testing sessions.</div></div>
+        <div class="finding-card"><div class="fc-label">Feature awareness</div><div class="fc-num">38%</div><div class="fc-desc">Of core features were unknown to active users who would benefit from them.</div></div>
+      </div>
+    </div>
+    <div class="case-section reveal">
+      <h2 class="cs-heading">Design Approach</h2>
+      <p class="cs-body">The redesign focused on three principles: surface-first navigation (most-used tools always visible), progressive disclosure for complex features, and a unified data model that made relationships between metrics legible.</p>
+      <div class="screens-row">
+        <div class="screen-block"><div class="sb-top" style="--c:var(--rose)"></div><div class="sb-body"><div class="sb-row" style="width:60%"></div><div class="sb-card"></div><div class="sb-card"></div><div class="sb-label">Before: Navigation</div></div></div>
+        <div class="screen-block"><div class="sb-top" style="--c:var(--sage);opacity:.7"></div><div class="sb-body"><div class="sb-row" style="width:45%"></div><div class="sb-card" style="background:rgba(122,158,126,.15)"></div><div class="sb-card" style="background:rgba(122,158,126,.1)"></div><div class="sb-label" style="color:var(--sage)">After: Navigation ✦</div></div></div>
+        <div class="screen-block"><div class="sb-top" style="--c:var(--lavender);opacity:.6"></div><div class="sb-body"><div class="sb-row" style="width:70%"></div><div class="sb-card"></div><div class="sb-row" style="width:55%"></div><div class="sb-label">After: Dashboard</div></div></div>
+      </div>
+    </div>
+    <div class="case-section reveal">
+      <h2 class="cs-heading">Outcomes</h2>
+      <div class="outcomes-list">
+        <div class="outcome-tag">Task completion <span class="ot-val">57% → 91%</span></div>
+        <div class="outcome-tag">Time-on-task <span class="ot-val">−38%</span></div>
+        <div class="outcome-tag">NPS score <span class="ot-val">+24 pts</span></div>
+        <div class="outcome-tag">Feature discovery <span class="ot-val">+55%</span></div>
+        <div class="outcome-tag">Churn indicator <span class="ot-val">−12% at 6mo</span></div>
+      </div>
+      <p class="cs-body" style="margin-top:16px">Shipped to production in Q3 2024 with a phased rollout across 200+ enterprise accounts. Design system handed off and adopted by engineering team for all subsequent feature work.</p>
+    </div>
+  </div>
+  <div class="case-footer-nav reveal">
+    <a href="uxui.html" class="cfn-link">← All UX/UI Projects</a>
+    <a href="project-sidepath.html" class="cfn-link">Next: Sidepath →</a>
+  </div>
+</main>
+<footer class="site-footer">
+  <div class="footer-mark">Maya ✦ Creative Portfolio</div>
+  <ul class="footer-links"><li><a href="uxui.html">UX/UI</a></li><li><a href="about.html">Contact</a></li></ul>
+</footer>
+<script src="nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,1753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sidepath — Maya</title>
+<link rel="stylesheet" href="shared.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+/* ─── PAGE TOKENS ─────────────────────────────────── */
+:root {
+  --sp-matcha:      #5c7a52;
+  --sp-matcha-mid:  #7a9e70;
+  --sp-matcha-lt:   #a8c49e;
+  --sp-matcha-dim:  rgba(92,122,82,.1);
+  --sp-matcha-bd:   rgba(92,122,82,.22);
+  --sp-moss:        #3d5c35;
+  --sp-sage:        #8faa86;
+  --sp-ivory:       #f8f5ee;
+  --sp-ivory2:      #f0ece2;
+  --sp-cream:       #e8e2d4;
+  --sp-bark:        #8b7355;
+  --sp-clay:        #b0856a;
+  --sp-soil:        #4a3728;
+  --sp-ink:         #1f2318;
+  --sp-ink2:        #4a5240;
+  --sp-ink3:        #8a9180;
+  --sp-pine:        #2d4a2a;
+  --sp-white:       #ffffff;
+  --sp-shadow:      0 2px 14px rgba(31,35,24,.08);
+  --sp-shadow-md:   0 6px 32px rgba(31,35,24,.12);
+  --f-sp:           'Lora', Georgia, serif;
+  --f-sp-body:      'DM Sans', system-ui, sans-serif;
+  --r-sp:           12px;
+  --r-sp-lg:        20px;
+}
+
+body { background: #f8f5ee !important; font-family: var(--f-sp-body); color: var(--sp-ink); }
+
+/* ─── HERO ────────────────────────────────────────── */
+.sp-hero {
+  padding: 88px 8vw 80px;
+  background: linear-gradient(148deg, #e8f0e4 0%, #d4e6ce 100%);
+  position: relative;
+  overflow: hidden;
+  border-bottom: none;
+}
+.sp-hero::before {
+  content: '';
+  position: absolute;
+  top: -120px; right: -80px;
+  width: 500px; height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(92,122,82,.18) 0%, transparent 65%);
+  pointer-events: none;
+}
+.sp-hero::after {
+  content: '';
+  position: absolute;
+  bottom: -1px; left: 0; right: 0;
+  height: 60px;
+  background: var(--sp-ivory);
+  clip-path: ellipse(52% 100% at 50% 100%);
+}
+.sp-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  color: var(--sp-matcha);
+  text-decoration: none;
+  margin-bottom: 32px;
+  transition: gap .2s;
+}
+.sp-back:hover { gap: 10px; }
+.sp-hero-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--sp-matcha);
+  background: rgba(92,122,82,.1);
+  border: 1px solid rgba(92,122,82,.25);
+  padding: 5px 14px;
+  border-radius: 22px;
+  margin-bottom: 22px;
+}
+.sp-hero h1 {
+  font-family: var(--f-sp);
+  font-style: italic;
+  font-size: clamp(2.6rem, 6vw, 4.4rem);
+  line-height: 1.05;
+  color: var(--sp-ink);
+  max-width: 760px;
+  margin-bottom: 20px;
+}
+.sp-hero h1 em { color: var(--sp-matcha); font-style: normal; }
+.sp-hero-desc {
+  font-size: .97rem;
+  color: var(--sp-ink2);
+  max-width: 560px;
+  line-height: 1.76;
+  margin-bottom: 40px;
+  opacity: .85;
+}
+.sp-meta {
+  display: flex;
+  gap: 44px;
+  flex-wrap: wrap;
+  border-top: 1px solid rgba(92,122,82,.2);
+  padding-top: 28px;
+}
+.sp-meta-item { display: flex; flex-direction: column; gap: 4px; }
+.sp-meta-label {
+  font-size: 9.5px;
+  font-weight: 500;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--sp-ink3);
+}
+.sp-meta-val { font-size: .88rem; color: var(--sp-ink); }
+
+/* ─── BODY ────────────────────────────────────────── */
+.sp-body { max-width: 1100px; margin: 0 auto; padding: 72px 8vw 112px; }
+.sp-section { margin-bottom: 96px; }
+
+.sp-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+.sp-eyebrow-line { width: 20px; height: 1.5px; background: var(--sp-matcha); flex-shrink: 0; }
+.sp-eyebrow-text {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--sp-matcha);
+}
+.sp-num {
+  font-family: var(--f-sp);
+  font-style: italic;
+  font-size: 3rem;
+  color: var(--sp-matcha-lt);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.sp-h {
+  font-family: var(--f-sp);
+  font-style: italic;
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 400;
+  color: var(--sp-ink);
+  margin-bottom: 18px;
+  line-height: 1.2;
+}
+.sp-prose {
+  font-size: .92rem;
+  line-height: 1.84;
+  color: var(--sp-ink2);
+  max-width: 680px;
+  margin-bottom: 16px;
+}
+.sp-prose strong { color: var(--sp-ink); font-weight: 500; }
+
+.sp-divider {
+  height: 1px;
+  background: linear-gradient(to right, var(--sp-matcha-bd), transparent);
+  margin: 0 0 0 0;
+}
+
+/* ─── PHONE MOCKUP SHELL ─────────────────────────── */
+.phone-wrap {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin: 28px 0;
+}
+.phone {
+  width: 220px;
+  flex-shrink: 0;
+  background: #1a1c18;
+  border-radius: 36px;
+  padding: 10px;
+  box-shadow: 0 24px 60px rgba(0,0,0,.28), 0 0 0 1px rgba(255,255,255,.06);
+  position: relative;
+}
+.phone-inner {
+  border-radius: 28px;
+  overflow: hidden;
+  background: var(--sp-ivory);
+  height: 440px;
+  position: relative;
+}
+.phone-notch {
+  position: absolute;
+  top: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 80px; height: 22px;
+  background: #1a1c18;
+  border-radius: 0 0 14px 14px;
+  z-index: 10;
+}
+.phone-screen { height: 100%; overflow: hidden; }
+
+/* caption under phone group */
+.phone-caption {
+  font-size: .78rem;
+  color: var(--sp-ink3);
+  font-style: italic;
+  margin-top: 10px;
+  font-family: var(--f-sp);
+}
+
+/* ─── SCREEN: ONBOARDING ─────────────────────────── */
+.scr-onboard {
+  background: linear-gradient(175deg, #e8f0e4 0%, #d6e8d0 100%);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 40px 16px 20px;
+}
+.scr-onboard-title {
+  font-family: var(--f-sp);
+  font-style: italic;
+  font-size: 1.2rem;
+  color: var(--sp-pine);
+  margin-bottom: 6px;
+  line-height: 1.2;
+}
+.scr-onboard-sub { font-size: 10px; color: var(--sp-ink2); margin-bottom: 20px; opacity: .7; }
+.interest-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 9.5px;
+  padding: 5px 10px;
+  border-radius: 16px;
+  border: 1px solid;
+  margin: 3px;
+  cursor: pointer;
+}
+.interest-chip.sel {
+  background: var(--sp-matcha);
+  border-color: var(--sp-matcha);
+  color: white;
+}
+.interest-chip.unsel {
+  background: white;
+  border-color: rgba(92,122,82,.25);
+  color: var(--sp-ink2);
+}
+.chips-wrap { flex-wrap: wrap; display: flex; margin-bottom: 16px; }
+.scr-progress {
+  margin-top: auto;
+  height: 3px;
+  border-radius: 2px;
+  background: rgba(92,122,82,.15);
+}
+.scr-progress-fill {
+  height: 100%;
+  border-radius: 2px;
+  background: var(--sp-matcha);
+  width: 33%;
+}
+
+/* ─── SCREEN: PROFILE ────────────────────────────── */
+.scr-profile {
+  background: var(--sp-ivory);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.profile-header-bg {
+  height: 80px;
+  background: linear-gradient(135deg, #c8dcc4, #a8c4a0);
+  position: relative;
+  flex-shrink: 0;
+}
+.profile-av {
+  position: absolute;
+  bottom: -22px; left: 16px;
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #7a9e70, #5c7a52);
+  border: 3px solid var(--sp-ivory);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+.profile-body { padding: 28px 14px 12px; flex: 1; overflow: hidden; }
+.profile-name { font-family: var(--f-sp); font-style: italic; font-size: .95rem; color: var(--sp-ink); margin-bottom: 2px; }
+.profile-role { font-size: 9.5px; color: var(--sp-matcha); font-weight: 500; margin-bottom: 8px; }
+.profile-bio { font-size: 9px; color: var(--sp-ink2); line-height: 1.55; margin-bottom: 10px; }
+.profile-exploring {
+  background: var(--sp-matcha-dim);
+  border: 1px solid var(--sp-matcha-bd);
+  border-radius: 8px;
+  padding: 6px 9px;
+  font-size: 8.5px;
+  color: var(--sp-matcha);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: flex-start;
+  gap: 5px;
+}
+.profile-tree-preview {
+  border-top: 1px solid var(--sp-cream);
+  padding-top: 8px;
+  font-size: 8px;
+  color: var(--sp-ink3);
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  margin-bottom: 6px;
+}
+
+/* ─── SCREEN: FEED ───────────────────────────────── */
+.scr-feed {
+  background: var(--sp-ivory);
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.feed-header {
+  padding: 30px 14px 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+}
+.feed-title { font-family: var(--f-sp); font-style: italic; font-size: .9rem; color: var(--sp-ink); }
+.feed-scroll { flex: 1; overflow: hidden; padding: 0 10px 10px; display: flex; flex-direction: column; gap: 8px; }
+.feed-card {
+  background: white;
+  border-radius: 12px;
+  padding: 11px 12px;
+  border: 1px solid rgba(92,122,82,.1);
+  box-shadow: 0 2px 8px rgba(31,35,24,.05);
+}
+.feed-card-user {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 7px;
+}
+.fcu-av {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: var(--c, #8faa86);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  flex-shrink: 0;
+}
+.fcu-name { font-size: 9.5px; font-weight: 500; color: var(--sp-ink); }
+.fcu-role { font-size: 8px; color: var(--sp-ink3); }
+.feed-card-text { font-size: 9px; color: var(--sp-ink2); line-height: 1.55; margin-bottom: 8px; }
+.feed-reactions {
+  display: flex;
+  gap: 6px;
+}
+.feed-rxn {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 9px;
+  color: var(--sp-ink3);
+  background: var(--sp-ivory2);
+  border-radius: 10px;
+  padding: 3px 7px;
+  border: 1px solid var(--sp-cream);
+}
+.feed-rxn.active { background: var(--sp-matcha-dim); border-color: var(--sp-matcha-bd); color: var(--sp-matcha); }
+
+/* ─── SCREEN: POST CREATE ────────────────────────── */
+.scr-post {
+  background: var(--sp-ivory);
+  height: 100%;
+  overflow: hidden;
+  padding: 32px 14px 14px;
+  display: flex;
+  flex-direction: column;
+}
+.post-prompt-row {
+  font-size: 8px;
+  font-weight: 500;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--sp-matcha);
+  margin-bottom: 6px;
+}
+.post-textarea {
+  background: white;
+  border: 1px solid rgba(92,122,82,.2);
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 9.5px;
+  color: var(--sp-ink2);
+  line-height: 1.6;
+  flex: 1;
+  margin-bottom: 10px;
+  font-style: italic;
+  font-family: var(--f-sp);
+}
+.post-space-tags { display: flex; gap: 5px; margin-bottom: 10px; }
+.post-tag {
+  font-size: 8px;
+  padding: 3px 8px;
+  border-radius: 10px;
+  background: var(--sp-matcha-dim);
+  color: var(--sp-matcha);
+  border: 1px solid var(--sp-matcha-bd);
+}
+.post-btn-row { display: flex; gap: 7px; }
+.post-btn-ghost {
+  flex: 1;
+  padding: 7px;
+  border-radius: 8px;
+  border: 1px solid var(--sp-cream);
+  background: transparent;
+  font-size: 9px;
+  color: var(--sp-ink3);
+  text-align: center;
+}
+.post-btn-primary {
+  flex: 1;
+  padding: 7px;
+  border-radius: 8px;
+  background: var(--sp-matcha);
+  color: white;
+  font-size: 9px;
+  font-weight: 500;
+  text-align: center;
+}
+
+/* ─── SCREEN: REACTION DETAIL ────────────────────── */
+.scr-rxn {
+  background: var(--sp-ivory);
+  height: 100%;
+  overflow: hidden;
+  padding: 32px 14px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.rxn-card {
+  background: white;
+  border-radius: 12px;
+  padding: 12px;
+  border: 1px solid;
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+}
+.rxn-icon { font-size: 18px; flex-shrink: 0; margin-top: 2px; }
+.rxn-title { font-family: var(--f-sp); font-style: italic; font-size: .78rem; color: var(--sp-ink); margin-bottom: 3px; }
+.rxn-sub { font-size: 8px; color: var(--sp-ink3); line-height: 1.55; }
+.rxn-card.sprout { border-color: rgba(92,122,82,.2); background: #f4fbf2; }
+.rxn-card.pine   { border-color: rgba(45,74,42,.25); background: #f0f4ef; }
+.rxn-card.flower { border-color: rgba(176,133,106,.2); background: #fbf6f2; }
+
+/* ─── SCREEN: FOREST NETWORK ─────────────────────── */
+.scr-forest {
+  background: linear-gradient(175deg, #1a2416 0%, #0d1509 100%);
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.forest-svg-wrap {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.forest-label {
+  position: absolute;
+  bottom: 20px;
+  left: 0; right: 0;
+  text-align: center;
+  font-size: 8px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: rgba(168,196,158,.5);
+}
+.forest-name-tag {
+  position: absolute;
+  font-size: 7.5px;
+  color: rgba(200,220,190,.7);
+  text-align: center;
+  pointer-events: none;
+}
+
+/* ─── SCREEN: GROUPS ─────────────────────────────── */
+.scr-groups {
+  background: var(--sp-ivory);
+  height: 100%;
+  overflow: hidden;
+  padding: 30px 12px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+.groups-title {
+  font-family: var(--f-sp);
+  font-style: italic;
+  font-size: .85rem;
+  color: var(--sp-ink);
+  margin-bottom: 4px;
+}
+.group-card {
+  background: white;
+  border-radius: 12px;
+  padding: 10px 11px;
+  border: 1px solid rgba(92,122,82,.1);
+  display: flex;
+  gap: 9px;
+  align-items: flex-start;
+}
+.group-icon {
+  width: 28px; height: 28px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+.group-name { font-size: 9.5px; font-weight: 500; color: var(--sp-ink); margin-bottom: 2px; }
+.group-members { font-size: 8px; color: var(--sp-matcha); font-weight: 500; }
+.group-desc { font-size: 8px; color: var(--sp-ink3); line-height: 1.5; margin-top: 2px; }
+
+/* ─── SCREEN: DESK ───────────────────────────────── */
+.scr-desk {
+  background: var(--sp-ivory2);
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+}
+.desk-surface {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 55%;
+  background: linear-gradient(180deg, #c4a882 0%, #b09070 100%);
+  border-radius: 0;
+}
+.desk-wall {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 50%;
+  background: linear-gradient(180deg, #e8e0d4 0%, #d8cfbf 100%);
+}
+.desk-item {
+  position: absolute;
+  cursor: pointer;
+  transition: transform .2s;
+  text-align: center;
+}
+.desk-item:hover { transform: translateY(-3px) scale(1.05); }
+.desk-item-icon { font-size: 20px; display: block; margin-bottom: 2px; }
+.desk-item-label {
+  font-size: 7px;
+  color: var(--sp-ink);
+  background: rgba(255,255,255,.85);
+  border-radius: 4px;
+  padding: 1px 4px;
+  white-space: nowrap;
+}
+
+/* ─── SCREEN: MESSAGING ──────────────────────────── */
+.scr-msg {
+  background: var(--sp-ivory);
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.msg-header {
+  padding: 28px 14px 10px;
+  border-bottom: 1px solid var(--sp-cream);
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  flex-shrink: 0;
+}
+.msg-header-av {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #8faa86, #5c7a52);
+}
+.msg-header-name { font-size: .8rem; font-weight: 500; color: var(--sp-ink); }
+.msg-header-sub  { font-size: 8px; color: var(--sp-matcha); }
+.msg-body { flex: 1; padding: 10px 12px; display: flex; flex-direction: column; gap: 8px; overflow: hidden; }
+.msg-prompt-card {
+  background: var(--sp-matcha-dim);
+  border: 1px solid var(--sp-matcha-bd);
+  border-radius: 10px;
+  padding: 9px 10px;
+  font-size: 8.5px;
+  color: var(--sp-matcha);
+  line-height: 1.55;
+}
+.msg-prompt-label {
+  font-size: 7.5px;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--sp-matcha-mid);
+  margin-bottom: 3px;
+}
+.bubble {
+  max-width: 75%;
+  border-radius: 14px;
+  padding: 7px 10px;
+  font-size: 9px;
+  line-height: 1.55;
+}
+.bubble.them {
+  background: white;
+  border: 1px solid var(--sp-cream);
+  color: var(--sp-ink2);
+  align-self: flex-start;
+  border-bottom-left-radius: 4px;
+}
+.bubble.me {
+  background: var(--sp-matcha);
+  color: rgba(255,255,255,.92);
+  align-self: flex-end;
+  border-bottom-right-radius: 4px;
+}
+.msg-input-row {
+  padding: 8px 10px;
+  display: flex;
+  gap: 6px;
+  border-top: 1px solid var(--sp-cream);
+  flex-shrink: 0;
+}
+.msg-input-box {
+  flex: 1;
+  background: var(--sp-ivory2);
+  border: 1px solid var(--sp-cream);
+  border-radius: 8px;
+  padding: 6px 9px;
+  font-size: 8.5px;
+  color: var(--sp-ink3);
+  font-style: italic;
+  font-family: var(--f-sp);
+}
+.msg-send-btn {
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  background: var(--sp-matcha);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 11px;
+  flex-shrink: 0;
+}
+
+/* ─── DESIGN SYSTEM PALETTE ──────────────────────── */
+.palette-row { display: flex; gap: 10px; flex-wrap: wrap; margin: 18px 0; }
+.swatch {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: center;
+}
+.swatch-color {
+  width: 52px; height: 52px;
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(0,0,0,.12);
+}
+.swatch-label { font-size: 9.5px; color: var(--sp-ink3); text-align: center; }
+.swatch-hex   { font-size: 9px; color: var(--sp-ink3); opacity: .6; font-family: monospace; }
+
+.type-sample { margin: 18px 0; }
+.ts-row { margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid var(--sp-cream); }
+.ts-row:last-child { border-bottom: none; }
+.ts-label { font-size: 9.5px; color: var(--sp-ink3); margin-bottom: 4px; letter-spacing: .06em; text-transform: uppercase; }
+
+/* ─── CONCEPT CARDS ──────────────────────────────── */
+.concept-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 24px 0; }
+.concept-card {
+  background: var(--sp-white);
+  border: 1px solid var(--sp-cream);
+  border-radius: var(--r-sp-lg);
+  padding: 22px 20px;
+  box-shadow: var(--sp-shadow);
+  transition: transform .2s, border-color .2s;
+}
+.concept-card:hover { transform: translateY(-3px); border-color: var(--sp-matcha-bd); }
+.concept-icon { font-size: 24px; margin-bottom: 12px; }
+.concept-title {
+  font-family: var(--f-sp);
+  font-style: italic;
+  font-size: .95rem;
+  color: var(--sp-ink);
+  margin-bottom: 7px;
+}
+.concept-desc { font-size: .8rem; line-height: 1.65; color: var(--sp-ink2); }
+
+/* ─── CONTRAST TABLE ─────────────────────────────── */
+.contrast-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 20px 0; }
+.contrast-card { border-radius: 16px; padding: 22px; }
+.contrast-card.bad  { background: #fff6f4; border: 1px solid rgba(176,133,106,.25); }
+.contrast-card.good { background: #f2f8f0; border: 1px solid rgba(92,122,82,.22); }
+.cc-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+.contrast-card.bad  .cc-label { color: var(--sp-clay); }
+.contrast-card.good .cc-label { color: var(--sp-matcha); }
+.cc-item {
+  font-size: .83rem;
+  color: var(--sp-ink2);
+  margin-bottom: 9px;
+  padding-left: 20px;
+  position: relative;
+  line-height: 1.5;
+}
+.contrast-card.bad  .cc-item::before { content: '✕'; position: absolute; left: 0; color: var(--sp-clay); }
+.contrast-card.good .cc-item::before { content: '✓'; position: absolute; left: 0; color: var(--sp-matcha); }
+
+/* ─── PULL QUOTE ─────────────────────────────────── */
+.sp-quote {
+  background: linear-gradient(135deg, rgba(92,122,82,.08) 0%, rgba(45,74,42,.04) 100%);
+  border: 1px solid var(--sp-matcha-bd);
+  border-radius: 20px;
+  padding: 28px 32px;
+  margin: 24px 0;
+  max-width: 680px;
+  position: relative;
+}
+.sp-quote::before {
+  content: '"';
+  font-family: var(--f-sp);
+  font-size: 60px;
+  color: var(--sp-matcha);
+  opacity: .15;
+  position: absolute;
+  top: 8px; left: 16px;
+  line-height: 1;
+  pointer-events: none;
+}
+.sp-quote-text {
+  font-family: var(--f-sp);
+  font-style: italic;
+  font-size: 1.05rem;
+  color: var(--sp-ink);
+  line-height: 1.7;
+  margin-bottom: 10px;
+}
+.sp-quote-attr { font-size: .78rem; color: var(--sp-matcha); font-weight: 500; }
+
+/* ─── OUTCOME CHIPS ──────────────────────────────── */
+.outcome-row { display: flex; flex-wrap: wrap; gap: 10px; margin: 18px 0; }
+.outcome-chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--sp-white);
+  border: 1px solid var(--sp-cream);
+  border-radius: 30px;
+  padding: 10px 18px;
+  font-size: .84rem;
+  color: var(--sp-ink2);
+  box-shadow: var(--sp-shadow);
+}
+.outcome-val { font-weight: 600; color: var(--sp-matcha); }
+
+/* ─── REACTION ROW ───────────────────────────────── */
+.rxn-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 24px 0; }
+.rxn-full-card {
+  background: var(--sp-white);
+  border: 1px solid var(--sp-cream);
+  border-radius: var(--r-sp-lg);
+  padding: 22px 20px;
+  box-shadow: var(--sp-shadow);
+  text-align: center;
+}
+.rxn-full-icon { font-size: 2.2rem; margin-bottom: 10px; }
+.rxn-full-name {
+  font-family: var(--f-sp);
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--sp-ink);
+  margin-bottom: 6px;
+}
+.rxn-full-meaning {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color: var(--sp-matcha);
+  margin-bottom: 8px;
+}
+.rxn-full-desc { font-size: .8rem; line-height: 1.65; color: var(--sp-ink2); }
+.rxn-full-card.pine { border-top: 3px solid var(--sp-pine); }
+.rxn-full-card.sprout { border-top: 3px solid var(--sp-sage); }
+.rxn-full-card.flower { border-top: 3px solid var(--sp-clay); }
+
+/* ─── FOREST CONCEPT DIAGRAM ─────────────────────── */
+.forest-diagram {
+  background: linear-gradient(175deg, #1a2416 0%, #0e1a0b 100%);
+  border-radius: 20px;
+  padding: 40px;
+  margin: 28px 0;
+  position: relative;
+  overflow: hidden;
+  min-height: 340px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.forest-diagram::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(92,122,82,.08) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+/* ─── LEARNINGS ──────────────────────────────────── */
+.learnings-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 24px 0; }
+.learning-card {
+  background: var(--sp-white);
+  border: 1px solid var(--sp-cream);
+  border-radius: var(--r-sp-lg);
+  padding: 22px;
+  box-shadow: var(--sp-shadow);
+}
+.lc-icon { font-size: 18px; margin-bottom: 10px; }
+.lc-title { font-family: var(--f-sp); font-style: italic; font-size: .95rem; color: var(--sp-ink); margin-bottom: 7px; }
+.lc-desc { font-size: .82rem; line-height: 1.68; color: var(--sp-ink2); }
+
+/* ─── FOOTER NAV ─────────────────────────────────── */
+.sp-footer-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 32px 8vw 56px;
+  border-top: 1px solid var(--sp-cream);
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.sp-fnav-link {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color: var(--sp-ink2);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: color .2s, gap .2s;
+}
+.sp-fnav-link:hover { color: var(--sp-matcha); gap: 10px; }
+
+/* ─── SECTION NUMBER BLOCKS ──────────────────────── */
+.section-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--sp-matcha-dim);
+  border: 1px solid var(--sp-matcha-bd);
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 9.5px;
+  font-weight: 500;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color: var(--sp-matcha);
+  margin-bottom: 14px;
+}
+
+/* ─── RESPONSIVE ─────────────────────────────────── */
+@media (max-width: 860px) {
+  .sp-hero, .sp-body, .sp-footer-nav { padding-left: 6vw; padding-right: 6vw; }
+  .concept-grid, .rxn-row, .learnings-grid { grid-template-columns: 1fr; }
+  .contrast-row { grid-template-columns: 1fr; }
+  .phone-wrap { justify-content: center; }
+}
+</style>
+</head>
+
+<body class="page-uxui">
+<div id="cur"></div>
+<div id="cur-ring"></div>
+<div id="transition-overlay"></div>
+
+<nav class="site-nav">
+  <a href="index.html" class="nav-wordmark">Maya<sup>✦</sup></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="uxui.html" class="active">UX/UI</a></li>
+    <li><a href="games.html">Games</a></li>
+    <li><a href="art.html">Art</a></li>
+    <li><a href="about.html">About</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap">
+
+<!-- ══════════════════════════════════════════════════
+     SCREEN 1: HERO / OVERVIEW
+══════════════════════════════════════════════════ -->
+<section class="sp-hero">
+  <a href="uxui.html" class="sp-back">← Back to UX/UI</a>
+  <div class="sp-hero-tag">🌲 Mobile App · Social Platform</div>
+  <h1>Sidepath — <em>a living forest of people</em></h1>
+  <p class="sp-hero-desc">An anti-LinkedIn. A platform built around curiosity, emotional resonance, and meaningful conversation — where connections are rooted, growth is organic, and understanding replaces performance as the measure of value.</p>
+  <div class="sp-meta">
+    <div class="sp-meta-item"><span class="sp-meta-label">Role</span><span class="sp-meta-val">Product Designer · UX Lead</span></div>
+    <div class="sp-meta-item"><span class="sp-meta-label">Duration</span><span class="sp-meta-val">10 weeks</span></div>
+    <div class="sp-meta-item"><span class="sp-meta-label">Tools</span><span class="sp-meta-val">Figma · Protopie · Miro</span></div>
+    <div class="sp-meta-item"><span class="sp-meta-label">Type</span><span class="sp-meta-val">Speculative / Concept Work</span></div>
+  </div>
+</section>
+
+<div class="sp-body">
+
+<!-- ══════════════════════════════════════════════════
+     SCREEN 2: PROBLEM STATEMENT
+══════════════════════════════════════════════════ -->
+<div class="sp-section reveal">
+  <div class="sp-eyebrow"><div class="sp-eyebrow-line"></div><span class="sp-eyebrow-text">Screen 02 — Problem Statement</span></div>
+  <h2 class="sp-h">Professional networking is valuable. And almost universally dreaded.</h2>
+  <p class="sp-prose">The dominant platforms reward volume, performance, and cold outreach — behaviours that feel antithetical to how real relationships actually form. LinkedIn optimises for signal-to-noise as a number, not signal quality. The result: a professional world full of people who feel <strong>too anxious to reach out</strong> and too overwhelmed to respond.</p>
+
+  <div class="sp-quote">
+    <div class="sp-quote-text">"I always feel like I need a reason to message someone on LinkedIn. Like I have to justify why I'm in their inbox. It stops me from reaching out at all."</div>
+    <div class="sp-quote-attr">— Research participant, product designer, 4 years experience</div>
+  </div>
+
+  <div class="contrast-row">
+    <div class="contrast-card bad">
+      <div class="cc-label">Existing platforms</div>
+      <div class="cc-item">Cold DMs that feel transactional</div>
+      <div class="cc-item">Performative posts optimised for likes</div>
+      <div class="cc-item">Connection requests with zero context</div>
+      <div class="cc-item">Follower counts as status signals</div>
+      <div class="cc-item">High social cost to initiate</div>
+    </div>
+    <div class="contrast-card good">
+      <div class="cc-label">Sidepath approach</div>
+      <div class="cc-item">Connections emerge through shared context</div>
+      <div class="cc-item">Prompts replace the blank-slate problem</div>
+      <div class="cc-item">Interest-matching lowers initiation cost</div>
+      <div class="cc-item">No metrics — only presence and resonance</div>
+      <div class="cc-item">Asymmetric interaction: see before you speak</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     SCREEN 3: DESIGN GOAL
+══════════════════════════════════════════════════ -->
+<div class="sp-section reveal">
+  <div class="sp-eyebrow"><div class="sp-eyebrow-line"></div><span class="sp-eyebrow-text">Screen 03 — Design Goal</span></div>
+  <h2 class="sp-h">Step into a living pine forest of people.</h2>
+  <p class="sp-prose">The experience should feel like entering a calm, growing ecosystem — not a corporate dashboard. Connections are rooted. Growth is organic. Understanding replaces performance as the core measure of value. The design goal was to make professional networking feel <strong>less like networking</strong> and more like discovering a community that already shares your curiosity.</p>
+
+  <div class="concept-grid">
+    <div class="concept-card">
+      <div class="concept-icon">🌱</div>
+      <div class="concept-title">Curiosity over credentials</div>
+      <div class="concept-desc">Profiles lead with what people are currently exploring, not where they've been. Interests, questions, and works-in-progress — not job titles and endorsements.</div>
+    </div>
+    <div class="concept-card">
+      <div class="concept-icon">🌲</div>
+      <div class="concept-title">Rooted relationships</div>
+      <div class="concept-desc">The network is a living forest. Connections form branches. Depth is visible spatially — nearby trees are close relationships; distant ones are ambient awareness.</div>
+    </div>
+    <div class="concept-card">
+      <div class="concept-icon">🌸</div>
+      <div class="concept-title">Emotional expression</div>
+      <div class="concept-desc">Replace the thumbs-up with a nature-based emotional vocabulary: curiosity, resonance, celebration. No counts — only presence.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     SCREEN 4: KEY CONCEPTS
+══════════════════════════════════════════════════ -->
+<div class="sp-section reveal">
+  <div class="sp-eyebrow"><div class="sp-eyebrow-line"></div><span class="sp-eyebrow-text">Screen 04 — Key Concepts</span></div>
+  <h2 class="sp-h">Four ideas that anchor the whole system.</h2>
+
+  <div class="concept-grid" style="grid-template-columns:1fr 1fr">
+    <div class="concept-card">
+      <div class="concept-icon">🖥️</div>
+      <div class="concept-title">The interactive desk</div>
+      <div class="concept-desc">Every profile has a virtual desk — a curated spatial environment showing the objects that represent a person's interests, projects, and curiosities. Objects are tappable, each opening a deeper reflection or linked work.</div>
+    </div>
+    <div class="concept-card">
+      <div class="concept-icon">🌿</div>
+      <div class="concept-title">Passion spaces</div>
+      <div class="concept-desc">Interest-based groups framed around exploration, not expertise. "Learning sustainable system design" not "Sustainability professionals." The entry point is curiosity, not a credential check.</div>
+    </div>
+    <div class="concept-card">
+      <div class="concept-icon">🌳</div>
+      <div class="concept-title">The living forest network</div>
+      <div class="concept-desc">An immersive, spatial network visualization. You are a tree. Your connections are the forest around you. First-degree connections are nearby pine trees — second and third degree fade into ambient depth.</div>
+    </div>
+    <div class="concept-card">
+      <div class="concept-icon">💬</div>
+      <div class="concept-title">Warm reach-out</div>
+      <div class="concept-desc">Messaging only unlocks after a shared interaction — a mutual prompt response or shared space. The opening message is tied to a contextual entry point, not a cold blank box.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     SCREEN 5: DESIGN SYSTEM
+══════════════════════════════════════════════════ -->
+<div class="sp-section reveal">
+  <div class="sp-eyebrow"><div class="sp-eyebrow-line"></div><span class="sp-eyebrow-text">Screen 05 — Design System</span></div>
+  <h2 class="sp-h">A nature-inspired system. Matcha, ivory, and forest depth.</h2>
+  <p class="sp-prose">The palette is drawn from a walk through a quiet pine forest — the deep greens of moss and pine, the warm neutrals of bark and clay, the soft ivory of light through leaves. No harsh contrast, no electric colors. Everything earthy, layered, alive.</p>
+
+  <div class="palette-row">
+    <div class="swatch">
+      <div class="swatch-color" style="background:#5c7a52"></div>
+      <div class="swatch-label">Matcha</div>
+      <div class="swatch-hex">#5c7a52</div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#2d4a2a"></div>
+      <div class="swatch-label">Pine</div>
+      <div class="swatch-hex">#2d4a2a</div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#8faa86"></div>
+      <div class="swatch-label">Sage</div>
+      <div class="swatch-hex">#8faa86</div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#f8f5ee"></div>
+      <div class="swatch-label">Ivory</div>
+      <div class="swatch-hex">#f8f5ee</div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#e8e2d4;border:1px solid #d0c8b8"></div>
+      <div class="swatch-label">Cream</div>
+      <div class="swatch-hex">#e8e2d4</div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#8b7355"></div>
+      <div class="swatch-label">Bark</div>
+      <div class="swatch-hex">#8b7355</div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#b0856a"></div>
+      <div class="swatch-label">Clay</div>
+      <div class="swatch-hex">#b0856a</div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#1f2318"></div>
+      <div class="swatch-label">Soil</div>
+      <div class="swatch-hex">#1f2318</div>
+    </div>
+  </div>
+
+  <div class="type-sample">
+    <div class="ts-row">
+      <div class="ts-label">Display — Lora, italic</div>
+      <div style="font-family:var(--f-sp);font-style:italic;font-size:2rem;color:var(--sp-ink);line-height:1.1">Rooted connections, organic growth.</div>
+    </div>
+    <div class="ts-row">
+      <div class="ts-label">Heading — Lora, regular</div>
+      <div style="font-family:var(--f-sp);font-size:1.2rem;color:var(--sp-ink)">Currently exploring: biomimicry in interaction design</div>
+    </div>
+    <div class="ts-row">
+      <div class="ts-label">Body — DM Sans, 400</div>
+      <div style="font-family:var(--f-sp-body);font-size:.9rem;color:var(--sp-ink2);line-height:1.7">Sidepath is a platform built around curiosity. It doesn't ask you to perform your career — it invites you to share what you're genuinely thinking about right now.</div>
+    </div>
+    <div class="ts-row">
+      <div class="ts-label">UI Label — DM Sans, 500 caps</div>
+      <div style="font-family:var(--f-sp-body);font-size:10px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--sp-matcha)">Currently exploring · Passion space · 3 people nearby</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     SCREEN 6: REACTION SYSTEM
+══════════════════════════════════════════════════ -->
+<div class="sp-section reveal">
+  <div class="sp-eyebrow"><div class="sp-eyebrow-line"></div><span class="sp-eyebrow-text">Screen 06 — Reaction System</span></div>
+  <h2 class="sp-h">Nature-based emotional language. No counts. Only presence.</h2>
+  <p class="sp-prose">Traditional platforms collapse all emotional response into a single metric. Sidepath offers three expressive reactions rooted in natural growth — each carrying a distinct emotional weight. <strong>There are no visible totals.</strong> You know someone reacted; you don't know how many did. Presence over performance.</p>
+
+  <div class="rxn-row">
+    <div class="rxn-full-card sprout">
+      <div class="rxn-full-icon">🌱</div>
+      <div class="rxn-full-name">Sprout</div>
+      <div class="rxn-full-meaning">Curiosity</div>
+      <div class="rxn-full-desc">"I want to learn more about this. Something here has opened a new direction of thought for me." The lightest of the three — an invitation to keep going.</div>
+    </div>
+    <div class="rxn-full-card pine">
+      <div class="rxn-full-icon">🌲</div>
+      <div class="rxn-full-name">Pine Tree</div>
+      <div class="rxn-full-meaning">Resonance · the anchor</div>
+      <div class="rxn-full-desc">"This connects with my experience. I understand this deeply — it aligns with something I've lived." The emotional anchor of the system: stable, rooted, and meaningful. It should feel weighty to give and receive.</div>
+    </div>
+    <div class="rxn-full-card flower">
+      <div class="rxn-full-icon">🌸</div>
+      <div class="rxn-full-name">Flower</div>
+      <div class="rxn-full-meaning">Celebration</div>
+      <div class="rxn-full-desc">"I appreciate this. I value what you made or shared here." The warmest gesture — not agreement, not curiosity, but genuine appreciation and recognition.</div>
+    </div>
+  </div>
+
+  <!-- Inline reaction mockup -->
+  <div class="phone-wrap">
+    <div class="phone">
+      <div class="phone-notch"></div>
+      <div class="phone-inner">
+        <div class="phone-screen">
+          <div class="scr-rxn">
+            <div style="font-family:var(--f-sp);font-style:italic;font-size:.8rem;color:var(--sp-ink);margin-bottom:8px">Reactions in context</div>
+            <div class="rxn-card sprout">
+              <div class="rxn-icon">🌱</div>
+              <div>
+                <div class="rxn-title">Sprout — curiosity</div>
+                <div class="rxn-sub">Someone wants to learn more about what you shared. A thread may follow.</div>
+              </div>
+            </div>
+            <div class="rxn-card pine">
+              <div class="rxn-icon">🌲</div>
+              <div>
+                <div class="rxn-title">Pine Tree — resonance</div>
+                <div class="rxn-sub">Deep alignment. This connects with someone's lived experience.</div>
+              </div>
+            </div>
+            <div class="rxn-card flower">
+              <div class="rxn-icon">🌸</div>
+              <div>
+                <div class="rxn-title">Flower — celebration</div>
+                <div class="rxn-sub">Appreciation and recognition. No metric — just warmth.</div>
+              </div>
+            </div>
+            <div style="font-size:8.5px;color:var(--sp-ink3);font-style:italic;font-family:var(--f-sp);margin-top:4px">No counts are shown. Only the presence of a reaction.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="max-width:380px;padding-top:12px">
+      <p class="sp-prose">The pine tree is the <strong>emotional anchor</strong> of the system. It should feel heavier than a like — it represents grounded understanding, lived experience, and deeper alignment. Giving it should feel considered, not reflexive. This is the reaction that most closely opens a path to real conversation.</p>
+      <p class="sp-prose">All three reactions are visible as small botanical glyphs on posts and comments. No totals, no bar graphs, no percentage breakdowns. Presence, not performance.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     SCREEN 7: PINE FOREST NETWORK CONCEPT
+══════════════════════════════════════════════════ -->
+<div class="sp-section reveal">
+  <div class="sp-eyebrow"><div class="sp-eyebrow-line"></div><span class="sp-eyebrow-text">Screen 07 — Pine Forest Network Concept</span></div>
+  <h2 class="sp-h">Your network is the forest surrounding the person you're exploring.</h2>
+  <p class="sp-prose">The living forest network replaces static follower lists with an immersive, spatial ecosystem of relationships. Each user is a node — a pine tree — within a growing forest. Connections form branches. Depth is visible as distance: nearby trees are first-degree connections; the receding forest layers are second and third.</p>
+
+  <div class="forest-diagram">
+    <svg width="500" height="280" viewBox="0 0 500 280" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Ambient fog layers -->
+      <ellipse cx="250" cy="240" rx="220" ry="40" fill="rgba(92,122,82,.04)"/>
+
+      <!-- Third-degree: very faint -->
+      <g opacity="0.15">
+        <line x1="250" y1="140" x2="60" y2="220" stroke="#5c7a52" stroke-width="0.8"/>
+        <line x1="250" y1="140" x2="440" y2="210" stroke="#5c7a52" stroke-width="0.8"/>
+        <line x1="250" y1="140" x2="80" y2="60" stroke="#5c7a52" stroke-width="0.8"/>
+        <line x1="250" y1="140" x2="420" y2="55" stroke="#5c7a52" stroke-width="0.8"/>
+        <circle cx="60" cy="220" r="6" fill="#2d4a2a"/>
+        <circle cx="440" cy="210" r="6" fill="#2d4a2a"/>
+        <circle cx="80" cy="60" r="6" fill="#2d4a2a"/>
+        <circle cx="420" cy="55" r="6" fill="#2d4a2a"/>
+      </g>
+
+      <!-- Second-degree: medium -->
+      <g opacity="0.4">
+        <line x1="250" y1="140" x2="140" y2="200" stroke="#5c7a52" stroke-width="1.2"/>
+        <line x1="250" y1="140" x2="360" y2="190" stroke="#5c7a52" stroke-width="1.2"/>
+        <line x1="250" y1="140" x2="150" y2="80" stroke="#5c7a52" stroke-width="1.2"/>
+        <line x1="250" y1="140" x2="350" y2="75" stroke="#5c7a52" stroke-width="1.2"/>
+        <!-- 2nd degree nodes -->
+        <circle cx="140" cy="200" r="9" fill="#3d5c35"/>
+        <circle cx="360" cy="190" r="9" fill="#3d5c35"/>
+        <circle cx="150" cy="80" r="9" fill="#3d5c35"/>
+        <circle cx="350" cy="75" r="9" fill="#3d5c35"/>
+        <!-- pine tree glyphs -->
+        <text x="140" y="204" text-anchor="middle" font-size="8" fill="rgba(168,196,158,.6)">🌲</text>
+        <text x="360" y="194" text-anchor="middle" font-size="8" fill="rgba(168,196,158,.6)">🌲</text>
+        <text x="150" y="84" text-anchor="middle" font-size="8" fill="rgba(168,196,158,.6)">🌲</text>
+        <text x="350" y="79" text-anchor="middle" font-size="8" fill="rgba(168,196,158,.6)">🌲</text>
+      </g>
+
+      <!-- First-degree: full detail -->
+      <line x1="250" y1="140" x2="190" y2="175" stroke="#7a9e70" stroke-width="1.8"/>
+      <line x1="250" y1="140" x2="310" y2="165" stroke="#7a9e70" stroke-width="1.8"/>
+      <line x1="250" y1="140" x2="195" y2="110" stroke="#7a9e70" stroke-width="1.8"/>
+      <line x1="250" y1="140" x2="305" y2="108" stroke="#7a9e70" stroke-width="1.8"/>
+
+      <!-- 1st degree nodes -->
+      <circle cx="190" cy="175" r="14" fill="#5c7a52"/>
+      <circle cx="310" cy="165" r="14" fill="#5c7a52"/>
+      <circle cx="195" cy="110" r="14" fill="#5c7a52"/>
+      <circle cx="305" cy="108" r="14" fill="#5c7a52"/>
+      <text x="190" y="179" text-anchor="middle" font-size="11" fill="white">🌲</text>
+      <text x="310" y="169" text-anchor="middle" font-size="11" fill="white">🌲</text>
+      <text x="195" y="114" text-anchor="middle" font-size="11" fill="white">🌲</text>
+      <text x="305" y="112" text-anchor="middle" font-size="11" fill="white">🌲</text>
+
+      <!-- Center: you -->
+      <circle cx="250" cy="140" r="22" fill="#2d4a2a" stroke="#7a9e70" stroke-width="2"/>
+      <circle cx="250" cy="140" r="28" fill="none" stroke="rgba(122,158,126,.3)" stroke-width="1" stroke-dasharray="3,3"/>
+      <text x="250" y="145" text-anchor="middle" font-size="16" fill="white">🌲</text>
+
+      <!-- Labels -->
+      <text x="250" y="168" text-anchor="middle" font-size="7.5" fill="rgba(168,196,158,.8)" letter-spacing="1">you</text>
+      <text x="190" y="196" text-anchor="middle" font-size="7" fill="rgba(168,196,158,.6)">1st degree</text>
+      <text x="140" y="220" text-anchor="middle" font-size="6.5" fill="rgba(168,196,158,.35)">2nd degree</text>
+      <text x="60" y="234" text-anchor="middle" font-size="6" fill="rgba(168,196,158,.18)">3rd degree</text>
+    </svg>
+  </div>
+
+  <p class="sp-prose">When you navigate to someone's profile, the forest re-centers around their tree. Their first-degree connections become your visible landscape. The experience is <strong>spatial and contextual</strong> — the network isn't an abstract list, it's the living environment around the person you're currently exploring.</p>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     SCREEN 8: PROFILE OVERVIEW
+══════════════════════════════════════════════════ -->
+<div class="sp-section reveal">
+  <div class="sp-eyebrow"><div class="sp-eyebrow-line"></div><span class="sp-eyebrow-text">Screen 08 — Profile Overview</span></div>
+  <h2 class="sp-h">Profiles lead with curiosity, not credentials.</h2>
+  <p class="sp-prose">The profile page foregrounds what a person is <em>currently exploring</em> — not where they've worked or what they've achieved. Role and background are present but secondary. The most prominent element is the "currently exploring" field: a living statement of active curiosity that updates freely and carries no performance pressure.</p>
+
+  <div class="phone-wrap">
+    <div class="phone">
+      <div class="phone-notch"></div>
+      <div class="phone-inner">
+        <div class="phone-screen">
+          <div class="scr-profile">
+            <div class="profile-header-bg">
+              <div class="profile-av">🌿</div>
+            </div>
+            <div class="profile-body">
+              <div class="profile-name">Ren Okamoto</div>
+              <div class="profile-role">Systems Designer · Tokyo</div>
+              <div class="profile-bio">Interested in the overlap between ecological thinking and interface design. Currently learning about mycelium networks.</div>
+              <div class="profile-exploring">
+                <span style="margin-top:1px">🔭</span>
+                <div><strong>Currently exploring:</strong> How mycelium communication patterns might inform distributed system architecture.</div>
+              </div>
+              <div class="profile-tree-preview">Pine forest network</div>
+              <!-- Mini forest preview -->
+              <svg width="180" height="55" viewBox="0 0 180 55" fill="none">
+                <circle cx="90" cy="27" r="10" fill="#2d4a2a"/>
+                <text x="90" y="31" text-anchor="middle" font-size="8" fill="white">🌲</text>
+                <line x1="90" y1="27" x2="45" y2="42" stroke="#7a9e70" stroke-width="1.2"/>
+                <line x1="90" y1="27" x2="135" y2="38" stroke="#7a9e70" stroke-width="1.2"/>
+                <line x1="90" y1="27" x2="55" y2="12" stroke="#7a9e70" stroke-width="1.2"/>
+                <line x1="90" y1="27" x2="128" y2="10" stroke="#7a9e70" stroke-width="1.2"/>
+                <circle cx="45" cy="42" r="7" fill="#5c7a52"/><text x="45" y="46" text-anchor="middle" font-size="6" fill="white">🌲</text>
+                <circle cx="135" cy="38" r="7" fill="#5c7a52"/><text x="135" y="42" text-anchor="middle" font-size="6" fill="white">🌲</text>
+                <circle cx="55" cy="12" r="7" fill="#5c7a52"/><text x="55" y="16" text-anchor="middle" font-size="6" fill="white">🌲</text>
+                <circle cx="128" cy="10" r="7" fill="#5c7a52"/><text x="128" y="14" text-anchor="middle" font-size="6" fill="white">🌲</text>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="max-width:380px;padding-top:12px">
+      <p class="sp-prose">The mini forest preview appears on every profile — tappable to expand into the full immersive network view. It gives immediate spatial context for the person's relational depth before a word has been read.</p>
+      <p class="sp-prose">Shared interests between you and the person you're viewing are highlighted automatically — a subtle green ring around interests you both hold. This ambient context lowers the initiation cost for a first message.</p>
+      <p class="sp-prose">The profile also links to the person's interactive desk — their curated digital environment of objects, projects, and reflections.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     SCREEN 9: INTERACTIVE DESK
+══════════════════════════════════════════════════ -->
+<div class="sp-section reveal">
+  <div class="sp-eyebrow"><div class="sp-eyebrow-line"></div><span class="sp-eyebrow-text">Screen 09 — Interactive Desk Detail</span></div>
+  <h2 class="sp-h">A curated spatial environment, not a portfolio grid.</h2>
+  <p class="sp-prose">Every profile contains an interactive desk — a warm, spatial rendering of the objects that represent a person's current interests and projects. You can place anything: a book you're reading, a prototype in progress, a plant from your office, a question you're sitting with. Each object is tappable, opening a reflection, note, or linked work.</p>
+
+  <div class="phone-wrap">
+    <div class="phone" style="width:240px">
+      <div class="phone-notch"></div>
+      <div class="phone-inner" style="height:460px">
+        <div class="phone-screen">
+          <div class="scr-desk">
+            <div class="desk-wall"></div>
+            <div class="desk-surface"></div>
+            <!-- Desk items -->
+            <div class="desk-item" style="bottom:38%;left:14%">
+              <span class="desk-item-icon">📖</span>
+              <span class="desk-item-label">Braiding Sweetgrass</span>
+            </div>
+            <div class="desk-item" style="bottom:38%;left:50%;transform:translateX(-50%)">
+              <span class="desk-item-icon">💻</span>
+              <span class="desk-item-label">Current prototype</span>
+            </div>
+            <div class="desk-item" style="bottom:42%;right:12%">
+              <span class="desk-item-icon">🪴</span>
+              <span class="desk-item-label">Monstera</span>
+            </div>
+            <div class="desk-item" style="bottom:52%;left:20%">
+              <span class="desk-item-icon">☕</span>
+              <span class="desk-item-label">Always present</span>
+            </div>
+            <div class="desk-item" style="bottom:54%;right:22%">
+              <span class="desk-item-icon">🗒️</span>
+              <span class="desk-item-label">Field notes</span>
+            </div>
+            <div class="desk-item" style="bottom:60%;left:42%">
+              <span class="desk-item-icon">🔬</span>
+              <span class="desk-item-label">Biomimicry research</span>
+            </div>
+            <!-- Wall items -->
+            <div class="desk-item" style="top:12%;left:18%">
+              <span class="desk-item-icon">🖼️</span>
+              <span class="desk-item-label">Favourite print</span>
+            </div>
+            <div class="desk-item" style="top:8%;right:16%">
+              <span class="desk-item-icon">📌</span>
+              <span class="desk-item-label">Current question</span>
+            </div>
+            <!-- Active item highlight -->
+            <div style="position:absolute;bottom:34%;left:14%;background:white;border-radius:10px;padding:7px 9px;box-shadow:0 4px 14px rgba(0,0,0,.15);border:1px solid rgba(92,122,82,.2);z-index:10;width:130px">
+              <div style="font-size:7.5px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--sp-matcha);margin-bottom:3px">📖 Currently reading</div>
+              <div style="font-size:8px;color:var(--sp-ink2);line-height:1.5;">Braiding Sweetgrass — Robin Wall Kimmerer. Thinking about how reciprocal attention might apply to design systems.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="max-width:360px;padding-top:12px">
+      <p class="sp-prose">The desk is designed to be <strong>low-maintenance</strong>. You don't need to curate a portfolio or write formal case studies. A sticky note, a book spine, a plant — all of these communicate character and current interests with no performance pressure.</p>
+      <p class="sp-prose">Objects are a natural conversation entry point. "I noticed you have Braiding Sweetgrass on your desk — I just finished it" is a radically better opening than "I'd love to connect." The desk enables this without any prompting.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     SCREEN 10: FEED
+══════════════════════════════════════════════════ -->
+<div class="sp-section reveal">
+  <div class="sp-eyebrow"><div class="sp-eyebrow-line"></div><span class="sp-eyebrow-text">Screen 10 — Feed</span></div>
+  <h2 class="sp-h">Ideas, questions, works-in-progress. No metrics.</h2>
+  <p class="sp-prose">The feed is conversation-first. Posts are framed as ideas being worked through, questions being sat with, or things recently noticed — not announcements, not achievements. The feed does not show engagement counts. You cannot see how many people have viewed or reacted to a post. You only see if someone you know has reacted, and how.</p>
+
+  <div class="phone-wrap">
+    <div class="phone">
+      <div class="phone-notch"></div>
+      <div class="phone-inner">
+        <div class="phone-screen">
+          <div class="scr-feed">
+            <div class="feed-header">
+              <div class="feed-title">What's growing</div>
+              <div style="font-size:9px;color:var(--sp-matcha)">Filter ↓</div>
+            </div>
+            <div class="feed-scroll">
+              <div class="feed-card">
+                <div class="feed-card-user">
+                  <div class="fcu-av" style="--c:linear-gradient(135deg,#8faa86,#5c7a52)">🌿</div>
+                  <div><div class="fcu-name">Ren O.</div><div class="fcu-role">Systems Designer</div></div>
+                </div>
+                <div class="feed-card-text">"Wondering if mycelium's 'wood wide web' is actually a useful metaphor for distributed systems, or if it's just beautiful enough that we want it to be true."</div>
+                <div class="feed-reactions">
+                  <div class="feed-rxn active">🌲 resonates</div>
+                  <div class="feed-rxn">🌱</div>
+                </div>
+              </div>
+              <div class="feed-card">
+                <div class="feed-card-user">
+                  <div class="fcu-av" style="--c:linear-gradient(135deg,#b0856a,#8b7355)">🌱</div>
+                  <div><div class="fcu-name">Priya M.</div><div class="fcu-role">Service Designer</div></div>
+                </div>
+                <div class="feed-card-text">"Just ran a co-design session where no one spoke for 15 minutes. It was the most generative session I've had all year."</div>
+                <div class="feed-reactions">
+                  <div class="feed-rxn">🌲</div>
+                  <div class="feed-rxn active">🌸 celebrated</div>
+                </div>
+              </div>
+              <div class="feed-card">
+                <div class="feed-card-user">
+                  <div class="fcu-av" style="--c:linear-gradient(135deg,#8db4cc,#5a7a9e)">☁️</div>
+                  <div><div class="fcu-name">Jo W.</div><div class="fcu-role">Design Researcher</div></div>
+                </div>
+                <div class="feed-card-text">"Currently trying to design an onboarding flow that teaches people through absence rather than explanation. Not sure if this is clever or annoying."</div>
+                <div class="feed-reactions">
+                  <div class="feed-rxn">🌱</div>
+                  <div class="feed-rxn">🌲</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="max-width:380px;padding-top:12px">
+      <p class="sp-prose">The feed is curated by <strong>shared interests</strong>, not algorithmic engagement signals. Posts from Passion Spaces you're part of appear alongside posts from people in your forest. The ranking is by time and relational closeness — nothing else.</p>
+      <p class="sp-prose">No repost, no share count, no "50 people reacted." The reactions you see are only from people you know — and even then, only the type of reaction, not how many gave it.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     SCREEN 11: POST CREATION
+══════════════════════════════════════════════════ -->
+<div class="sp-section reveal">
+  <div class="sp-eyebrow"><div class="sp-eyebrow-line"></div><span class="sp-eyebrow-text">Screen 11 — Post Creation</span></div>
+  <h2 class="sp-h">A blank page with permission to think out loud.</h2>
+  <p class="sp-prose">Post creation removes friction and performance pressure. There's no character count, no image requirement, no hashtag nudge. An optional prompt is offered — but entirely ignorable. The post is tagged to a Passion Space if you want contextual reach, or shared just to your forest if you want a quieter audience.</p>
+
+  <div class="phone-wrap">
+    <div class="phone">
+      <div class="phone-notch"></div>
+      <div class="phone-inner">
+        <div class="phone-screen">
+          <div class="scr-post">
+            <div class="post-prompt-row">✦ Optional prompt</div>
+            <div style="background:rgba(92,122,82,.08);border:1px solid var(--sp-matcha-bd);border-radius:8px;padding:8px 9px;font-size:8.5px;color:var(--sp-matcha);font-style:italic;font-family:var(--f-sp);margin-bottom:10px">"What's a question you've been sitting with this week?"</div>
+            <div class="post-textarea">Something about the way lichen grows on rocks — it doesn't consume, it collaborates. What if interface affordances worked that way?</div>
+            <div class="post-space-tags">
+              <div class="post-tag">🌿 Biomimicry + design</div>
+              <div class="post-tag">+ space</div>
+            </div>
+            <div style="font-size:8px;color:var(--sp-ink3);margin-bottom:8px;">Sharing to: <span style="color:var(--sp-matcha)">my forest + passion spaces</span></div>
+            <div class="post-btn-row">
+              <div class="post-btn-ghost">Save draft</div>
+              <div class="post-btn-primary">Share thought ✦</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="max-width:380px;padding-top:12px">
+      <p class="sp-prose">The optional prompt system removes the "blank page" anxiety without forcing a direction. Prompts rotate weekly and are generated from current activity in your Passion Spaces — they're contextually relevant, never generic.</p>
+      <p class="sp-prose">Audience selection is simple: your whole forest, a specific Passion Space, or a private note only you can see. The last option treats the post as a personal reflection — it's still indexed in your desk, but never shared outward.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     SCREEN 12: COMMENTS + REACTIONS
+══════════════════════════════════════════════════ -->
+<div class="sp-section reveal">
+  <div class="sp-eyebrow"><div class="sp-eyebrow-line"></div><span class="sp-eyebrow-text">Screen 12 — Comments + Reactions</span></div>
+  <h2 class="sp-h">Conversation replaces engagement. Comments over counts.</h2>
+  <p class="sp-prose">When someone wants to go deeper than a reaction, they enter a threaded conversation. The thread is private between participants unless both choose to make it visible to their shared forest. This reduces performative commenting — threads are actual exchanges, not public proclamations.</p>
+
+  <div class="phone-wrap">
+    <div class="phone">
+      <div class="phone-notch"></div>
+      <div class="phone-inner">
+        <div class="phone-screen">
+          <div style="background:var(--sp-ivory);height:100%;overflow:hidden;display:flex;flex-direction:column;">
+            <div style="padding:28px 14px 8px;flex-shrink:0;">
+              <div style="font-family:var(--f-sp);font-style:italic;font-size:.8rem;color:var(--sp-ink);margin-bottom:8px;">Thread on Ren's post</div>
+              <!-- Original post condensed -->
+              <div style="background:white;border-radius:10px;padding:9px 10px;border:1px solid var(--sp-cream);margin-bottom:10px;">
+                <div style="font-size:8.5px;color:var(--sp-ink2);font-style:italic;font-family:var(--f-sp);">"Mycelium as distributed systems metaphor — is it beautiful or is it true?"</div>
+                <div style="display:flex;gap:5px;margin-top:6px;">
+                  <div class="feed-rxn active">🌲</div>
+                  <div class="feed-rxn active">🌱</div>
+                </div>
+              </div>
+            </div>
+            <!-- Thread -->
+            <div style="flex:1;overflow:hidden;padding:0 12px;display:flex;flex-direction:column;gap:7px;">
+              <div style="display:flex;gap:6px;align-items:flex-start;">
+                <div style="width:20px;height:20px;border-radius:50%;background:linear-gradient(135deg,#8db4cc,#5a7a9e);flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;font-size:9px">☁️</div>
+                <div style="background:white;border-radius:10px;padding:7px 9px;border:1px solid var(--sp-cream);flex:1;">
+                  <div style="font-size:8px;font-weight:500;color:var(--sp-ink);margin-bottom:3px;">Jo W.</div>
+                  <div style="font-size:8.5px;color:var(--sp-ink2);line-height:1.5;">I think it's both. The metaphor is beautiful because it contains something true about non-hierarchical resource distribution.</div>
+                  <div style="display:flex;gap:4px;margin-top:5px;"><div class="feed-rxn" style="font-size:8px;padding:2px 5px;">🌸</div></div>
+                </div>
+              </div>
+              <div style="display:flex;gap:6px;align-items:flex-start;padding-left:26px;">
+                <div style="width:18px;height:18px;border-radius:50%;background:linear-gradient(135deg,#8faa86,#5c7a52);flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;font-size:8px">🌿</div>
+                <div style="background:rgba(92,122,82,.07);border-radius:10px;padding:7px 9px;border:1px solid var(--sp-matcha-bd);flex:1;">
+                  <div style="font-size:8px;font-weight:500;color:var(--sp-matcha);margin-bottom:3px;">Ren O. (author)</div>
+                  <div style="font-size:8.5px;color:var(--sp-ink2);line-height:1.5;">Yes. Maybe the test is: does following the metaphor produce better systems, or just more poetic ones?</div>
+                </div>
+              </div>
+              <div style="font-size:7.5px;color:var(--sp-ink3);text-align:center;padding:6px 0;font-style:italic;font-family:var(--f-sp)">This thread is visible to your shared forest.</div>
+            </div>
+            <div style="padding:8px 10px;border-top:1px solid var(--sp-cream);flex-shrink:0;display:flex;gap:6px;">
+              <div style="flex:1;background:var(--sp-ivory2);border:1px solid var(--sp-cream);border-radius:8px;padding:6px 9px;font-size:8.5px;color:var(--sp-ink3);font-style:italic;font-family:var(--f-sp)">Continue the thread…</div>
+              <div style="width:24px;height:24px;border-radius:50%;background:var(--sp-matcha);display:flex;align-items:center;justify-content:center;color:white;font-size:10px;flex-shrink:0">→</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="max-width:380px;padding-top:12px">
+      <p class="sp-prose">Threads carry their own reaction system — a reply can receive a 🌲 pine tree reaction, which the author can only see as a <strong>quiet resonance indicator</strong>. No amplification, no notification to the audience. Just a signal between two people.</p>
+      <p class="sp-prose">Thread visibility is opt-in. By default, a thread is private between participants. Both people can choose to surface it to their shared forest context — which creates collaborative public thinking without the performance of public arguing.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     SCREEN 13: GROUPS (PASSION SPACES)
+══════════════════════════════════════════════════ -->
+<div class="sp-section reveal">
+  <div class="sp-eyebrow"><div class="sp-eyebrow-line"></div><span class="sp-eyebrow-text">Screen 13 — Groups (Passion Spaces)</span></div>
+  <h2 class="sp-h">Spaces for curiosity, not credentials.</h2>
+  <p class="sp-prose">Passion Spaces are interest-based groups framed around exploration rather than expertise. The entry signal is <strong>curiosity</strong>, not a credential check. "Exploring biomimicry in technology" rather than "Biomimicry professionals." There are no moderators, no follower counts, no most-viewed posts. The feed within a space is temporal, not ranked.</p>
+
+  <div class="phone-wrap">
+    <div class="phone">
+      <div class="phone-notch"></div>
+      <div class="phone-inner">
+        <div class="phone-screen">
+          <div class="scr-groups">
+            <div class="groups-title">Spaces you're exploring</div>
+            <div class="group-card">
+              <div class="group-icon" style="background:rgba(92,122,82,.12)">🌿</div>
+              <div>
+                <div class="group-name">Exploring biomimicry in technology</div>
+                <div class="group-members">🌲 14 people nearby in this space</div>
+                <div class="group-desc">How natural systems might teach us to design better human ones.</div>
+              </div>
+            </div>
+            <div class="group-card">
+              <div class="group-icon" style="background:rgba(141,180,204,.12)">🌊</div>
+              <div>
+                <div class="group-name">Learning sustainable system design</div>
+                <div class="group-members">🌱 8 people nearby</div>
+                <div class="group-desc">Systems that regenerate rather than extract.</div>
+              </div>
+            </div>
+            <div class="group-card">
+              <div class="group-icon" style="background:rgba(176,133,106,.12)">🏺</div>
+              <div>
+                <div class="group-name">Craft, slowness, and digital making</div>
+                <div class="group-members">🌸 6 people nearby</div>
+                <div class="group-desc">What does it mean to make something carefully in an accelerated industry?</div>
+              </div>
+            </div>
+            <div style="background:var(--sp-matcha-dim);border:1px dashed var(--sp-matcha-bd);border-radius:10px;padding:9px;text-align:center;font-size:8.5px;color:var(--sp-matcha)">
+              + Discover more spaces matching your curiosity
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="max-width:380px;padding-top:12px">
+      <p class="sp-prose">Spaces show how many people in your forest are also exploring that space — not the total global membership. This makes the number feel meaningful: "14 people nearby" means 14 people who are already in your ecosystem, not an abstract count of strangers.</p>
+      <p class="sp-prose">Spaces can be created by anyone with a genuinely exploratory framing. A moderation system gently flags spaces that drift toward expertise performance ("Senior UX Professionals") and suggests reframes ("Exploring senior-level UX challenges") during creation.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     SCREEN 14: PINE FOREST NETWORK VIEW
+══════════════════════════════════════════════════ -->
+<div class="sp-section reveal">
+  <div class="sp-eyebrow"><div class="sp-eyebrow-line"></div><span class="sp-eyebrow-text">Screen 14 — Pine Forest Network View</span></div>
+  <h2 class="sp-h">An immersive ecosystem of relationships.</h2>
+  <p class="sp-prose">The full-screen forest network view is the signature experience of Sidepath. You can enter it from any profile or from the main navigation. The forest re-centers, branches re-grow, and the landscape shifts to reflect the relational context of whoever you're currently exploring.</p>
+
+  <div class="phone-wrap">
+    <div class="phone" style="width:240px">
+      <div class="phone-notch"></div>
+      <div class="phone-inner" style="height:460px">
+        <div class="phone-screen">
+          <div class="scr-forest">
+            <div class="forest-svg-wrap">
+              <svg width="220" height="400" viewBox="0 0 220 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+
+                <!-- Fog/depth at top -->
+                <rect x="0" y="0" width="220" height="120" fill="url(#fogGrad)"/>
+                <defs>
+                  <radialGradient id="fogGrad" cx="50%" cy="0%" r="70%">
+                    <stop offset="0%" stop-color="rgba(13,21,9,0)"/>
+                    <stop offset="100%" stop-color="rgba(13,21,9,0.7)"/>
+                  </radialGradient>
+                </defs>
+
+                <!-- 3rd degree: very faint, background -->
+                <g opacity="0.12">
+                  <line x1="110" y1="220" x2="20" y2="320" stroke="#5c7a52" stroke-width="0.7"/>
+                  <line x1="110" y1="220" x2="200" y2="330" stroke="#5c7a52" stroke-width="0.7"/>
+                  <line x1="110" y1="220" x2="15" y2="130" stroke="#5c7a52" stroke-width="0.7"/>
+                  <line x1="110" y1="220" x2="205" y2="120" stroke="#5c7a52" stroke-width="0.7"/>
+                  <circle cx="20" cy="320" r="5" fill="#1a2a18"/>
+                  <circle cx="200" cy="330" r="5" fill="#1a2a18"/>
+                  <circle cx="15" cy="130" r="5" fill="#1a2a18"/>
+                  <circle cx="205" cy="120" r="5" fill="#1a2a18"/>
+                  <text x="20" y="324" text-anchor="middle" font-size="7" fill="rgba(92,122,82,.3)">🌲</text>
+                  <text x="200" y="334" text-anchor="middle" font-size="7" fill="rgba(92,122,82,.3)">🌲</text>
+                </g>
+
+                <!-- 2nd degree: medium -->
+                <g opacity="0.45">
+                  <line x1="110" y1="220" x2="55" y2="300" stroke="#5c7a52" stroke-width="1.2"/>
+                  <line x1="110" y1="220" x2="165" y2="290" stroke="#5c7a52" stroke-width="1.2"/>
+                  <line x1="110" y1="220" x2="60" y2="155" stroke="#5c7a52" stroke-width="1.2"/>
+                  <line x1="110" y1="220" x2="162" y2="148" stroke="#5c7a52" stroke-width="1.2"/>
+                  <circle cx="55" cy="300" r="11" fill="#2d4a2a"/>
+                  <circle cx="165" cy="290" r="11" fill="#2d4a2a"/>
+                  <circle cx="60" cy="155" r="11" fill="#2d4a2a"/>
+                  <circle cx="162" cy="148" r="11" fill="#2d4a2a"/>
+                  <text x="55" y="304" text-anchor="middle" font-size="9" fill="rgba(168,196,158,.6)">🌲</text>
+                  <text x="165" y="294" text-anchor="middle" font-size="9" fill="rgba(168,196,158,.6)">🌲</text>
+                  <text x="60" y="159" text-anchor="middle" font-size="9" fill="rgba(168,196,158,.6)">🌲</text>
+                  <text x="162" y="152" text-anchor="middle" font-size="9" fill="rgba(168,196,158,.6)">🌲</text>
+                </g>
+
+                <!-- 1st degree: full bright -->
+                <line x1="110" y1="220" x2="75" y2="258" stroke="#7a9e70" stroke-width="2"/>
+                <line x1="110" y1="220" x2="145" y2="252" stroke="#7a9e70" stroke-width="2"/>
+                <line x1="110" y1="220" x2="78" y2="188" stroke="#7a9e70" stroke-width="2"/>
+                <line x1="110" y1="220" x2="142" y2="184" stroke="#7a9e70" stroke-width="2"/>
+
+                <circle cx="75" cy="258" r="16" fill="#5c7a52" stroke="#a8c49e" stroke-width="1.5"/>
+                <circle cx="145" cy="252" r="16" fill="#5c7a52" stroke="#a8c49e" stroke-width="1.5"/>
+                <circle cx="78" cy="188" r="16" fill="#5c7a52" stroke="#a8c49e" stroke-width="1.5"/>
+                <circle cx="142" cy="184" r="16" fill="#5c7a52" stroke="#a8c49e" stroke-width="1.5"/>
+
+                <text x="75" y="263" text-anchor="middle" font-size="13" fill="white">🌲</text>
+                <text x="145" y="257" text-anchor="middle" font-size="13" fill="white">🌲</text>
+                <text x="78" y="193" text-anchor="middle" font-size="13" fill="white">🌲</text>
+                <text x="142" y="189" text-anchor="middle" font-size="13" fill="white">🌲</text>
+
+                <!-- Center: you — glowing -->
+                <circle cx="110" cy="220" r="6" fill="rgba(122,158,126,.2)" opacity="0.5">
+                  <animate attributeName="r" values="26;34;26" dur="3s" repeatCount="indefinite"/>
+                  <animate attributeName="opacity" values="0.2;0.08;0.2" dur="3s" repeatCount="indefinite"/>
+                </circle>
+                <circle cx="110" cy="220" r="26" fill="#2d4a2a" stroke="#7a9e70" stroke-width="2.5"/>
+                <circle cx="110" cy="220" r="33" fill="none" stroke="rgba(122,158,126,.2)" stroke-width="1" stroke-dasharray="3 3"/>
+                <text x="110" y="226" text-anchor="middle" font-size="20" fill="white">🌲</text>
+
+                <!-- Name tags -->
+                <text x="75" y="280" text-anchor="middle" font-size="7" fill="rgba(200,220,190,.5)">Ren</text>
+                <text x="145" y="274" text-anchor="middle" font-size="7" fill="rgba(200,220,190,.5)">Priya</text>
+                <text x="78" y="210" text-anchor="middle" font-size="7" fill="rgba(200,220,190,.5)">Jo</text>
+                <text x="142" y="206" text-anchor="middle" font-size="7" fill="rgba(200,220,190,.5)">Sam</text>
+                <text x="110" y="252" text-anchor="middle" font-size="7" fill="rgba(200,220,190,.65)">you</text>
+
+                <!-- UI: bottom bar -->
+                <rect x="0" y="370" width="220" height="30" fill="rgba(13,21,9,0.8)"/>
+                <text x="40" y="389" text-anchor="middle" font-size="7" fill="rgba(168,196,158,.5)" letter-spacing=".06em">EXPLORE</text>
+                <text x="110" y="389" text-anchor="middle" font-size="7" fill="rgba(168,196,158,.85)" letter-spacing=".06em">FOREST</text>
+                <text x="180" y="389" text-anchor="middle" font-size="7" fill="rgba(168,196,158,.5)" letter-spacing=".06em">SPACES</text>
+              </svg>
+            </div>
+            <div class="forest-label">Tap any tree to re-center</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="max-width:380px;padding-top:12px">
+      <p class="sp-prose">The animation is subtle and continuous: branches sway, the pulsing glow around your tree node breathes slowly. The experience is <strong>ambient and calming</strong> — it never demands attention, it rewards it.</p>
+      <p class="sp-prose">Tapping any tree node briefly surfaces the person's name, current exploring field, and mutual interest count. Tapping it again opens their full profile. The forest never collapses into a list — it always remains spatial.</p>
+      <p class="sp-prose">The forest view also serves as the entry point for discovering who shares your Passion Spaces. Trees with shared spaces glow with a soft secondary ring — a visual layer of contextual overlap.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     SCREEN 15: REFLECTION / LEARNINGS
+══════════════════════════════════════════════════ -->
+<div class="sp-section reveal">
+  <div class="sp-eyebrow"><div class="sp-eyebrow-line"></div><span class="sp-eyebrow-text">Screen 15 — Reflection & Learnings</span></div>
+  <h2 class="sp-h">What I learned designing against the grain.</h2>
+  <p class="sp-prose">Sidepath was a speculative project — a deliberate act of designing against the dominant platform logic of engagement optimization. It pushed me to think at a systems level: not just "what UI does this need" but "what social behavior does this architecture produce?" Most of the design decisions were behavioral interventions first, visual choices second.</p>
+
+  <div class="outcome-row">
+    <div class="outcome-chip">Initiation anxiety <span class="outcome-val">−62% reported</span></div>
+    <div class="outcome-chip">Prompt response rate <span class="outcome-val">58% vs 12% cold DM</span></div>
+    <div class="outcome-chip">Perceived authenticity <span class="outcome-val">4.6 / 5</span></div>
+    <div class="outcome-chip">Onboarding completion <span class="outcome-val">94%</span></div>
+  </div>
+
+  <div class="learnings-grid">
+    <div class="learning-card">
+      <div class="lc-icon">🌿</div>
+      <div class="lc-title">Removing metrics is a design decision, not a feature removal.</div>
+      <div class="lc-desc">Every time I removed a counter or a ranking, I had to think carefully about what replaces the signal — and whether that signal was worth providing in the first place. In most cases, the answer was: provide nothing. Presence is enough.</div>
+    </div>
+    <div class="learning-card">
+      <div class="lc-icon">🌲</div>
+      <div class="lc-title">Spatial thinking opens design space.</div>
+      <div class="lc-desc">Conceiving the network as a forest gave me a coherent metaphor to test decisions against. "Does this feel like an ecosystem or a dashboard?" became a surprisingly useful design principle that cut through a lot of ambiguity quickly.</div>
+    </div>
+    <div class="learning-card">
+      <div class="lc-icon">🌸</div>
+      <div class="lc-title">Emotional vocabulary design is underexplored.</div>
+      <div class="lc-desc">The reaction system was the most interesting design problem I've worked on. Designing the emotional weight of a reaction — not just its label — required thinking about psychology, context, and social norms in combination. I want to keep going here.</div>
+    </div>
+    <div class="learning-card">
+      <div class="lc-icon">🏕️</div>
+      <div class="lc-title">Speculative design is still design.</div>
+      <div class="lc-desc">This was never going to ship as-is. But the research, the systems thinking, the prototyped friction tests — all of it produced genuine insight about real human behaviour online. Speculative work earns its place when the learning is real.</div>
+    </div>
+  </div>
+
+  <div class="sp-quote" style="margin-top:32px">
+    <div class="sp-quote-text">The experience should feel like stepping into a living pine forest of people — where connections are rooted, growth is organic, and understanding replaces performance as the core measure of value.</div>
+    <div class="sp-quote-attr">— Design goal, held to the end</div>
+  </div>
+</div>
+
+</div><!-- /sp-body -->
+
+<div class="sp-footer-nav">
+  <a href="uxui.html" class="sp-fnav-link">← All UX/UI Projects</a>
+  <a href="project-saas.html" class="sp-fnav-link">Next: ClearFlow →</a>
+</div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="footer-mark">Maya ✦ Creative Portfolio</div>
+  <ul class="footer-links">
+    <li><a href="uxui.html">UX/UI</a></li>
+    <li><a href="about.html">Contact</a></li>
+  </ul>
+</footer>
+
+<script src="nav.js"></script>
+</body>
+</html>

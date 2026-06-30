@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Path of Emotions — Thea</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+:root {
+  --te-green: #5a9e7a;
+  --te-dark: #1a2a1a;
+  --te-mid: #2a3d2a;
+  --te-gold: #c8a040;
+  --te-paper: #f4f1ec;
+  --te-pixel: #3a5a3a;
+}
+body { background: var(--te-paper); }
+
+/* ── HERO (matches shared site-nav style pages) ── */
+.te-hero-section {
+  padding: 52px 8vw 48px;
+  background: white;
+  border-bottom: 1px solid rgba(28,21,16,.08);
+  position: relative; overflow: hidden;
+}
+.te-hero-section::before {
+  content: ''; position: absolute; top: -120px; right: -100px;
+  width: 480px; height: 480px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(90,158,122,.12) 0%, transparent 65%);
+  pointer-events: none;
+}
+.te-back {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 11px; font-weight: 500; letter-spacing: .09em;
+  text-transform: uppercase; color: #7a8c76;
+  margin-bottom: 20px; position: relative; z-index: 1; transition: color .2s;
+}
+.te-back:hover { color: var(--te-green); }
+.te-tags { display: flex; gap: 7px; flex-wrap: wrap; margin-bottom: 16px; position: relative; z-index: 1; }
+.te-tag-pill {
+  font-size: 10.5px; font-weight: 500; letter-spacing: .07em;
+  text-transform: uppercase; padding: 4px 12px; border-radius: 20px; border: 1px solid;
+}
+.tp-green { color: #385e3e; background: #ddecd7; border-color: #9dc49a; }
+.tp-gold  { color: var(--te-gold); background: rgba(200,160,64,.1); border-color: rgba(200,160,64,.3); }
+.tp-slate { color: #4a5a7a; background: rgba(74,90,122,.08); border-color: rgba(74,90,122,.2); }
+.te-hero-h1 {
+  font-family: var(--f-display); font-style: italic;
+  font-size: clamp(2rem, 4vw, 3.4rem); line-height: 1.06;
+  color: var(--te-dark); max-width: 760px; margin-bottom: 14px;
+  position: relative; z-index: 1;
+}
+.te-hero-h1 em { color: var(--te-green); font-style: normal; }
+.te-hero-desc {
+  font-size: .92rem; color: #445040; max-width: 540px;
+  line-height: 1.72; margin-bottom: 24px; position: relative; z-index: 1;
+  font-family: var(--f-heading); font-style: italic;
+}
+.te-meta-bar {
+  display: flex; gap: 32px; flex-wrap: wrap;
+  position: relative; z-index: 1;
+}
+.te-meta-item { display: flex; flex-direction: column; gap: 4px; }
+.te-meta-label { font-size: 10px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: #7a8c76; }
+.te-meta-val { font-size: .84rem; color: var(--te-dark); }
+
+/* dev status banner */
+.dev-banner {
+  background: var(--te-dark); color: rgba(255,255,255,.6);
+  padding: 12px 8vw; display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+  font-family: var(--f-ui); font-size: .7rem; font-weight: 600;
+  letter-spacing: .08em; text-transform: uppercase;
+}
+.dev-dot {
+  width: 8px; height: 8px; border-radius: 0;
+  background: var(--te-green); animation: pulse 1s steps(2) infinite; flex-shrink: 0;
+}
+@keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0;} }
+.dev-eta { margin-left: auto; color: rgba(90,158,122,.8); }
+
+/* ── CONTENT ── */
+.te-content { padding: 72px 8vw 96px; max-width: 1080px; margin: 0 auto; }
+.te-section { margin-bottom: 72px; }
+.te-section-label {
+  font-family: var(--f-ui); font-size: .66rem; font-weight: 700;
+  letter-spacing: .14em; text-transform: uppercase;
+  color: var(--te-green); display: flex; align-items: center; gap: 8px; margin-bottom: 12px;
+}
+.te-section-label::before { content: ''; display: block; width: 18px; height: 1.5px; background: var(--te-green); }
+.te-h2 {
+  font-family: var(--f-display); font-style: italic;
+  font-size: clamp(1.5rem, 2.8vw, 2rem); color: var(--te-dark); margin-bottom: 16px; line-height: 1.2;
+}
+.te-h2 em { color: var(--te-green); font-style: normal; }
+.te-prose {
+  font-size: .92rem; line-height: 1.82; color: #445040;
+  max-width: 680px; margin-bottom: 14px;
+}
+.te-prose strong { color: var(--te-dark); font-weight: 500; }
+
+/* pull quote */
+.te-pull {
+  border-left: 3px solid var(--te-green);
+  padding: 14px 22px; margin: 24px 0;
+  background: rgba(90,158,122,.07);
+  border-radius: 0 10px 10px 0;
+  max-width: 620px;
+}
+.te-pull p {
+  font-family: var(--f-display); font-style: italic;
+  font-size: 1.05rem; color: var(--te-dark); line-height: 1.6; margin-bottom: 5px;
+}
+.te-pull cite { font-size: .78rem; color: #7a8c76; font-style: normal; }
+
+/* concept cards */
+.te-concept-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-top: 28px; }
+.te-concept-card {
+  background: white; border-radius: 6px; padding: 24px 20px;
+  box-shadow: 4px 4px 0 rgba(90,158,122,.12), 0 4px 16px rgba(0,0,0,.05);
+  border: 1.5px solid rgba(90,158,122,.14); position: relative;
+}
+.te-concept-card::before {
+  content: ''; position: absolute; top: -1px; left: -1px;
+  width: 8px; height: 8px;
+  border-top: 3px solid var(--te-green); border-left: 3px solid var(--te-green);
+}
+.te-concept-card::after {
+  content: ''; position: absolute; bottom: -1px; right: -1px;
+  width: 8px; height: 8px;
+  border-bottom: 3px solid var(--te-green); border-right: 3px solid var(--te-green);
+}
+.tc-icon { font-size: 2rem; margin-bottom: 12px; }
+.tc-title { font-family: var(--f-display); font-style: italic; font-size: 1rem; color: var(--te-dark); margin-bottom: 7px; }
+.tc-desc { font-size: .8rem; line-height: 1.65; color: #445040; opacity: .8; }
+
+/* persona carousel */
+.persona-carousel-wrap { position: relative; margin-top: 24px; }
+.persona-carousel {
+  display: flex; gap: 20px;
+  overflow-x: auto; scroll-snap-type: x mandatory;
+  scroll-behavior: smooth; cursor: grab;
+  padding-bottom: 12px;
+  -webkit-overflow-scrolling: touch;
+}
+.persona-carousel:active { cursor: grabbing; }
+.persona-carousel::-webkit-scrollbar { height: 4px; }
+.persona-carousel::-webkit-scrollbar-track { background: rgba(90,158,122,.08); border-radius: 2px; }
+.persona-carousel::-webkit-scrollbar-thumb { background: rgba(90,158,122,.3); border-radius: 2px; }
+.persona-card {
+  flex: 0 0 460px; scroll-snap-align: start;
+  border-radius: 14px; overflow: hidden;
+  box-shadow: 4px 4px 0 rgba(90,158,122,.15), 0 6px 24px rgba(0,0,0,.09);
+  border: 1.5px solid rgba(90,158,122,.18); background: white;
+  transition: transform .25s ease, box-shadow .25s ease;
+  user-select: none; display: flex; flex-direction: column;
+}
+.persona-card:hover { transform: translateY(-3px); box-shadow: 5px 8px 0 rgba(90,158,122,.18), 0 10px 32px rgba(0,0,0,.12); }
+.persona-img {
+  width: 100%; height: 290px; background: #2a1a2e;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden; position: relative; flex-shrink: 0;
+}
+.persona-img img { width: 100%; height: 100%; object-fit: contain; object-position: center; display: block; }
+.persona-body { padding: 14px 18px 16px; border-top: 1px solid rgba(90,158,122,.1); }
+.persona-name { font-family: var(--f-display); font-style: italic; font-size: 1.05rem; color: var(--te-dark); margin-bottom: 6px; }
+.persona-role { font-size: .75rem; color: #7a8c76; font-weight: 500; letter-spacing: .05em; }
+
+/* carousel nav buttons */
+.carousel-nav {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-top: 16px;
+}
+.carousel-btns { display: flex; gap: 8px; }
+.carousel-btn {
+  width: 36px; height: 36px; border-radius: 50%;
+  border: 1.5px solid rgba(90,158,122,.3);
+  background: white; color: var(--te-green);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; font-size: 14px;
+  transition: all .2s ease; box-shadow: 2px 2px 0 rgba(90,158,122,.1);
+}
+.carousel-btn:hover { background: var(--te-green); color: white; border-color: var(--te-green); transform: translateY(-1px); }
+.carousel-dots { display: flex; gap: 6px; align-items: center; }
+.carousel-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: rgba(90,158,122,.2); cursor: pointer; transition: all .2s ease;
+}
+.carousel-dot.active { background: var(--te-green); transform: scale(1.2); }
+.carousel-hint {
+  font-family: var(--f-ui); font-size: .62rem; font-weight: 600;
+  letter-spacing: .08em; text-transform: uppercase;
+  color: #7a8c76; opacity: .5;
+}
+
+/* full-width image utility */
+.te-img-full {
+  width: 100%; border-radius: 12px;
+  box-shadow: 4px 4px 0 rgba(90,158,122,.15), 0 6px 24px rgba(0,0,0,.09);
+  border: 1.5px solid rgba(90,158,122,.14);
+  display: block; margin: 24px 0;
+}
+.te-img-centered {
+  display: block; max-width: 680px; width: 100%;
+  border-radius: 12px;
+  box-shadow: 4px 4px 0 rgba(90,158,122,.15), 0 6px 24px rgba(0,0,0,.09);
+  border: 1.5px solid rgba(90,158,122,.14);
+  margin: 24px auto;
+}
+.te-img-grid { display: grid; gap: 14px; margin: 24px 0; }
+.te-img-grid.two  { grid-template-columns: 1fr 1fr; }
+.te-img-grid.three { grid-template-columns: 1fr 1fr 1fr; }
+.te-img-grid img, .te-img-grid .te-img-slot {
+  width: 100%; border-radius: 10px;
+  box-shadow: 3px 3px 0 rgba(90,158,122,.12), 0 4px 14px rgba(0,0,0,.07);
+  border: 1.5px solid rgba(90,158,122,.12);
+  display: block;
+}
+.te-img-caption {
+  font-size: .76rem; color: #7a8c76; font-style: italic;
+  text-align: center; margin-top: 6px;
+}
+
+/* coming-soon image slot */
+.te-img-slot {
+  aspect-ratio: 4/3;
+  background: linear-gradient(135deg, #1a2a1a, #2a3d2a);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 10px;
+  position: relative; overflow: hidden;
+}
+.te-img-slot::before {
+  content: ''; position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(90,158,122,.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(90,158,122,.07) 1px, transparent 1px);
+  background-size: 14px 14px;
+}
+.te-img-slot-label {
+  font-family: var(--f-ui); font-size: .65rem; font-weight: 700;
+  letter-spacing: .12em; text-transform: uppercase;
+  color: rgba(90,158,122,.6); position: relative; z-index: 1; text-align: center; padding: 0 16px;
+}
+.te-img-slot-icon { font-size: 2.2rem; opacity: .25; position: relative; z-index: 1; }
+.te-slot-badge {
+  position: relative; z-index: 1;
+  font-family: var(--f-ui); font-size: .6rem; font-weight: 700;
+  letter-spacing: .1em; text-transform: uppercase;
+  background: rgba(90,158,122,.15); border: 1.5px solid rgba(90,158,122,.35);
+  color: rgba(90,158,122,.9); padding: 4px 12px; border-radius: 0;
+}
+
+/* environments grid - 2 col */
+.env-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 24px 0; }
+.env-card {
+  border-radius: 12px; overflow: hidden; border: 1.5px solid rgba(90,158,122,.15);
+  box-shadow: 3px 3px 0 rgba(90,158,122,.1); background: white;
+  transition: transform .2s ease;
+}
+.env-card:hover { transform: translateY(-3px); }
+.env-thumb {
+  aspect-ratio: 16/9; background: var(--bg, #1a2a1a);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 3rem;
+}
+.env-label {
+  padding: 10px 14px; font-family: var(--f-ui); font-size: .65rem;
+  font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+  color: #445040; line-height: 1.3;
+}
+.env-card-soon {
+  border-radius: 12px; overflow: hidden; border: 1.5px dashed rgba(90,158,122,.25);
+  box-shadow: 3px 3px 0 rgba(90,158,122,.07); background: rgba(90,158,122,.04);
+}
+.env-thumb-soon {
+  aspect-ratio: 16/9; background: linear-gradient(135deg, #1a2a1a, #2a3d2a);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 8px; position: relative; overflow: hidden;
+}
+.env-thumb-soon::before {
+  content: ''; position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(90,158,122,.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(90,158,122,.06) 1px, transparent 1px);
+  background-size: 14px 14px;
+}
+.env-thumb-soon span { position: relative; z-index: 1; font-size: 2rem; opacity: .3; }
+.env-soon-badge {
+  position: relative; z-index: 1;
+  font-family: var(--f-ui); font-size: .6rem; font-weight: 700;
+  letter-spacing: .1em; text-transform: uppercase;
+  background: rgba(90,158,122,.15); border: 1.5px solid rgba(90,158,122,.35);
+  color: rgba(90,158,122,.9); padding: 3px 10px; border-radius: 0;
+}
+
+/* word cloud */
+.te-word-cloud { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+.te-word {
+  font-family: var(--f-ui); font-size: .72rem; font-weight: 600;
+  padding: 7px 14px; border-radius: 0; background: white;
+  border: 2px solid rgba(90,158,122,.22);
+  color: var(--te-green); box-shadow: 3px 3px 0 rgba(90,158,122,.12);
+  transition: all .15s steps(2); cursor: default;
+}
+.te-word:hover { background: var(--te-green); color: white; transform: translate(-2px,-2px); box-shadow: 5px 5px 0 rgba(90,158,122,.28); }
+.te-word.dim { color: #4a4a3a; border-color: rgba(28,21,16,.1); box-shadow: 3px 3px 0 rgba(0,0,0,.05); }
+
+/* design choice callout */
+.design-choice {
+  border: 1.5px solid rgba(90,158,122,.25);
+  border-radius: 10px; padding: 20px 24px;
+  background: rgba(90,158,122,.05); max-width: 680px; margin: 20px 0;
+  display: flex; gap: 14px; align-items: flex-start;
+}
+.dc-icon { font-size: 1.4rem; flex-shrink: 0; margin-top: 2px; }
+.dc-title { font-size: 12px; font-weight: 500; letter-spacing: .07em; text-transform: uppercase; color: var(--te-green); margin-bottom: 6px; }
+.dc-text { font-size: .86rem; color: #445040; line-height: 1.72; }
+.dc-text strong { color: var(--te-dark); font-weight: 500; }
+
+/* in-progress card */
+.te-wip {
+  background: linear-gradient(135deg, var(--te-dark), var(--te-mid));
+  border-radius: 8px; padding: 48px 40px;
+  box-shadow: 6px 6px 0 rgba(90,158,122,.18), 0 10px 40px rgba(0,0,0,.14);
+  border: 2px solid rgba(90,158,122,.2);
+  position: relative; overflow: hidden;
+}
+.te-wip::before {
+  content: ''; position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(90,158,122,.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(90,158,122,.04) 1px, transparent 1px);
+  background-size: 16px 16px;
+}
+.te-wip > * { position: relative; z-index: 1; }
+.te-wip-title { font-family: var(--f-display); font-style: italic; font-size: 1.6rem; color: white; margin: 14px 0 10px; }
+.te-wip-desc { font-size: .88rem; line-height: 1.72; color: rgba(255,255,255,.55); max-width: 500px; margin-bottom: 24px; }
+.te-wip-list { display: flex; flex-direction: column; gap: 9px; }
+.te-wip-item {
+  display: flex; align-items: center; gap: 10px;
+  font-family: var(--f-ui); font-size: .7rem; font-weight: 600;
+  letter-spacing: .06em; text-transform: uppercase; color: rgba(255,255,255,.45);
+}
+.te-wip-item::before { content: ''; width: 6px; height: 6px; background: var(--te-green); flex-shrink: 0; }
+.te-wip-eta {
+  display: inline-flex; align-items: center; gap: 8px; margin-top: 24px;
+  font-family: var(--f-ui); font-size: .7rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--te-green); background: rgba(90,158,122,.1); border: 2px solid rgba(90,158,122,.3);
+  padding: 9px 18px; border-radius: 0;
+}
+
+/* footer nav */
+.footer-nav {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 32px 8vw 56px; border-top: 1px solid rgba(28,21,16,.08);
+  max-width: 1080px; margin: 0 auto;
+}
+.fnav-link { font-size: 11px; font-weight: 500; letter-spacing: .07em; text-transform: uppercase; color: #445040; display: flex; align-items: center; gap: 6px; transition: color .2s; text-decoration: none; }
+.fnav-link:hover { color: var(--te-green); }
+
+@media(max-width:900px) {
+  .te-concept-grid { grid-template-columns: 1fr 1fr; }
+  .persona-grid { grid-template-columns: 1fr 1fr; }
+  .te-img-grid.two, .te-img-grid.three { grid-template-columns: 1fr; }
+  .env-grid { grid-template-columns: repeat(4,1fr); }
+  .te-content { padding: 48px 6vw 72px; }
+}
+@media(max-width:560px) {
+  .te-concept-grid { grid-template-columns: 1fr; }
+  .persona-grid { grid-template-columns: 1fr; }
+  .env-grid { grid-template-columns: repeat(2,1fr); }
+}
+</style>
+</head>
+<body class="page-games">
+<div id="cur"></div><div id="cur-ring"></div><div id="transition-overlay"></div>
+
+<nav class="site-nav">
+  <a href="index.html" class="nav-wordmark">Thea<sup>✦</sup></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="uxui.html">UX/UI</a></li>
+    <li><a href="games.html" class="active">Games</a></li>
+    <li><a href="art.html">Art</a></li>
+    <li><a href="about.html">About</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap">
+
+  <!-- HERO -->
+  <section class="te-hero-section">
+    <a href="games.html" class="te-back">← Back to Games</a>
+    <div class="te-tags">
+      <span class="te-tag-pill tp-green">Pixel Art · Typing Game</span>
+      <span class="te-tag-pill tp-gold">Built for Internship · ResolveX</span>
+      <span class="te-tag-pill tp-slate">Browser · HTML / CSS / JS</span>
+    </div>
+    <h1 class="te-hero-h1">Path of <em>Emotions</em> ⛰️</h1>
+    <p class="te-hero-desc">A pixel art typing game for crisis line workers — building emotional vocabulary and typing fluency through seven progressively challenging environments, with feelings words falling from the sky.</p>
+    <div class="te-meta-bar">
+      <div class="te-meta-item"><span class="te-meta-label">Role</span><span class="te-meta-val">Solo Developer · Designer · Artist</span></div>
+      <div class="te-meta-item"><span class="te-meta-label">Engine</span><span class="te-meta-val">HTML · CSS · JavaScript</span></div>
+      <div class="te-meta-item"><span class="te-meta-label">Genre</span><span class="te-meta-val">Typing Game · Wellness Tool</span></div>
+      <div class="te-meta-item"><span class="te-meta-label">Platform</span><span class="te-meta-val">Browser</span></div>
+      <div class="te-meta-item"><span class="te-meta-label">Status</span><span class="te-meta-val">In development</span></div>
+      <div class="te-meta-item"><span class="te-meta-label">Context</span><span class="te-meta-val">ResolveX Internship</span></div>
+    </div>
+  </section>
+
+  <div class="dev-banner">
+    <div class="dev-dot"></div>
+    Actively in development · screenshots and playable build coming soon
+    <span class="dev-eta">Will update when complete ✦</span>
+  </div>
+
+  <div class="te-content">
+
+    <!-- WHY THIS PROJECT -->
+    <div class="te-section reveal">
+      <div class="te-section-label">Background & Motivation</div>
+      <h2 class="te-h2">Why this project <em>found me</em></h2>
+      <p class="te-prose">Years before I was a designer, I was a volunteer at a crisis line texting service. Following a series of trainings, I spent hours typing responses to people in acute distress, learning to choose words carefully, quickly, and with intention. That experience gave me important context. However, I never had to fill out extensive documentation after every interaction, just a few questions.</p>
+      <p class="te-prose">Later, I worked as a houseless camp case manager, which was a role that demanded emotional precision, often in chaotic conditions. The workers around me had to document and emotionally regulate all at once. I watched brilliant, caring people burn out not from lack of empathy, but from systems that gave them no room to breathe or practice.</p>
+      <p class="te-prose">When my internship at <strong>ResolveX</strong>, a mental health company with documentation software for crisis center workers, offered me this opportunity to make a game, I was incredibly excited to build. Path of Emotions started as an answer to a very personal design question: <strong>what does it look like to practice both emotional vocabulary and typing speed in a space that doesn't feel clinical?</strong></p>
+      <div class="te-pull">
+        <p>"What if the same act of typing that fills out crisis documentation could also be a moment of calm and learning?"</p>
+        <cite>-> The question that started this project</cite>
+      </div>
+    </div>
+
+    <!-- USER PERSONAS -->
+    <div class="te-section reveal">
+      <div class="te-section-label">User Research</div>
+      <h2 class="te-h2">Who we're <em>designing for</em></h2>
+      <p class="te-prose">Before deciding what time of game to create, I developed six user personas representing the range of workers in this problem space who might use Path of Emotions, from new frontline employees finding their footing to seasoned executives managing burnout. 
+        Each persona shaped a different aspect of the game: pacing, vocabulary difficulty, visual tone, and accessibility needs.</p>
+      <div class="persona-carousel-wrap">
+        <div class="persona-carousel" id="personaCarousel">
+          <div class="persona-card">
+            <div class="persona-img"><img src="pics/games/emotions/persona1.png" alt="User persona 1"></div>
+            <div class="persona-body"><div class="persona-name">Persona 1</div><div class="persona-role">Frontline Worker</div></div>
+          </div>
+          <div class="persona-card">
+            <div class="persona-img"><img src="pics/games/emotions/persona2.png" alt="User persona 2"></div>
+            <div class="persona-body"><div class="persona-name">Persona 2</div><div class="persona-role">Shift Lead</div></div>
+          </div>
+          <div class="persona-card">
+            <div class="persona-img"><img src="pics/games/emotions/persona3.png" alt="User persona 3"></div>
+            <div class="persona-body"><div class="persona-name">Persona 3</div><div class="persona-role">Crisis Line Director</div></div>
+          </div>
+          <div class="persona-card">
+            <div class="persona-img"><img src="pics/games/emotions/persona4.png" alt="User persona 4"></div>
+            <div class="persona-body"><div class="persona-name">Persona 4</div><div class="persona-role">ResolveX Executive</div></div>
+          </div>
+          <div class="persona-card">
+            <div class="persona-img"><img src="pics/games/emotions/persona5.png" alt="User persona 5"></div>
+            <div class="persona-body"><div class="persona-name">Persona 5</div><div class="persona-role">ResolveX Employee</div></div>
+          </div>
+          <div class="persona-card">
+            <div class="persona-img"><img src="pics/games/emotions/persona6.png" alt="User persona 6"></div>
+            <div class="persona-body"><div class="persona-name">Persona 6</div><div class="persona-role">Crisis Line Executive</div></div>
+          </div>
+        </div>
+        <div class="carousel-nav">
+          <div class="carousel-dots" id="personaDots"></div>
+          <div style="display:flex;align-items:center;gap:16px;">
+            <span class="carousel-hint">Drag or click arrows</span>
+            <div class="carousel-btns">
+              <button class="carousel-btn" id="personaPrev" aria-label="Previous">←</button>
+              <button class="carousel-btn" id="personaNext" aria-label="Next">→</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- EMOTIONS WHEEL -->
+    <div class="te-section reveal">
+      <div class="te-section-label">Research Foundation</div>
+      <h2 class="te-h2">The feelings <em>wheel</em></h2>
+      <p class="te-prose">The vocabulary for Path of Emotions is grounded in the feelings wheel, which is a structured map of emotions language used widely in crisis support training.
+         It organizes emotions from broad states at the center outward to nuanced, layered feeling-words at the edges.</p>
+      <p class="te-prose">This became the backbone of the word bank and the game's difficulty progression. Words closest to the center of the wheel — "sad," "angry," "afraid" — appear in early levels. As the game progresses, the words move outward: "bereft," "ambivalent," "despondent," "tender." The mountain climbs as the vocabulary deepens.</p>
+      <img src="pics/games/emotions/feelingsWheel.png" alt="Feelings wheel reference" class="te-img-centered">
+      <p class="te-img-caption">The feelings wheel: foundation of the word bank and difficulty curve</p>
+
+      <h3 style="font-family:var(--f-display);font-style:italic;font-size:1.1rem;color:var(--te-dark);margin:28px 0 14px;">A sample of feeling words used in the game</h3>
+      <div class="te-word-cloud">
+        <span class="te-word">Anxious</span>
+        <span class="te-word">Hopeful</span>
+        <span class="te-word">Grief</span>
+        <span class="te-word">Resilient</span>
+        <span class="te-word">Overwhelmed</span>
+        <span class="te-word">Bereft</span>
+        <span class="te-word">Tender</span>
+        <span class="te-word">Numb</span>
+        <span class="te-word">Ambivalent</span>
+        <span class="te-word">Despairing</span>
+        <span class="te-word">Relieved</span>
+        <span class="te-word">Shattered</span>
+        <span class="te-word">Hollow</span>
+        <span class="te-word">Wistful</span>
+        <span class="te-word">Despondent</span>
+        <span class="te-word">Elated</span>
+        <span class="te-word">Rattled</span>
+        <span class="te-word dim">+ many more</span>
+      </div>
+    </div>
+
+    <!-- THE GAME -->
+    <div class="te-section reveal">
+      <div class="te-section-label">The Game</div>
+      <h2 class="te-h2">How <em>Path of Emotions</em> works</h2>
+      <p class="te-prose">Crisis line workers spend significant time typing during and after calls, documenting, responding, logging. Typing fluency directly affects how present they can be on a call. 
+        Path of Emotions builds that fluency in a way that also familiarizes workers with the exact emotional vocabulary they'll use on the line.</p>
+      <p class="te-prose">The mechanic is simple: feeling words fall from the top of the screen. Players type each word and press enter to clear it and move onto the next terms
+         before it reaches the bottom. Words are highlighted as the current target when the player hits enter, so there's no clicking needed. Each level gets gradually faster, 
+         increasing the typing demand over time. There are intermediate levels with paragraphs to type, testing an individual's ability to type full sentences.</p>
+      <p class="te-prose">The dual purpose is intentional. <strong>Faster typing means more practice with typing under pressure.</strong> Familiarity with emotional vocabulary means richer, 
+        more precise responses to callers. Both skills are practiced in the same breath, inside a calming pixel art environment that is not in a documentation context.</p>
+      <div class="te-concept-grid">
+        <div class="te-concept-card">
+          <div class="tc-icon">⌨️</div>
+          <div class="tc-title">Typing Fluency</div>
+          <div class="tc-desc">Words fall gradually faster across levels. Workers build speed in a low-stakes space, so documentation during live calls feels less overwhelming. 
+            The game can be stopped and resumed at any time, and starting speed can be adjusted accordingly for replayability.</div>
+        </div>
+        <div class="te-concept-card">
+          <div class="tc-icon">💬</div>
+          <div class="tc-title">Emotional Vocabulary</div>
+          <div class="tc-desc">Every word in the game is a feeling word drawn from crisis support language. 
+            Players absorb vocabulary passively while focusing on the typing task.</div>
+        </div>
+        <div class="te-concept-card">
+          <div class="tc-icon">🌿</div>
+          <div class="tc-title">Calming Environment</div>
+          <div class="tc-desc">Seven pixel art backgrounds progress through environments that feel restorative rather than stressful, including a waterfall, snowy banks, and more.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ENVIRONMENTS -->
+    <div class="te-section reveal">
+      <div class="te-section-label">World Design</div>
+      <h2 class="te-h2">Seven <em>environments</em></h2>
+      <p class="te-prose">The game moves through seven distinct environments, each with its own pixel art background and emotional tone. 
+        The home screen opens inside a cozy tent that is safe and relatively barren. From there, the player moves outward into larger, 
+        more expansive scenes as the words grow more complex. Six are complete; the Forest Floor is still in progress.</p>
+
+      <p class="te-prose">The environment progression was sketched out early in the process with rough drawings and rough colored drawings to nail down the emotional arc and 
+        visual variety before committing to any pixel art. These sketches aren't for all environments, just the early ones used to establish tone 
+        and spatial direction.</p>
+
+      <img src="pics/games/emotions/draftLevels.png" alt="Rough environment progression sketches" class="te-img-full">
+      <p class="te-img-caption">Early environment progression -> early iteration rough ideation sketches</p>
+
+      <div class="te-img-grid three" style="margin-top:20px;">
+        <div>
+          <img src="pics/games/emotions/originalProps.png" alt="Early environment work 1" style="width:100%;border-radius:10px;box-shadow:3px 3px 0 rgba(90,158,122,.12),0 4px 14px rgba(0,0,0,.07);border:1.5px solid rgba(90,158,122,.12);display:block;">
+          <p class="te-img-caption">Environment / prop work -> early stage but deprecated</p>
+        </div>
+        <div>
+          <img src="pics/games/emotions/originalStream.png" alt="Early environment work 2" style="width:100%;border-radius:10px;box-shadow:3px 3px 0 rgba(90,158,122,.12),0 4px 14px rgba(0,0,0,.07);border:1.5px solid rgba(90,158,122,.12);display:block;">
+          <p class="te-img-caption">Background exploration (original stream background, depreecated)</p>
+        </div>
+        <div>
+          <img src="pics/games/emotions/tent.png" alt="Tent home screen" style="width:100%;border-radius:10px;box-shadow:3px 3px 0 rgba(90,158,122,.12),0 4px 14px rgba(0,0,0,.07);border:1.5px solid rgba(90,158,122,.12);display:block;">
+          <p class="te-img-caption">Home screen -> inside the tent</p>
+        </div>
+      </div>
+
+      <div class="env-grid" style="margin-top:28px;">
+        <div class="env-card">
+          <div class="env-thumb" style="padding:0;aspect-ratio:16/9;overflow:hidden;">
+            <img src="pics/games/emotions/tent.png" alt="Home Screen — Tent" style="width:100%;height:100%;object-fit:cover;display:block;">
+          </div>
+          <div class="env-label">Home Screen -> Inside the Tent</div>
+        </div>
+        <div class="env-card-soon">
+          <div class="env-thumb-soon">
+            <span>🌲</span>
+            <div class="env-soon-badge">Coming Soon ✦</div>
+          </div>
+          <div class="env-label" style="color:#7a8c76;">Level 1 -> Forest Floor</div>
+        </div>
+        <div class="env-card">
+          <div class="env-thumb" style="padding:0;aspect-ratio:16/9;overflow:hidden;">
+            <img src="pics/games/emotions/waterfall.png" alt="Level 2 — Waterfall" style="width:100%;height:100%;object-fit:cover;display:block;">
+          </div>
+          <div class="env-label">Level 2 -> Waterfall</div>
+        </div>
+        <div class="env-card">
+          <div class="env-thumb" style="padding:0;aspect-ratio:16/9;overflow:hidden;">
+            <img src="pics/games/emotions/greentoSnow.png" alt="Level 3 — Green to Snow" style="width:100%;height:100%;object-fit:cover;display:block;">
+          </div>
+          <div class="env-label">Level 3 -> Green to Snow</div>
+        </div>
+        <div class="env-card">
+          <div class="env-thumb" style="padding:0;aspect-ratio:16/9;overflow:hidden;">
+            <img src="pics/games/emotions/snowy.png" alt="Level 4 — Snowy" style="width:100%;height:100%;object-fit:cover;display:block;">
+          </div>
+          <div class="env-label">Level 4 -> Snowy</div>
+        </div>
+        <div class="env-card">
+          <div class="env-thumb" style="padding:0;aspect-ratio:16/9;overflow:hidden;">
+            <img src="pics/games/emotions/baseCamp.png" alt="Level 5 — Base Camp" style="width:100%;height:100%;object-fit:cover;display:block;">
+          </div>
+          <div class="env-label">Level 5 -> Base Camp</div>
+        </div>
+        <div class="env-card">
+          <div class="env-thumb" style="padding:0;aspect-ratio:16/9;overflow:hidden;">
+            <img src="pics/games/emotions/summit.png" alt="Level 6 — Summit" style="width:100%;height:100%;object-fit:cover;display:block;">
+          </div>
+          <div class="env-label">Level 6 -> Summit</div>
+        </div>
+      </div>
+
+      <p class="te-prose" style="margin-top:24px;">Each text also has custom UI underlays, backgrounds for falling text and button states that are designed after the backgrounds were finalized so text 
+        legibility stays consistent across different sky and ground colors.</p>
+
+      <div style="max-width:480px;">
+        <img src="pics/games/emotions/textUI.png" alt="UI button overlays" class="te-img-centered" style="margin:16px 0 4px;">
+        <p class="te-img-caption">UI button and overlay work</p>
+      </div>
+    </div>
+
+    <!-- CHARACTERS -->
+    <div class="te-section reveal">
+      <div class="te-section-label">Characters</div>
+      <h2 class="te-h2">Small animated <em>characters</em></h2>
+      <p class="te-prose">Each environment has a small animated pixel character that lives in the scene with idle animations and reactions to correctly typed words. This will help make the world feel alive without 
+        distracting from the typing. Character work is the most recent phase, and images will be added here once they're complete.</p>
+      <p class="te-prose" style="color:#7a8c76;font-style:italic;">✦ Character sprite images coming soon! I will update this section when complete.</p>
+    </div>
+
+    <!-- DESIGN CHOICES -->
+    <div class="te-section reveal">
+      <div class="te-section-label">Design Decisions</div>
+      <h2 class="te-h2">How the mechanic <em>evolved</em></h2>
+      <p class="te-prose">Several decisions shifted significantly during development, both in terms of the interaction design and the technology stack.</p>
+
+      <div class="design-choice">
+        <div class="dc-icon">🎮</div>
+        <div>
+          <div class="dc-title">Unity → HTML / CSS / JavaScript</div>
+          <div class="dc-text">I started building Path of Emotions in Unity, which felt like a natural fit given I'd worked in it before. 
+            But as the project took shape, I realized the game was always intended to live in a browser and accessible to crisis line workers 
+            without any install, across whatever device they're using at their desk. <strong>If it's a web game, a web game makes more sense to build as one</strong> (even though I could have uploaded the Unity game to web format).
+            Because I have experience with frontend, switching to HTML, CSS, and JavaScript simplified the deployment entirely, kept the files size small, and meant I could iterate on the UI and feel much faster without a build pipeline
+            in the way.</div>
+        </div>
+      </div>
+
+      <div class="design-choice">
+        <div class="dc-icon">🖱️</div>
+        <div>
+          <div class="dc-title">Click-to-select → Enter to advance</div>
+          <div class="dc-text">The original design required players to <strong>click on each word</strong> to select it before typing. This felt intuitive at first, but became tedious quickly, 
+            especially in levels with many words falling at once. The mouse movement broke the typing rhythm entirely and added friction that worked against the calming tone and would not work in higher levels.
+            The solution was simpler: <strong>players just type and hit enter</strong>. The next word in the queue highlights automatically, so the hand never leaves the keyboard. 
+            It's faster, and flows better.</div>
+        </div>
+      </div>
+
+      <div class="design-choice">
+        <div class="dc-icon">⏩</div>
+        <div>
+          <div class="dc-title">Gradual speed increase across levels</div>
+          <div class="dc-text">Rather than fixed difficulty tiers, the words fall <strong>gradually faster</strong> as each level progresses — starting slow enough to be meditative, accelerating to a pace that requires real focus by the end. This mirrors how real typing fluency builds: the challenge appears gently, not as a sudden wall.</div>
+        </div>
+      </div>
+
+      <div class="design-choice">
+        <div class="dc-icon">🌿</div>
+        <div>
+          <div class="dc-title">Environment as emotional texture, not just backdrop</div>
+          <div class="dc-text">Early versions had the same background for every level. The decision to give each level a distinct, progressively expansive environment came from the personas — burned-out workers and new volunteers both needed <strong>the game to feel like a break</strong>, not another task. The changing scenery provides that sense of journey and progress without any explicit reward system.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- WHERE IT'S AT -->
+    <div class="te-section reveal">
+      <div class="te-section-label">Current Status</div>
+      <h2 class="te-h2">Still <em>building</em></h2>
+      <div class="te-wip">
+        <div class="te-img-slot-icon">🛠️</div>
+        <div class="te-wip-title">In Active Development</div>
+        <div class="te-wip-desc">Coding is underway. The environments and UI are built; character work is in progress. 
+          Hoping to wrap development soon, and will update this page with a playable build and final screenshots when complete.</div>
+        <div class="te-wip-list">
+          <div class="te-wip-item">Six environments complete -> Forest Floor in progress</div>
+          <div class="te-wip-item">UI overlays and falling text -> complete</div>
+          <div class="te-wip-item">Word bank drawn from feelings wheel -> in progress</div>
+          <div class="te-wip-item">Core typing mechanic -> in development (HTML/CSS/JS)</div>
+          <div class="te-wip-item">Small animated characters -> in progress</div>
+          <div class="te-wip-item">Level progression and speed curve -> in progress</div>
+          <div class="te-wip-item">Sound design and ambient audio -> planned</div>
+          <div class="te-wip-item">Playable build and final screenshots -> coming soon</div>
+        </div>
+        <div class="te-wip-eta">⏱ &nbsp;Will update when complete</div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<div class="footer-nav">
+  <a href="games.html" class="fnav-link">← All Games</a>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-mark">Thea ✦ Creative Portfolio</div>
+  <ul class="footer-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="uxui.html">UX/UI</a></li>
+    <li><a href="games.html">Games</a></li>
+    <li><a href="art.html">Art</a></li>
+    <li><a href="about.html">About</a></li>
+  </ul>
+</footer>
+<script src="nav.js"></script>
+<script>
+// ── PERSONA CAROUSEL ──
+const carousel = document.getElementById('personaCarousel');
+const cards    = carousel.querySelectorAll('.persona-card');
+const dotsWrap = document.getElementById('personaDots');
+const prevBtn  = document.getElementById('personaPrev');
+const nextBtn  = document.getElementById('personaNext');
+const total    = cards.length;
+let current    = 0;
+let isDragging = false, startX = 0, scrollStart = 0;
+
+// build dots
+cards.forEach((_, i) => {
+  const d = document.createElement('button');
+  d.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+  d.setAttribute('aria-label', `Go to persona ${i + 1}`);
+  d.addEventListener('click', () => scrollTo(i));
+  dotsWrap.appendChild(d);
+});
+
+function updateDots() {
+  dotsWrap.querySelectorAll('.carousel-dot').forEach((d, i) => {
+    d.classList.toggle('active', i === current);
+  });
+}
+
+function scrollTo(index) {
+  current = Math.max(0, Math.min(index, total - 1));
+  const card = cards[current];
+  carousel.scrollTo({ left: card.offsetLeft - 0, behavior: 'smooth' });
+  updateDots();
+}
+
+prevBtn.addEventListener('click', () => scrollTo(current - 1));
+nextBtn.addEventListener('click', () => scrollTo(current + 1));
+
+// update active dot on scroll
+carousel.addEventListener('scroll', () => {
+  const cardW = cards[0].offsetWidth + 20; // gap
+  current = Math.round(carousel.scrollLeft / cardW);
+  updateDots();
+}, { passive: true });
+
+// drag to scroll
+carousel.addEventListener('mousedown', e => {
+  isDragging = true; startX = e.pageX; scrollStart = carousel.scrollLeft;
+  carousel.style.cursor = 'grabbing';
+});
+window.addEventListener('mousemove', e => {
+  if (!isDragging) return;
+  carousel.scrollLeft = scrollStart - (e.pageX - startX);
+});
+window.addEventListener('mouseup', () => {
+  isDragging = false;
+  carousel.style.cursor = 'grab';
+});
+</script>
+</body>
+</html>

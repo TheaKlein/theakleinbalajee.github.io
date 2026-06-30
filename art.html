@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Art — Maya</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+body { background: var(--paper); }
+
+.page-hero { padding: 40px 8vw 36px; position:relative; overflow:hidden; }
+.page-hero::before { content:''; position:absolute; top:-80px;right:-80px; width:420px;height:420px; border-radius:50%; background:radial-gradient(circle,rgba(232,137,106,.2) 0%,transparent 65%); pointer-events:none; }
+.page-hero-label { display:inline-flex;align-items:center;gap:8px; font-family:var(--f-ui);font-size:.7rem;font-weight:700; letter-spacing:.12em;text-transform:uppercase; color:var(--rose);background:rgba(232,137,106,.1); border:1px solid rgba(232,137,106,.3); padding:6px 14px;border-radius:24px;margin-bottom:22px; }
+.page-hero h1 {
+  font-family:var(--f-display);font-style:italic;
+  font-size:clamp(2rem,4vw,3.2rem);line-height:1.0;
+  color:var(--ink);max-width:700px;
+}
+.page-hero .hero-sub { font-family:var(--f-heading);font-style:italic; font-size:1.05rem;color:var(--ink2); margin-top:16px;max-width:500px;line-height:1.65;opacity:.7; }
+
+.coming-soon { padding: 30px 8vw 60px; text-align:center; background: rgba(232,137,106,.08); }
+.coming-soon p { font-family:var(--f-display);font-style:italic;font-size:clamp(2rem,5vw,4rem);color:var(--ink2);opacity:1; }
+</style>
+</head>
+<body class="page-art">
+<div id="cur"></div>
+<div id="cur-ring"></div>
+<div id="transition-overlay"></div>
+
+<nav class="site-nav">
+  <a href="index.html" class="nav-wordmark">Maya<sup>✦</sup></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="uxui.html">UX/UI</a></li>
+    <li><a href="games.html">Games</a></li>
+    <li><a href="art.html" class="active">Art</a></li>
+    <li><a href="about.html">About</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap">
+  <section class="page-hero">
+    <div class="page-hero-label reveal">🎨 &nbsp;Art & Illustration</div>
+    <h1 class="reveal reveal-delay-1">Building worlds<br><em>with pixels & pen.</em></h1>
+    <p class="hero-sub reveal reveal-delay-2">A visual archive of sprites, environments, 3D work, and everything in between.</p>
+  </section>
+
+  <section class="coming-soon reveal">
+    <p>Art section under construction,<br> coming soon 🛠️</p>
+    <p style="margin-top:24px;font-size:1.25rem;opacity:.8;">In the meantime, check out my art in the games section, about section, or on the cover page!</p>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-mark">Maya ✦ Creative Portfolio</div>
+  <ul class="footer-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="uxui.html">UX/UI</a></li>
+    <li><a href="games.html">Games</a></li>
+    <li><a href="about.html">About</a></li>
+  </ul>
+</footer>
+
+<script src="nav.js"></script>
+</body>
+</html>
+
